@@ -24,9 +24,9 @@ const send404 = (res) => {
 };
 
 app.post('/', (req, res) => {
-  const action = req.body.queryResult.action;
+  const action = (req.body.queryResult || {}).action;
 
-  if (action.length < 4) {
+  if (!action || action.length < 4) {
     send404(res);
   } else {
     const module = action.substring(0, 3);
