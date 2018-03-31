@@ -1,14 +1,16 @@
-const express = require("express")
-const bodyParser = require("body-parser")
-const request = require("request")
+const express = require("express");
+const app = express();
 
-bodyParser.use(
+const bodyParser = require("body-parser");
+const request = require("request");
+
+app.use(
   bodyParser.urlencoded({
     extended: true
   })
 );
 
-bodyParser.use(bodyParser.json());
+app.use(bodyParser.json());
 
 
 function getBusData(callback) {
@@ -38,7 +40,7 @@ function getBusData(callback) {
     // });
 }
 
-express.post("/bus", function(req, res) {
+app.post("/bus", function(req, res) {
 	var data = getBusData(function(busdata, error) {
 		var speech = busdata["1"]["stops"]["0"]
 		res.json({
@@ -48,4 +50,8 @@ express.post("/bus", function(req, res) {
 		})
 	})
 
+});
+
+app.listen(3000, function() {
+  console.log("Server up and listening!");
 });
