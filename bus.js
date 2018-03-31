@@ -1,5 +1,16 @@
 const request = require('request');
 
+const routeIdToKey = {
+  "MT": 1,
+  "Mountaintop": 1,
+  "SV": 2,
+  "Saucon Village": 2,
+  "TR": 3,
+  "T.R.A.C.S.": 3,
+  "AT": 4,
+  "Athletics": 4
+};
+
 const getBusData = (callback) => {
   // The busdata request may respond with a blank JSON if no buses are running
   // For testing, we can use the testdata
