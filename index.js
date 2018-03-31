@@ -59,7 +59,7 @@ function departFrom(req, res) {
 
 app.post("/", function(req, res) {
     console.log(req.body)
-    var action = req.body.intent.action
+    var action = req.body.queryResult.action
     if (action == "Location") {
         departFrom(req, res)
     } else if (action == "Test") {
