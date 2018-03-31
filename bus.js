@@ -34,7 +34,7 @@ module.exports = {
     });
   },
   'Test': (req, res) => {
-    getBusData(function(busdata, error) {
+    getBusData((busdata, error) => {
       const speech = busdata['1']['stops']['0'];
       res.json({
         fulfillment_text: speech
