@@ -1,8 +1,10 @@
+const request = require("request");
+
 function getBusData(callback) {
 	// The busdata request may respond with a blank JSON if no buses are running
 	// For testing, we can use the testdata
 
-	var testResponse = require("./testdata/busdata")
+	const testResponse = require("./testdata/busdata");
 	callback(testResponse, null)
 
 	// The real body fo this method
@@ -39,4 +41,4 @@ module.exports = {
         	})
     	});
 	}
-}
+};
