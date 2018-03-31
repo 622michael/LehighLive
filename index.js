@@ -45,7 +45,7 @@ app.post('/', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  console.log('hello');
+  res.send("hello awesome peeps");
 });
 
 const PORT = process.env.PORT || 3000;
