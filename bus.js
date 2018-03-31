@@ -27,7 +27,7 @@ const getBusData = (callback) => {
   // });
 };
 
-module.exports = {
+const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   'Location': (req, res) => {
     res.json({
       fulfillment_text: 'The location request was successful!'
@@ -42,3 +42,5 @@ module.exports = {
     });
   }
 };
+
+module.exports = BUS_FUNCTION_ACTION_NAME_TO_FUNCTION;

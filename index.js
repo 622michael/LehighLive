@@ -34,7 +34,7 @@ app.post('/', (req, res) => {
   }
   const moduleName = action.substring(0, MODULE_NAME_LENGTH_FROM_ACTION).toUpperCase();
   const functionName = action.substring(MODULE_NAME_LENGTH_FROM_ACTION);
-  
+
   const module = modules[moduleName];
   const functionInModule = module[functionName];
   if (module && functionInModule) {
