@@ -7,13 +7,13 @@ This is a project to implement Google Assistant with the Lehigh Live App.
 
 To run locally:
 
-'''
+```
 
 cd lehighlive
 npm install
 npm start
 
-''' 
+``` 
 
 ## Deploy
 
