@@ -41,13 +41,20 @@ function getBusData(callback) {
 }
 
 app.post("/bus", function(req, res) {
+
 	var data = getBusData(function(busdata, error) {
-		var speech = busdata["1"]["stops"]["0"]
-		res.json({
-			speech: speech,
-			displayText: speech,
-			source: "lehighlive"
-		})
+        var speech = busdata["1"]["stops"]["0"]
+
+        res.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type 
+        res.send(JSON.stringify({ 
+            "speech": speech, 
+            "displayText": speech 
+        }));
+		// res.json({
+		// 	speech: speech,
+		// 	displayText: speech,
+		// 	source: "lehighlive"
+		// })
 	})
 
 });
