@@ -40,13 +40,35 @@ function getBusData(callback) {
     // });
 }
 
-app.post("/bus", function(req, res) {
-	getBusData(function(busdata, error) {
+function output(req, res) {
+    getBusData(function(busdata, error) {
         var speech = busdata["1"]["stops"]["0"]
         res.json({
             fulfillment_text: speech
         })
-	});
+    });
+
+}
+
+function departFrom(req, res) {
+    res.json({
+        fulfillment_text: "The location request was successful!"
+    })
+
+}
+
+app.post("/", function(req, res) {
+    console.log(req.body)
+    var action = req.body.intent.action
+    if (action == "Location") {
+        departFrom(req, res)
+    } else if (action == "Test") {
+        output(req, res)
+    } else {
+        res.json({
+            fulfillment_text: "That is not an action!"
+        })
+    }
 });
 
 var port = process.env.PORT || 3000
