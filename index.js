@@ -47,6 +47,24 @@ app.post('/', (req, res) => {
 app.get('/', (req, res) => {
   console.log('hello');
 });
+app.get('/rmp',(req, res) => {
+    var request = require("request");
+
+var options = { method: 'GET',
+    url: 'http://www.ratemyprofessors.com/paginate/professors/ratings',
+    qs: { tid: '2076881', page: '0', max: '3', cache: 'false' },
+    headers:
+        { 'Postman-Token': '297e504c-bf0c-4196-92e6-8c0c8c6c0441',
+            'Cache-Control': 'no-cache' } };
+
+request(options, function (error, response, body) {
+    if (error) throw new Error(error);
+
+    console.log(body);
+    res.send(body);
+});
+
+})
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
