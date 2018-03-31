@@ -32,13 +32,13 @@ app.post('/', (req, res) => {
     send404(res);
     return;
   }
-  const moduleName = action.substring(0, MODULE_NAME_LENGTH_FROM_ACTION);
+  const moduleName = action.substring(0, MODULE_NAME_LENGTH_FROM_ACTION).toUpperCase();
   const functionName = action.substring(MODULE_NAME_LENGTH_FROM_ACTION);
   
   const module = modules[moduleName];
-  const functionWithinModule = module[functionName];
-  if (module && functionWithinModule) {
-    functionWithinModule(req, res);
+  const functionInModule = module[functionName];
+  if (module && functionInModule) {
+    functionInModule(req, res);
   } else {
     send404(res);
   }
