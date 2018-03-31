@@ -1,7 +1,7 @@
-const express = require("express");
+const express = require('express');
 const app = express();
 
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 
 app.use(
   bodyParser.urlencoded({
@@ -12,36 +12,39 @@ app.use(
 app.use(bodyParser.json());
 
 
-const busModule = require("./bus");
+const busModule = require('./bus');
 
 const modules = {
-    "BUS": busModule
+  'BUS': busModule
 };
 
-function send404(res) {
-    res.status(404);
-    res.send("Page not found");
-}
+const send404 = (res) => {
+  res.status(404);
+  res.send('Page not found');
+};
 
-app.post("/", function(req, res) {
-    const action = req.body.queryResult.action;
+app.post('/', (req, res) => {
+  const action = req.body.queryResult.action;
 
-    if (action.length < 4) {
-        send404(res)
+  if (action.length < 4) {
+    send404(res);
+  } else {
+    const module = action.substring(0, 3);
+    const func = action.substring(3);
+
+    if (modules[module] && modules[module][func]) {
+      modules[module][func](req, res);
     } else {
-        const module = action.substring(0, 3);
-        const func = action.substring(3);
-
-        if (modules[module] && modules[module][func]) {
-            modules[module][func](req, res)
-        } else {
-            send404(res)
-        }
+      send404(res);
     }
+  }
+});
 
+app.get('/', (req, res) => {
+  console.log('hello');
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port, function() {
-  console.log("Server up and listening at " + port + "!");
+app.listen(port, () => {
+  console.log('Server up and listening at ' + port + '!');
 });
