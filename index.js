@@ -52,6 +52,7 @@ app.post("/bus", function(req, res) {
 
 });
 
-app.listen(3000, function() {
-  console.log("Server up and listening!");
+var port = process.env.PORT || 3000
+app.listen(port, function() {
+  console.log("Server up and listening at " + port + "!");
 });
