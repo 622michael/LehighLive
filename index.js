@@ -41,30 +41,12 @@ function getBusData(callback) {
 }
 
 app.post("/bus", function(req, res) {
-
-	var data = getBusData(function(busdata, error) {
+	getBusData(function(busdata, error) {
         var speech = busdata["1"]["stops"]["0"]
-
-        // res.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type 
-        // res.send(JSON.stringify({ 
-        //     "fulfillment_text": speech,
-        //     // "fulfillment_messages": [
-        //     //     {
-        //     //         "text": [speech]
-        //     //     }
-        //     // ]
-            
-        // }));
         res.json({
             fulfillment_text: speech
         })
-		// res.json({
-		// 	speech: speech,
-		// 	displayText: speech,
-		// 	source: "lehighlive"
-		// })
-	})
-
+	});
 });
 
 var port = process.env.PORT || 3000
