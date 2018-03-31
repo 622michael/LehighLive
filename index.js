@@ -45,35 +45,19 @@ app.post("/bus", function(req, res) {
 	var data = getBusData(function(busdata, error) {
         var speech = busdata["1"]["stops"]["0"]
 
-        res.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type 
-        res.send(JSON.stringify({ 
-            // "displayText": speech,
-            // 'google': {
-            //     'expectUserResponse': false,
-            //     'isInSandbox': true,
-            //     'finalResponse': {
-            //         'richResponse': {
-            //             'items': [
-            //                 {
-            //                     'simpleResponse': {
-            //                     "textToSpeech": speech,
-            //                     "displayText": speech,
-            //                     "ssml": "<speak>" + speech + "</speak>"
-            //                     }
-            //                 }
-            //             ]
-            //         }
-            //     }
-            // },
-            // "speech": speech
-            "fulfillment_text": speech,
-            // "fulfillment_messages": [
-            //     {
-            //         "text": [speech]
-            //     }
-            // ]
+        // res.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type 
+        // res.send(JSON.stringify({ 
+        //     "fulfillment_text": speech,
+        //     // "fulfillment_messages": [
+        //     //     {
+        //     //         "text": [speech]
+        //     //     }
+        //     // ]
             
-        }));
+        // }));
+        res.json({
+            fulfillment_text: speech
+        })
 		// res.json({
 		// 	speech: speech,
 		// 	displayText: speech,
