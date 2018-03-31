@@ -1,14 +1,12 @@
 const request = require('request');
 
-const routeIdToKey = {
-  "MT": 1,
-  "Mountaintop": 1,
-  "SV": 2,
-  "Saucon Village": 2,
-  "TR": 3,
-  "T.R.A.C.S.": 3,
-  "AT": 4,
-  "Athletics": 4
+const routeToKey = {
+  "Mountaintop Express": '1',
+  "Saucon Village": '2',
+  "T.R.A.C.S.": '3',
+  "Athletics": '4',
+  "Packer Express": '10',
+  "Campus Connector": '11'
 };
 
 const getBusData = (callback) => {

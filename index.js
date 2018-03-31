@@ -11,7 +11,6 @@ app.use(
 
 app.use(bodyParser.json());
 
-
 const busModule = require('./bus');
 
 const modules = {
