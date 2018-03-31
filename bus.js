@@ -44,6 +44,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   },
   'Test': (req, res) => {
     getBusData((busdata, error) => {
+      console.log(req);
       const speech = busdata['1']['stops']['0'];
       res.json({
         fulfillment_text: speech
