@@ -47,8 +47,25 @@ app.post("/bus", function(req, res) {
 
         res.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type 
         res.send(JSON.stringify({ 
-            "speech": speech, 
-            "displayText": speech 
+            'google': {
+                'expectUserResponse': false,
+                'isInSandbox': true,
+                'finalResponse': {
+                    'richResponse': {
+                        'items': [
+                            {
+                                'simpleResponse': {
+                                "textToSpeech": speech,
+                                "displayText": speech,
+                                "ssml": "<speak>" + speech + "</speak>"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "speech": speech,
+            "displayText": speech
         }));
 		// res.json({
 		// 	speech: speech,
