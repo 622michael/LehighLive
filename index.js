@@ -45,7 +45,7 @@ app.post('/', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  console.log('hello');
+  res.send("hello awesome peeps");
 });
 app.get('/rmp',(req, res) => {
     var request = require("request");
