@@ -13,18 +13,6 @@ app.use(
 app.use(bodyParser.json());
 
 
-
-
-function output(req, res) {
-
-
-}
-
-function departFrom(req, res) {
-
-
-}
-
 var busModule = require("./bus")
 
 var modules = {
