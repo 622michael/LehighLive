@@ -67,11 +67,11 @@ app.post("/bus", function(req, res) {
             // },
             // "speech": speech
             "fulfillment_text": speech,
-            "fulfillment_messages": [
-                {
-                    "text": speech
-                }
-            ]
+            // "fulfillment_messages": [
+            //     {
+            //         "text": [speech]
+            //     }
+            // ]
             
         }));
 		// res.json({
