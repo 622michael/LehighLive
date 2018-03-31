@@ -26,17 +26,21 @@ const send404 = (res) => {
 app.post('/', (req, res) => {
   const action = (req.body.queryResult || {}).action;
 
-  if (!action || action.length < 4) {
+  const MODULE_NAME_LENGTH_FROM_ACTION = 3;
+  const actionInvalid = !action || action.length <= MODULE_NAME_LENGTH_FROM_ACTION;
+  if (actionInvalid) {
     send404(res);
+    return;
+  }
+  const moduleName = action.substring(0, MODULE_NAME_LENGTH_FROM_ACTION);
+  const functionName = action.substring(MODULE_NAME_LENGTH_FROM_ACTION);
+  
+  const module = modules[moduleName];
+  const functionWithinModule = module[functionName];
+  if (module && functionWithinModule) {
+    functionWithinModule(req, res);
   } else {
-    const module = action.substring(0, 3);
-    const func = action.substring(3);
-
-    if (modules[module] && modules[module][func]) {
-      modules[module][func](req, res);
-    } else {
-      send404(res);
-    }
+    send404(res);
   }
 });
 
@@ -44,7 +48,7 @@ app.get('/', (req, res) => {
   console.log('hello');
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log('Server up and listening at ' + port + '!');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log('Server up and listening at ' + PORT + '!');
 });
