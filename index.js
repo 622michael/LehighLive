@@ -47,25 +47,31 @@ app.post("/bus", function(req, res) {
 
         res.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type 
         res.send(JSON.stringify({ 
-            "displayText": speech,
-            'google': {
-                'expectUserResponse': false,
-                'isInSandbox': true,
-                'finalResponse': {
-                    'richResponse': {
-                        'items': [
-                            {
-                                'simpleResponse': {
-                                "textToSpeech": speech,
-                                "displayText": speech,
-                                "ssml": "<speak>" + speech + "</speak>"
-                                }
-                            }
-                        ]
-                    }
+            // "displayText": speech,
+            // 'google': {
+            //     'expectUserResponse': false,
+            //     'isInSandbox': true,
+            //     'finalResponse': {
+            //         'richResponse': {
+            //             'items': [
+            //                 {
+            //                     'simpleResponse': {
+            //                     "textToSpeech": speech,
+            //                     "displayText": speech,
+            //                     "ssml": "<speak>" + speech + "</speak>"
+            //                     }
+            //                 }
+            //             ]
+            //         }
+            //     }
+            // },
+            // "speech": speech
+            "fulfillment_text": speech,
+            "fulfillment_messages": [
+                {
+                    "text": speech
                 }
-            },
-            "speech": speech
+            ]
             
         }));
 		// res.json({
