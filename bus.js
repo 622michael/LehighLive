@@ -49,6 +49,9 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             let busCode = routeToKey[busName];
             console.log(busName);
             console.log(busCode);
+            for (var i = 0; i <= busdata.length; i++) {
+                console.log(busdata[i]['name']);
+            }
             const speech = busdata[1]['stops']['0'];
             //TODO Decide what bus data to provide based on what the user asks for, the busCode variable doesn't correspond
             //TODO to the index in busData
