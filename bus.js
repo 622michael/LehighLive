@@ -45,10 +45,12 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   'Test': (req, res) => {
     getBusData((busdata, error) => {
       console.dir(req);
-        let requestParamaters = req.body.queryResult.parameters.bus;
-        console.log(requestParamaters);
+        let busName = req.body.queryResult.parameters.bus;
+        let busCode = routeToKey[busName];
+        console.log(busName);
       const speech = busdata['1']['stops']['0'];
-      console.log("The " + requestParamaters + " " + speech);
+      console.log("Bus Code: " + busCode);
+      console.log("The " + busName + " " + speech);
 
         res.json({
         fulfillment_text: speech
