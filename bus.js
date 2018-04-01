@@ -48,6 +48,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         let busName = req.body.queryResult.parameters.bus;
         let busCode = routeToKey[busName];
         console.log(busName);
+        console.log(busCode);
       const speech = busdata[busCode]['stops']['0'];
       console.log("Bus Code: " + busCode);
       console.log("The " + busName + " " + speech);
