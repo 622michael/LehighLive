@@ -49,7 +49,14 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         let busCode = routeToKey[busName];
         console.log(busName);
         console.log(busCode);
-      const speech = busdata[busCode]['stops']['0'];
+        busdata.forEach(function (item) {
+          if(item.name == busName){
+            console.log("If ststement reached");
+            console.log(item['stops']['0']);
+          }
+
+        })
+      const speech = busdata[1]['stops']['0'];
       console.log("Bus Code: " + busCode);
       console.log("The " + busName + " " + speech);
 
