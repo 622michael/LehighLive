@@ -25,7 +25,7 @@ const send404 = (res) => {
 
 app.post('/', (req, res) => {
     const action = (req.body.queryResult || {}).action;
-
+    console.log("action: "  + action);
     const MODULE_NAME_LENGTH_FROM_ACTION = 3;
     const actionInvalid = !action || action.length <= MODULE_NAME_LENGTH_FROM_ACTION;
     if (actionInvalid) {
@@ -33,7 +33,10 @@ app.post('/', (req, res) => {
         return;
     }
     const moduleName = action.substring(0, MODULE_NAME_LENGTH_FROM_ACTION).toUpperCase();
+    console.log("moduleName: "  + moduleName);
     const functionName = action.substring(MODULE_NAME_LENGTH_FROM_ACTION);
+    console.log("functionName: "  + functionName);
+
     const module = modules[moduleName];
     const functionInModule = module[functionName];
     if (module && functionInModule) {
