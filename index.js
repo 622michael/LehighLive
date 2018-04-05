@@ -4,9 +4,9 @@ const app = express();
 const bodyParser = require('body-parser');
 
 app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
+    bodyParser.urlencoded({
+        extended: true
+    })
 );
 
 app.use(bodyParser.json());
@@ -14,41 +14,41 @@ app.use(bodyParser.json());
 const busModule = require('./bus');
 const proModule = require('./professor');
 const modules = {
-  'BUS': busModule
+    'BUS': busModule,
+    'PRO': proModule
 };
 
 const send404 = (res) => {
-  res.status(404);
-  res.send('Page not found');
+    res.status(404);
+    res.send('Page not found');
 };
 
 app.post('/', (req, res) => {
-  const action = (req.body.queryResult || {}).action;
+    const action = (req.body.queryResult || {}).action;
 
-  const MODULE_NAME_LENGTH_FROM_ACTION = 3;
-  const actionInvalid = !action || action.length <= MODULE_NAME_LENGTH_FROM_ACTION;
-  if (actionInvalid) {
-    send404(res);
-    return;
-  }
-  const moduleName = action.substring(0, MODULE_NAME_LENGTH_FROM_ACTION).toUpperCase();
-  const functionName = action.substring(MODULE_NAME_LENGTH_FROM_ACTION);
-
-  const module = modules[moduleName];
-  const functionInModule = module[functionName];
-  if (module && functionInModule) {
-    functionInModule(req, res);
-  } else {
-    send404(res);
-  }
+    const MODULE_NAME_LENGTH_FROM_ACTION = 3;
+    const actionInvalid = !action || action.length <= MODULE_NAME_LENGTH_FROM_ACTION;
+    if (actionInvalid) {
+        send404(res);
+        return;
+    }
+    const moduleName = action.substring(0, MODULE_NAME_LENGTH_FROM_ACTION).toUpperCase();
+    const functionName = action.substring(MODULE_NAME_LENGTH_FROM_ACTION);
+    const module = modules[moduleName];
+    const functionInModule = module[functionName];
+    if (module && functionInModule) {
+        functionInModule(req, res);
+    } else {
+        send404(res);
+    }
 });
 
 app.get('/', (req, res) => {
-  res.send('hello awesome peeps');
+    res.send('hello awesome peeps');
 });
 
 app.get('/rmp', (req, res) => {
-  const request = require('request');
+    const request = require('request');
 
     var headers1 = {
         'Accept-Encoding': 'gzip, deflate',
@@ -74,29 +74,29 @@ app.get('/rmp', (req, res) => {
             console.log("Rating" + parsed[0]['rating']);
         }
     }
- 
+
     request(options1, callback);
 
     const options = {
-    method: 'GET',
-    url: 'http://www.ratemyprofessors.com/paginate/professors/ratings',
-    qs: {tid: '2076881', page: '0', max: '3', cache: 'false'},
-    headers:
-      {
-        'Cache-Control': 'no-cache'
-      }
-  };
-  request(options, (error, response, body) => {
-    if (error) {
-      throw new Error(error);
-    }
-    var parsed = JSON.parse(body);
-    console.log(parsed);
-    // console.log(body);
-      let comment = parsed.ratings[0].rComments;
-      console.log(comment);
-    res.send(comment);
-  });
+        method: 'GET',
+        url: 'http://www.ratemyprofessors.com/paginate/professors/ratings',
+        qs: {tid: '2076881', page: '0', max: '3', cache: 'false'},
+        headers:
+            {
+                'Cache-Control': 'no-cache'
+            }
+    };
+    request(options, (error, response, body) => {
+        if (error) {
+            throw new Error(error);
+        }
+        var parsed = JSON.parse(body);
+        console.log(parsed);
+        // console.log(body);
+        let comment = parsed.ratings[0].rComments;
+        console.log(comment);
+        res.send(comment);
+    });
 });
 
 app.get('/din', (req, res) => {
@@ -105,5 +105,5 @@ app.get('/din', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log('Server up and listening at ' + PORT + '!');
+    console.log('Server up and listening at ' + PORT + '!');
 });
