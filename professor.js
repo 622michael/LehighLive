@@ -49,12 +49,13 @@ const RMP_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             let comment = parsed.ratings[0].rComments;
             console.log(comment);
             res.send(comment);
-        });
 
 
         res.json({
-            fulfillment_text: 'The professor request was successful!'
+            fulfillment_text: comment
         });
+        });
+
     }
 };
 module.exports = RMP_FUNCTION_ACTION_NAME_TO_FUNCTION;
