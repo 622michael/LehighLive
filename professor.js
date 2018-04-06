@@ -1,5 +1,5 @@
 const RMP_FUNCTION_ACTION_NAME_TO_FUNCTION = {
-    'Professor': (req, res) => {
+    'Test': (req, res) => {
         console.log('Professor method reached');
 
 
