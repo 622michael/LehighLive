@@ -5,7 +5,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
         var options = {
             method: 'GET',
-            url: 'https://clients6.google.com/calendar/v3/calendars/indark@lehigh.edu/events',
+            url: 'https://cors-anywhere.herokuapp.com/https://clients6.google.com/calendar/v3/calendars/indark@lehigh.edu/events',
             qs:
                 {
                     calendarId: 'indark%40lehigh.edu',
@@ -21,7 +21,9 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             headers:
                 {
                     'Postman-Token': '3821c48d-2936-464a-a196-e00d9e7b0462',
-                    'Cache-Control': 'no-cache'
+                    'Cache-Control': 'no-cache',
+                    'Origin':''
+
                 }
         };
 
