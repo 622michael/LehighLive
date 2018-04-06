@@ -4,7 +4,7 @@
   "description": "A backend to connect Google Assistant with the Lehigh Live app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/mocha/bin/mocha",
     "start": "node index.js"
   },
   "author": "",

@@ -1,4 +1,6 @@
 const busModule = require('./bus');
-describe("Bus Test", function() {
-    console.log("This test should automatically pass");
-});
+
+it("test", (done) => {
+	console.log("This test should automatically pass");
+    done()
+})
