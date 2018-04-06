@@ -22,7 +22,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 {
                     'Postman-Token': 'eb2bd4a0-d9d7-4c74-8b17-c953a8673a99',
                     'Cache-Control': 'no-cache',
-                    Origin: ''
+                    'Origin': ''
                 }
         };
 
