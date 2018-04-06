@@ -17,7 +17,7 @@ const evtModule = require('./evt');
 const modules = {
     'BUS': busModule,
     'PRO': proModule,
-    'EVT' : evtModule
+    'EVT': evtModule
 };
 
 const send404 = (res) => {
