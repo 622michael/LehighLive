@@ -25,7 +25,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                     'Origin': ''
                 }
         };
-
+        console.log(options);
         request(options, function (error, response, body) {
             if (error) throw new Error(error);
 
