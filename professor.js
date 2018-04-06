@@ -2,6 +2,7 @@ const RMP_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'Test': (req, res) => {
         console.log('Professor method reached');
         const request = require('request');
+        const bodyParser = require('body-parser');
 
         var headers1 = {
             'Accept-Encoding': 'gzip, deflate',
@@ -48,8 +49,6 @@ const RMP_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 // console.log(body);
             let comment = parsed.ratings[0].rComments;
             console.log(comment);
-            res.send(comment);
-
 
         res.json({
             fulfillment_text: comment
