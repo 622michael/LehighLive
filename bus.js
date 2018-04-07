@@ -13,6 +13,8 @@ const routeToKey = {
 const BusDataURL = "http://bus.lehigh.edu/scripts/busdata.php?format=json"
 const TimeTableURL = "http://buses.lehigh.edu/scripts/routestoptimes.php?format=json"
 
+const DialogflowApp = require('actions-on-google').DialogflowApp;
+
 const makeCORRequest = (url, callback) => {
     var options = {
         method: 'GET',
@@ -54,13 +56,13 @@ const getBusData = (callback) => {
 
 const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'Location': (req, res) => {
-        res.json({
-            speech: "Can I access your location?",
-            displayText: "Can I access your location?",
-            data: {
-                permissions: ["DEVICE_PRECISE_LOCATION"]
-            }
-        })
+        const app = new DialogflowApp({req, res});
+        if (!app.isPermissionGranted()) {
+            app.tell("You have granted permission");
+
+        } else {
+            app.askForPermission('To locate you', app.SupportedPermissions.DEVICE_PRECISE_LOCATION);
+        }
     },
     'Test': (req, res) => {
         getBusData((busdata, error) => {
