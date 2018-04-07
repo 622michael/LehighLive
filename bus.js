@@ -4,10 +4,25 @@ const routeToKey = {
     "Mountaintop Express": '1',
     "Saucon Village": '2',
     "T.R.A.C.S.": '3',
+    "TRACS": '3',
     "Athletics": '4',
     "Packer Express": '10',
     "Campus Connector": '11'
 };
+
+const BusDataURL = "http://bus.lehigh.edu/scripts/busdata.php?format=json"
+const TimeTableURL = "http://buses.lehigh.edu/scripts/routestoptimes.php?format=json"
+
+const makeCORRequest = (url, callback) => {
+    var options = {
+        method: 'GET',
+        url: 'https://cors-anywhere.herokuapp.com/' + url,
+        qs: {format: 'json'}
+    };
+    request(options, function (error, response, body) {
+        callback(error, response, body);
+    });
+}
 
 const getBusData = (callback) => {
     // The busdata request may respond with a blank JSON if no buses are running
@@ -36,11 +51,16 @@ const getBusData = (callback) => {
     // });
 };
 
+
 const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'Location': (req, res) => {
         res.json({
-            fulfillment_text: 'The location request was successful!'
-        });
+            speech: "Can I access your location?",
+            displayText: "Can I access your location?",
+            data: {
+                permissions: ["DEVICE_PRECISE_LOCATION"]
+            }
+        })
     },
     'Test': (req, res) => {
         getBusData((busdata, error) => {
