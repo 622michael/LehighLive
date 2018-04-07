@@ -56,10 +56,10 @@ const getBusData = (callback) => {
 
 const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'Location': (req, res) => {
+        console.log(req.body)
         const app = new DialogflowApp({req, res});
-        if (!app.isPermissionGranted()) {
+        if (app.isPermissionGranted()) {
             app.tell("You have granted permission");
-
         } else {
             app.askForPermission('To locate you', app.SupportedPermissions.DEVICE_PRECISE_LOCATION);
         }
