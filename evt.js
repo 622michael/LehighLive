@@ -15,18 +15,25 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             if (res.error) throw new Error(res.error);
             console.log(res.body);
             var events = new Array();
+            var threeDay = new Array();
             console.log(moment(Date.now()));
             threeDaysFromNow = moment(Date.now()).add(4,'d');
+            aWeekFromNow = moment(Date.now()).add(7,'d');
             for (var i =0; i < res.body.items.length;i++){
                 var dateTime = res.body.items[i].start.dateTime;
                 console.log('moment : ' + moment(dateTime).fromNow() + " " + moment(dateTime).isAfter(Date.now()) + " " + moment(dateTime).isBefore(threeDaysFromNow));
                 if(moment(dateTime).isAfter(Date.now())) {
                     events[i] = {"dateTime": dateTime};
+                    if (moment(dateTime).isBefore(threeDaysFromNow)) {
+                        threeDay[i] = {"dateTime": dateTime};
+                    }
 
                 }
             }
             console.log("EVENTS ARRAY");
             console.log(events);
+            console.log("3 DAY ARRAY");
+            console.log(threeDay);
         });
 
         res.json({
