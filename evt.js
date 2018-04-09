@@ -26,7 +26,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 if(moment(dateTime).isAfter(Date.now())) {
                     events[i] = {"dateTime": dateTime};
                     if (moment(dateTime).isBefore(threeDaysFromNow)) {
-                        let eventTimeFromNow = dateTime.fromNow();
+                        let eventTimeFromNow = moment(dateTime).fromNow();
                         threeDay[i] = {"dateTime": eventTimeFromNow, "event":eventName};
                     }
 
