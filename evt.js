@@ -9,13 +9,12 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         req.headers({
             "Cache-Control": "no-cache"
         });
-
+        var threeDay = new Array();
         req.end(function (res) {
             var moment = require("moment");
             if (res.error) throw new Error(res.error);
             console.log(res.body);
             var events = new Array();
-            var threeDay = new Array();
             console.log(moment(Date.now()));
             threeDaysFromNow = moment(Date.now()).add(4,'d');
             aWeekFromNow = moment(Date.now()).add(7,'d');
