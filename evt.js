@@ -37,6 +37,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             console.log("EVENTS ARRAY");
             console.log(events);
             console.log("3 DAY ARRAY");
+            threeDay =  threeDay.filter(arr => arr);
             console.log(threeDay);
         });
 
