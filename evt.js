@@ -42,7 +42,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         });
 
         res.json({
-            fulfillment_text: 'The calendar request was successful!'
+            fulfillment_text: threeDay
         });
     },
 };
