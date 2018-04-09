@@ -26,6 +26,13 @@ const makeCORRequest = (url, callback) => {
     });
 }
 
+const getTiemTable = (callback) => {
+    const testBody = require('./testdata/timetable');
+    callback(null, null, testBody);
+
+    // makeCORRequest(TimeTableURL, callback);
+}
+
 const getBusData = (callback) => {
     // The busdata request may respond with a blank JSON if no buses are running
     // For testing, we can use the testdata
@@ -63,6 +70,49 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         } else {
             app.askForPermission('To locate you', app.SupportedPermissions.DEVICE_PRECISE_LOCATION);
         }
+    },
+    'Desitination': (req, res) => {
+        const bus = req.body.queryResult.parameters.bus;
+        const dest = req.body.queryResult.parameters.destination;
+
+        getTiemTable(function(error, response, timeTable) {
+            if (error != null) {
+                res.json({
+                    fulfillment_text: "I'm having trouble getting the bus routes at the moment. Please try again later."
+                })
+            } else {
+                const stops = timeTable[routeToKey[bus]]
+                var found = false
+                for  (var stop in stops) {
+                    const stopInfo = stops[stop]
+                    if (stopInfo.name == dest) {
+                        found = true
+
+                        if (stopInfo.arrival == "Arriving Soon") {
+                            res.json({
+                                fulfillment_text: bus + " will be arriving soon."
+                            })
+                        } else if (stopInfo.arrival == "Just Departed") {
+                            // We should find the next one
+
+                            res.json({
+                                fulfillment_text: bus + " just left " + dest
+                            })
+                        } else {
+                            res.json({
+                                fulfillment_text: bus + " arrives at " + stopInfo.arrival
+                            })
+                        }
+                    }
+                }
+
+                if (!found) {
+                    res.json({
+                        fulfillment_text: bus + " does not stop at " + dest
+                    })
+                }
+            }
+        })
     },
     'Test': (req, res) => {
         getBusData((busdata, error) => {
