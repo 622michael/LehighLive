@@ -27,7 +27,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                     if (moment(dateTime).isBefore(threeDaysFromNow)) {
                         let eventMoment = moment(dateTime);
                         let eventTimeFromNow = eventMoment.fromNow();
-                        let eventString = eventName + " " + eventTimeFromNow + ", on " + eventMoment.format("dddd, MMMM Do");
+                        let eventString = eventName + "on " + eventMoment.format("dddd, MMMM Do");
                         threeDay[i] = eventString;
                     }
 
@@ -43,7 +43,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             fulfillment_text: threeDay
         });
 
-        
+
     },
 };
 
