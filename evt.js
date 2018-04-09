@@ -15,6 +15,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             if (res.error) throw new Error(res.error);
             console.log(res.body);
             var events = new Array();
+            console.log(moment(Date.now()));
             for (var i =0; i < res.body.items.length;i++){
                 var dateTime = res.body.items[i].start.dateTime;
                 console.log('moment : ' + moment(dateTime).fromNow() + " " + moment(dateTime).isAfter(Date.now()));
