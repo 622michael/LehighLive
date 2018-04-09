@@ -29,6 +29,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                         let eventTimeFromNow = eventMoment.fromNow();
                         let eventString = eventName + "on " + eventMoment.format("dddd, MMMM Do");
                         threeDay[i] = eventString;
+                        
                     }
 
                 }
