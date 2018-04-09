@@ -12,11 +12,14 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         req.end(function (res) {
             if (res.error) throw new Error(res.error);
             console.log(res.body);
+            var events = new Array();
             for (var i =0; i < res.body.items.length;i++){
                 var dateTime = res.body.items[i].start.dateTime;
                 console.log('DATETIME: ' + dateTime);
+                events[i] = {"dateTime" : dateTime};
             }
-
+            console.log("EVENTS ARRAY");
+            console.log(events);
         });
 
         res.json({
