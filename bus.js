@@ -110,6 +110,9 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                     case "At Stop":
                         fullfillment = bus + " is at " + dest
                         break;
+                    case "-":
+                        fullfillment = bus + " is not running"
+                        break;
                     default:
                         fullfillment = bus + " arrives at " + arrival
                         break;
