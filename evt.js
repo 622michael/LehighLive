@@ -15,7 +15,7 @@ function processEvents(result, threeDay) {
             if (moment(dateTime).isBefore(threeDaysFromNow)) {
                 let eventMoment = moment(dateTime);
                 let eventTimeFromNow = eventMoment.fromNow();
-                let eventString = eventName + " " + eventTimeFromNow + ", on " + eventMoment.format("dddd, MMMM Do");
+                let eventString = eventName + ", on " + eventMoment.format("dddd, MMMM Do");
                 threeDay[i] = eventString;
             }
 
