@@ -31,7 +31,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             if (!error && response.statusCode == 200) {
                 console.log(body);
                 console.log(error);
-                console.log(response.toString());
+                console.dir(response);
             }
         }
 
