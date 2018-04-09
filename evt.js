@@ -30,6 +30,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         function callback(error, response, body) {
             if (!error && response.statusCode == 200) {
                 console.log(body);
+                console.log(error);
+                console.log(response);
             }
         }
 
