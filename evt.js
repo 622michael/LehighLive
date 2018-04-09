@@ -12,8 +12,11 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         req.end(function (res) {
             if (res.error) throw new Error(res.error);
             console.log(res.body);
-            var dateTime = res.body.items[0].start.dateTime;
-            console.log('DATETIME: ' + dateTime);
+            for (var i =0; i < res.body.items.length;i++){
+                var dateTime = res.body.items[i].start.dateTime;
+                console.log('DATETIME: ' + dateTime);
+            }
+
         });
 
         res.json({
