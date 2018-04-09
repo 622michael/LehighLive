@@ -10,6 +10,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         });
 
         req.end(function (res) {
+            require("moment");
             if (res.error) throw new Error(res.error);
             console.log(res.body);
             var events = new Array();
