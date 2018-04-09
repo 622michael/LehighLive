@@ -18,19 +18,22 @@ const DialogflowApp = require('actions-on-google').DialogflowApp;
 const makeCORRequest = (url, callback) => {
     var options = {
         method: 'GET',
-        url: 'https://cors-anywhere.herokuapp.com/' + url,
-        qs: {format: 'json'}
+        url: url,
+        qs: {format: 'json'},
+        headers: {"origin": "Android", "User-Agent": "Android"}
     };
     request(options, function (error, response, body) {
         callback(error, response, body);
     });
 }
 
-const getTiemTable = (callback) => {
-    const testBody = require('./testdata/timetable');
-    callback(null, null, testBody);
+const getTimeTable = (callback) => {
+    // const testBody = require('./testdata/timetable');
+    // callback(null, null, testBody);
 
-    // makeCORRequest(TimeTableURL, callback);
+    makeCORRequest(TimeTableURL, function(error, response, body) {
+        callback(error, response, JSON.parse(body))
+    });
 }
 
 const getBusData = (callback) => {
@@ -60,10 +63,22 @@ const getBusData = (callback) => {
     // });
 };
 
+function getArrival(timeTable, bus, dest) {
+    const stops = timeTable[routeToKey[bus]]["stops"]
+
+    for (var stop in stops) {
+        const stopInfo = stops[stop]
+        if (stopInfo.name == dest) {
+            return stopInfo.arrival
+        }
+    }
+
+    return false
+}
+
 
 const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'Location': (req, res) => {
-        console.log(req.body)
         const app = new DialogflowApp({req, res});
         if (app.isPermissionGranted()) {
             app.tell("You have granted permission");
@@ -71,47 +86,39 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             app.askForPermission('To locate you', app.SupportedPermissions.DEVICE_PRECISE_LOCATION);
         }
     },
-    'Desitination': (req, res) => {
+    'Destination': (req, res) => {
         const bus = req.body.queryResult.parameters.bus;
         const dest = req.body.queryResult.parameters.destination;
 
-        getTiemTable(function(error, response, timeTable) {
+        getTimeTable(function(error, response, timeTable) {
+            var fullfillment = null
             if (error != null) {
-                res.json({
-                    fulfillment_text: "I'm having trouble getting the bus routes at the moment. Please try again later."
-                })
-            } else {
-                const stops = timeTable[routeToKey[bus]]
-                var found = false
-                for  (var stop in stops) {
-                    const stopInfo = stops[stop]
-                    if (stopInfo.name == dest) {
-                        found = true
-
-                        if (stopInfo.arrival == "Arriving Soon") {
-                            res.json({
-                                fulfillment_text: bus + " will be arriving soon."
-                            })
-                        } else if (stopInfo.arrival == "Just Departed") {
-                            // We should find the next one
-
-                            res.json({
-                                fulfillment_text: bus + " just left " + dest
-                            })
-                        } else {
-                            res.json({
-                                fulfillment_text: bus + " arrives at " + stopInfo.arrival
-                            })
-                        }
-                    }
-                }
-
-                if (!found) {
-                    res.json({
-                        fulfillment_text: bus + " does not stop at " + dest
-                    })
+                fullfillment = "I'm having trouble getting the bus routes at the moment. Please try again later."
+            } 
+            else {
+                const arrival = getArrival(timeTable, bus, dest)
+                switch(arrival) {
+                    case false:
+                        fullfillment = bus + " does not stop at " + dest
+                        break;
+                    case "Arriving Soon":
+                        fullfillment = bus + " will be arriving soon."
+                        break;
+                    case "Just Departed":
+                        fullfillment = bus + " just left " + dest
+                        break;
+                    case "At Stop":
+                        fullfillment = bus + " is at " + dest
+                        break;
+                    default:
+                        fullfillment = bus + " arrives at " + arrival
+                        break;
                 }
             }
+
+            res.json({
+                fulfillment_text: fullfillment
+            })
         })
     },
     'Test': (req, res) => {
