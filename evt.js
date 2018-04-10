@@ -38,11 +38,12 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             console.log("3 DAY ARRAY");
             threeDay =  threeDay.filter(arr => arr);
             console.log(threeDay);
-            res.json({
-                fulfillment_text: threeDay
-            });
-        });
 
+        });
+        res.json({
+            fulfillment_text: "wtf"
+        });
+        console.log("Does this reach")
 
 
     },
