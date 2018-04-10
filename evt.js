@@ -3,7 +3,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'today': (req, res) => {
         console.log("Event Today reached");
         var unirest = require("unirest");
-        var threeDay;
+        let threeDay = ["why","the fuck", "does this not work"];
         var req = unirest("GET", "https://clients6.google.com/calendar/v3/calendars/indark@lehigh.edu/events?calendarId=indark%40lehigh.edu&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-06T00%3A00%3A00-04%3A00&timeMax=2018-05-15T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs");
 
         req.headers({
@@ -14,7 +14,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             if (result.error) throw new Error(result.error);
             console.log(result.body);
             var events = new Array();
-            threeDay = new Array();
+            threeDay = [];
             console.log(moment(Date.now()));
             threeDaysFromNow = moment(Date.now()).add(4,'d');
             aWeekFromNow = moment(Date.now()).add(7,'d');
@@ -28,7 +28,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                         let eventMoment = moment(dateTime);
                         let eventTimeFromNow = eventMoment.fromNow();
                         let eventString = eventName + " on " + eventMoment.format("dddd, MMMM Do");
-                        threeDay[i] = eventString;
+                        threeDay.push(eventString);
                     }
 
                 }
@@ -40,8 +40,9 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             console.log(threeDay);
 
         });
+        let text = threeDay.join(', ');
         res.json({
-            fulfillment_text: "wtf"
+            fulfillment_text: text
         });
         console.log("Does this reach")
 
