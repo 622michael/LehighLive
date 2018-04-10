@@ -38,12 +38,12 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             console.log("3 DAY ARRAY");
             threeDay =  threeDay.filter(arr => arr);
             console.log(threeDay);
+            let text = threeDay.join(', ');
+            res.json({
+                fulfillment_text: text
+            });
+        });
 
-        });
-        let text = threeDay.join(', ');
-        res.json({
-            fulfillment_text: text
-        });
         console.log("Does this reach")
 
 
