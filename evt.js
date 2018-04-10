@@ -27,7 +27,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                     if (moment(dateTime).isBefore(threeDaysFromNow)) {
                         let eventMoment = moment(dateTime);
                         let eventTimeFromNow = eventMoment.fromNow();
-                        let eventString = eventName + "on " + eventMoment.format("dddd, MMMM Do");
+                        let eventString = eventName + " on " + eventMoment.format("dddd, MMMM Do");
                         threeDay[i] = eventString;
                     }
 
@@ -38,10 +38,11 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             console.log("3 DAY ARRAY");
             threeDay =  threeDay.filter(arr => arr);
             console.log(threeDay);
+            res.json({
+                fulfillment_text: threeDay
+            });
         });
-        res.json({
-            fulfillment_text: threeDay
-        });
+
 
 
     },
