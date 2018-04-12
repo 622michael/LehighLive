@@ -43,25 +43,40 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
     'sports': (req, res) => {
         console.log("Sports reached");
-        var request = require("request");
+        // var request = require("request");
+        //
+        // var options = { method: 'GET',
+        //     url: 'https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs',
+        //
+        //     headers:
+        //         { 'Postman-Token': 'd42a0f1d-b3ae-4f3a-847e-2879508c1ef9',
+        //             'Cache-Control': 'no-cache' } };
+        //
+        // request(options, function (error, response, body) {
+        //     if (error) throw new Error(error);
+        //
+        //     console.log(body);
+        //     // let itemList = JSON.parse(body.items);
+        //     // var eventnames = new Array();
+        //     // let names = itemList.map (event => {
+        //     //     eventnames.push(event);
+        //     // })
+        //     // console.log(names);
+        // });
+        var unirest = require("unirest");
 
-        var options = { method: 'GET',
-            url: 'https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs',
+        var req = unirest("GET", "https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs");
 
-            headers:
-                { 'Postman-Token': 'd42a0f1d-b3ae-4f3a-847e-2879508c1ef9',
-                    'Cache-Control': 'no-cache' } };
+        req.headers({
+            "Postman-Token": "3c269766-2b96-474a-a246-f6da16cd16f0",
+            "Cache-Control": "no-cache"
+        });
 
-        request(options, function (error, response, body) {
-            if (error) throw new Error(error);
 
-            console.log(body);
-            // let itemList = JSON.parse(body.items);
-            // var eventnames = new Array();
-            // let names = itemList.map (event => {
-            //     eventnames.push(event);
-            // })
-            // console.log(names);
+        req.end(function (res) {
+            if (res.error) throw new Error(res.error);
+
+            console.log(res.body);
         });
 
         res.json({
