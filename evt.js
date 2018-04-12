@@ -115,6 +115,7 @@ function handleRequest(menudate, meal) {
     unirest.get("http://mc.lehigh.edu/services/dining/resident/Rathbone/Week_14_Rathbone.xml").end( (function (res) {
         if (res.error) throw new Error(res.error);
         console.log(res.body);
+        fs.writeFile('/food.xml',res.body,null,null);
         var weeklyMenus = JSON.parse(res.body).VFPData.weeklymenu;
         var station = "";
         for (i in weeklyMenus) {
