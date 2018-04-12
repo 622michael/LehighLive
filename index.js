@@ -14,10 +14,13 @@ app.use(bodyParser.json());
 const busModule = require('./bus');
 const proModule = require('./professor');
 const evtModule = require('./evt');
+const dinModule = require('./din');
 const modules = {
     'BUS': busModule,
     'PRO': proModule,
-    'EVT': evtModule
+    'EVT': evtModule,
+    'DIN': dinModule
+
 };
 
 const send404 = (res) => {
