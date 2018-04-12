@@ -13,11 +13,10 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         request(options, function (error, response, body) {
             if (error) throw new Error(error);
             // console.log(body);
-            let jsonBody = body.substr(10);
-            console.log(jsonBody);
-
+            body = body.substr(10);
+            console.log(body);
+            console.log()
             console.log(req.body.queryResult.parameters.Dining);
-
         res.json({
             fulfillment_text: body
         })

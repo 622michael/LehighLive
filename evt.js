@@ -12,13 +12,13 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             console.log(result.body);
             //let events = [];
             console.log(moment(Date.now()));
-            const threeDaysFromNow = moment(Date.now()).add(4,'d');
-            const aWeekFromNow = moment(Date.now()).add(7,'d');
+            const threeDaysFromNow = moment(Date.now()).add(4, 'd');
+            const aWeekFromNow = moment(Date.now()).add(7, 'd');
             const threeDay = result.body.items.map(event => {
                 const dateTime = event.start.dateTime;
                 const eventName = event.summary;
                 console.log('moment : ' + moment(dateTime).fromNow() + " " + moment(dateTime).isAfter(Date.now()) + " " + moment(dateTime).isBefore(threeDaysFromNow));
-                if(moment(dateTime).isAfter(Date.now())) {
+                if (moment(dateTime).isAfter(Date.now())) {
                     //events[i] = {"dateTime": dateTime};
                     if (moment(dateTime).isBefore(threeDaysFromNow)) {
                         const eventMoment = moment(dateTime);
@@ -40,6 +40,15 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
 
     },
-};
+
+    'sports': (req, res) => {
+        console.log("Sports reached");
+        res.json({
+            fulfillment_text: "Sports Reached"
+
+        });
+    }
+}
+
 
 module.exports = EVT_FUNCTION_ACTION_NAME_TO_FUNCTION;
