@@ -13,11 +13,12 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         request(options, function (error, response, body) {
             if (error) throw new Error(error);
             console.log(body);
-        });
+
 
         res.json({
-            fulfillment_text:  body
+            fulfillment_text: "Dining reached"
         })
+        });
     },
 };
 
