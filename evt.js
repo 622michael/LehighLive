@@ -56,17 +56,16 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             if (error) throw new Error(error);
 
             console.log(body);
-            let itemList = JSON.parse(body.items);
-            var eventnames = new Array();
-            let names = itemList.map (event => {
-                eventnames.push(event);
-            })
-            console.log(names);
+            // let itemList = JSON.parse(body.items);
+            // var eventnames = new Array();
+            // let names = itemList.map (event => {
+            //     eventnames.push(event);
+            // })
+            // console.log(names);
         });
 
         res.json({
             fulfillment_text: "Sports Reached"
-
         });
     }
 }
