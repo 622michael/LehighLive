@@ -87,7 +87,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             console.log("After Map");
 
 
-            console.log(names);
+            // console.log(names);
         });
 
         res.json({
