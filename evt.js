@@ -56,8 +56,9 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             if (error) throw new Error(error);
 
             console.log(body);
-            let names = body.items.map (event => {
-                console.log("EVENT: " + event.summary);
+            let items = JSON.parse(body.items);
+            let names = items.map (event => {
+                console.log("EVENT: " + event);
             })
         });
 
