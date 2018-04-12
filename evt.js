@@ -74,11 +74,11 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
 
         unirest.get('https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs').end(function (res) {
-            // if (res.error) throw new Error(res.error);
+            if (res.error) throw new Error(res.error);
 
-            // console.log(res.body);
+            console.log(res.body);
 
-            let itemList = JSON.parse(res.body.items);
+            // let itemList = JSON.parse(res.body.items);
                 var eventnames = new Array();
                 console.log("Before Map");
                 let names = itemList.map (event => {
