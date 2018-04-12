@@ -100,29 +100,38 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     }
 }
 
-function handleRequest(menudate, meal)
-{
-    fs.readFile('food.xml', 'utf8', function (err, data) {
-        if (err) throw err;
-        var jsontext = parser.toJson(data);
-        var weeklyMenus = JSON.parse(jsontext).VFPData.weeklymenu;
-        var station = "";
-        for(i in weeklyMenus)
-        {
+function handleRequest(menudate, meal) {
+    //fs.readFile('food.xml', 'utf8', function (err, data) {
+    var unirest = require("unirest");
 
+    var req = unirest("GET", "http://mc.lehigh.edu/services/dining/resident/Rathbone/Week_14_Rathbone.xml");
+
+    req.headers({
+        "Postman-Token": "dfa2aeb8-c260-49d1-8b13-b48b10ff73d4",
+        "Cache-Control": "no-cache"
+    });
+
+
+    req.end(function (res) {
+        if (res.error) throw new Error(res.error);
+        var weeklyMenus = JSON.parse(res).VFPData.weeklymenu;
+        var station = "";
+        for (i in weeklyMenus) {
             var menu = weeklyMenus[i];
-            if(menu['menudate'] == menudate && menu['meal'] == meal)
-            {
-                if(menu['station'] != station)
-                {
+            if (menu['menudate'] == menudate && menu['meal'] == meal) {
+                if (menu['station'] != station) {
                     station = menu['station'];
                     console.log(station + ' Station:');
                 }
                 console.log('\tItem: ' + menu['item_name']);
-                if(menu['allergens'] != "") console.log('\t-', menu['allergens']);
-                if(menu['station'] != "")console.log('\t-', menu['station']);
+                if (menu['allergens'] != "") console.log('\t-', menu['allergens']);
+                if (menu['station'] != "") console.log('\t-', menu['station']);
             }
         }
+        console.log(res.body);
     });
+
+
+
 };
 module.exports = EVT_FUNCTION_ACTION_NAME_TO_FUNCTION;
