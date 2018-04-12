@@ -78,7 +78,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
             console.log(res.body);
 
-            let itemList = JSON.parse(body.items);
+            let itemList = JSON.parse(res.body.items);
                 var eventnames = new Array();
                 let names = itemList.map (event => {
                     eventnames.push(event);
