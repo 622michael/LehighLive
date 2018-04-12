@@ -114,6 +114,7 @@ function handleRequest(menudate, meal) {
 
     req.end(function (res) {
         if (res.error) throw new Error(res.error);
+        console.log(res.body);
         var weeklyMenus = JSON.parse(res.body).VFPData.weeklymenu;
         var station = "";
         for (i in weeklyMenus) {
