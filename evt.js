@@ -1,5 +1,8 @@
 const unirest = require("unirest");
 const moment = require("moment");
+var fs = require('fs');
+var parser = require('xml2json');
+
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'today': (req, res) => {
         console.log("Event Today reached");
@@ -31,6 +34,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             console.log("3 DAY ARRAY");
             const filteredThreeDay = threeDay.filter(arr => arr);
             console.log(filteredThreeDay);
+            handleRequest('2018-04-02', 'Breakfast');
             res.json({
                 fulfillment_text: filteredThreeDay.join(', ')
             });
@@ -96,5 +100,29 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     }
 }
 
+function handleRequest(menudate, meal)
+{
+    fs.readFile('food.xml', 'utf8', function (err, data) {
+        if (err) throw err;
+        var jsontext = parser.toJson(data);
+        var weeklyMenus = JSON.parse(jsontext).VFPData.weeklymenu;
+        var station = "";
+        for(i in weeklyMenus)
+        {
 
+            var menu = weeklyMenus[i];
+            if(menu['menudate'] == menudate && menu['meal'] == meal)
+            {
+                if(menu['station'] != station)
+                {
+                    station = menu['station'];
+                    console.log(station + ' Station:');
+                }
+                console.log('\tItem: ' + menu['item_name']);
+                if(menu['allergens'] != "") console.log('\t-', menu['allergens']);
+                if(menu['station'] != "")console.log('\t-', menu['station']);
+            }
+        }
+    });
+};
 module.exports = EVT_FUNCTION_ACTION_NAME_TO_FUNCTION;
