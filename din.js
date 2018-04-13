@@ -182,11 +182,49 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         console.log(location);
         console.log(meal);
         let now = moment(Date.now());
-        console.log()
+        console.log(getMenu(location,now,meal));
         res.json({
             fulfillment_text: location + meal + now
         })
     }
 };
+const getMenu = (location, date, period) => {
+    let menuString = "";
+    let fs = require('fs');
+    let parser = require('xml2json');
+    let fileName = 'testdata/xml/' + location;
 
+    let time = date.format("YYYY-MM-DD");
+    console.log(time);
+
+    fs.readFile(fileName + '.xml', 'utf8', function (err, data) {
+        if (err) {
+            return "No information on " + location + " found.";
+        }
+        let jsonText = parser.toJson(data);
+        let weeklyMenus = JSON.parse(jsonText)['VFPData']['weeklymenu'];
+        let station = "";
+        let i = 0;
+        // goes through all the listed items on a menu
+
+        for(i in weeklyMenus)
+        {
+            let menu = weeklyMenus[i];
+            if(menu['menudate'] === time && menu['meal'] === period)
+            {
+                // Because items are listed sequentially by station, this is a switch to label what station the item is from
+                if(menu['station'] !== station)
+                {
+                    station = menu['station'];
+                    menuString += station + ' Station:\n';
+                }
+                menuString += '- ' + menu['item_name'] + '\n';
+                // if(menu['allergens'] !== "") menuString += '- ' + menu['allergens'] + '\n';
+                // if(menu['calories'] !== "") menuString += '- Calories: ' + menu['calories'] + '\n';
+            }
+        }
+        console.log(menuString);
+        return menuString;
+    });
+};
 module.exports = EVT_FUNCTION_ACTION_NAME_TO_FUNCTION;
