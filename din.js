@@ -86,13 +86,21 @@ const parseLocationTime = (hoursString) => {
   let startHour = getHourFromTimeString(startTime);
   let endHour = getHourFromTimeString(endTime);
 
-  const timeRangeCrossesDay = isPm(startTime) && isAm(endTime);
-  if (timeRangeCrossesDay) {
+  if (isPm(startTime) && isAm(endTime)) {
     const onAmSideOfRange = getCurrentHour() <= endHour;
     if (onAmSideOfRange) {
       startHour -= HOURS_IN_DAY;
     }
     // on pm side of range
+    else {
+      endHour += HOURS_IN_DAY;
+    }
+  } else if (isAm(startTime) && isAm(endTime)) {
+    const onRightSideOfRange = getCurrentHour() <= endHour;
+    if (onRightSideOfRange) {
+      startHour -= HOURS_IN_DAY;
+    }
+    // on left side of range
     else {
       endHour += HOURS_IN_DAY;
     }
