@@ -175,6 +175,13 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         //     fulfillment_text: body
         //   });
         // });
+    },
+    'menu': (req, res) => {
+        let location = req.body.queryResult.parameters.location;
+        let meal = req.body.queryResult.parameters.meal;
+        res.json({
+            fulfillment_text: location
+        })
     }
 };
 
