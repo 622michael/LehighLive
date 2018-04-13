@@ -8,7 +8,7 @@ app.use(
         extended: true
     })
 );
- 
+
 app.use(bodyParser.json());
 
 const busModule = require('./bus');

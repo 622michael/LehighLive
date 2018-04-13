@@ -47,6 +47,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
     'sports': (req, res) => {
         console.log("Sports reached");
+        console.log("Sup");
         // var request = require("request");
         //
         // var options = { method: 'GET',
