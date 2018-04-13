@@ -67,7 +67,10 @@ const parseLocationTime = (hoursString) => {
     }
   }).trim();
 
-  const times = timeRangeForToday.substring(timeRangeForToday.indexOf(':') + 1).trim().split('-');
+  let replaced = timeRangeForToday.replace("a.m.", "am");
+  replaced = replaced.replace("p.m.", "pm").split(' ').join('');
+  const times = replaced.substring(replaced.indexOf(':') + 1).trim().split('-');
+
 
   let startHour = times[0].indexOf("am") !== -1 ? parseInt(times[0].replace('am')) : parseInt(times[0].replace('pm')) + 12;
   let endHour = times[1].indexOf("am") !== -1 ? parseInt(times[1].replace('am')) : parseInt(times[1].replace('pm')) + 12;
@@ -76,10 +79,15 @@ const parseLocationTime = (hoursString) => {
   if(times[1] === "12:00pm") endHour = 12;
   if(times[1] === "12:00am") endHour = 0;
 
+  if(endHour < startHour)
+  {
+    endHour += 24;
+  }
+
   const startMinutes = parseInt(times[0].replace('am').split(':')[1]);
   const endMinutes = parseInt(times[1].replace('am').split(':')[1]);
 
-  console.log(timeRangeForToday);
+  console.log(replaced);
   console.log('hours:',startHour,endHour);
   console.log('minutes:',startMinutes, endMinutes);
   return {
@@ -151,9 +159,9 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         }
     };
 
-    const locationObjectRequested = getRequestedLocation(req.body.queryResult.parameters.locationName);
+    // const locationObjectRequested = getRequestedLocation(req.body.queryResult.parameters.locationName);
     res.json({
-      fulfillment_text: locationObjectRequested.hours
+      fulfillment_text: getOpenLocations().map(location => location.title).join(',')
     });
 
     // request(options, function(error, response, body) {
