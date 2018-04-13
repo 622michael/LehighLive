@@ -179,8 +179,12 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'menu': (req, res) => {
         let location = req.body.queryResult.parameters.location;
         let meal = req.body.queryResult.parameters.meal;
+        console.log(location);
+        console.log(meal);
+        let now = moment(Date.now());
+        console.log()
         res.json({
-            fulfillment_text: location
+            fulfillment_text: location + meal + now
         })
     }
 };
