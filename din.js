@@ -100,8 +100,8 @@ const isOpenNow = (location) => {
 
 const getRequestedLocation = (locationName) => {
   return getAllLocations().find(location => {
-    const locationNames = new Set(location.title, location.fulltitle, location.mapsearch);
-    return locationName in locationNames;
+    const locationNames = new Set([location.title, location.fulltitle, location.mapsearch]);
+    return locationNames.has(locationName);
   });
 };
 
