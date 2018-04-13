@@ -22,6 +22,12 @@ const getAllLocations = () => {
   return allLocations;
 };
 
+const getHour = (hour) => {
+  if(hour === "12:00am") return 0;
+  if(hour === "12:00pm") return 12;
+  else return hour.indexOf("am") !== -1 ? parseInt(hour.replace('am')) : parseInt(hour.replace('pm')) + 12;
+};
+
 const parseLocationTime = (hoursString) => {
   const timeRanges = hoursString.split(',');
   const timeRangeForToday = timeRanges.find(timeRange => {
@@ -37,21 +43,31 @@ const parseLocationTime = (hoursString) => {
     }
   }).trim();
 
-  let replaced = timeRangeForToday.replace("a.m.", "am");
-  replaced = replaced.replace("p.m.", "pm").split(' ').join('');
-  const times = replaced.substring(replaced.indexOf(':') + 1).trim().split('-');
+  // Mon-Thu: 7:30am-8:30pm, Fri: 7:30am-1:30pm
+  const replaced =
+    timeRangeForToday
+    .replace("a.m.", "am")
+    .replace("p.m.", "pm")
+    .split(' ')
+    .join('');
 
-  let startHour = times[0].indexOf("am") !== -1 ? parseInt(times[0].replace('am')) : parseInt(times[0].replace('pm')) + 12;
-  let endHour = times[1].indexOf("am") !== -1 ? parseInt(times[1].replace('am')) : parseInt(times[1].replace('pm')) + 12;
-  if(times[0] === "12:00pm") startHour = 12;
-  if(times[0] === "12:00am") startHour = 0;
-  if(times[1] === "12:00pm") endHour = 12;
-  if(times[1] === "12:00am") endHour = 0;
+  // [7:30am, 8:30pm]
+  const times =
+    replaced
+      .substring(replaced.indexOf(':') + 1) // get rid of initial Day range up to :
+      .trim() // dont think this is needed
+      .split('-'); // separate into the start time and end time
+
+  // 7:30am
+  const startTime = times[0];
+  const endTime = times[1];
+  const startHour = getHour(startTime);
+  let endHour = getHour(endTime);
   if(endHour < startHour) endHour += 24;
 
-
-  const startMinutes = parseInt(times[0].replace('am').split(':')[1]);
-  const endMinutes = parseInt(times[1].replace('am').split(':')[1]);
+  // 30
+  const startMinutes = parseInt(startTime.replace('am').split(':')[1]);
+  const endMinutes = parseInt(startTime.replace('am').split(':')[1]);
 
   const startDate = new Date();
   startDate.setHours(startHour, startMinutes);
@@ -84,11 +100,8 @@ const isOpenNow = (location) => {
 
 const getRequestedLocation = (locationName) => {
   return getAllLocations().find(location => {
-    return (
-      locationName === location.title ||
-      locationName === location.fulltitle ||
-      locationName === location.mapsearch
-    );
+    const locationNames = new Set(location.title, location.fulltitle, location.mapsearch);
+    return locationName in locationNames;
   });
 };
 
