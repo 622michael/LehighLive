@@ -1,7 +1,7 @@
 const moment = require('moment');
 // DINtime
 // What's open now?
-
+const HOURS_IN_DAY = 24;
 const map = {
   'Sun': 0,
   'Mon': 1,
@@ -22,29 +22,46 @@ const getAllLocations = () => {
   return allLocations;
 };
 
-const getHour = (hour) => {
+const getHourFromTimeString = (hour) => {
   if(hour === "12:00am") return 0;
   if(hour === "12:00pm") return 12;
   else return hour.includes("am") ? parseInt(hour.replace('am')) : parseInt(hour.replace('pm')) + 12;
 };
 
+const getMinutesFromTimeString = (time) => {
+  return parseInt(time.replace(/am|pm/g,'').split(':')[1])
+};
+
 const getCurrentHour = () => new Date().getHours();
+const getCurrentDay = () => new Date().getDay();
 
 const isAm = (hour) => hour.includes("am");
 const isPm = (hour) => hour.includes("pm");
 
+const makeDate = (hour, minutes) => {
+    const date = new Date();
+    date.setHours(hour, minutes);
+    return date;
+};
+
+// STRING LOOKS LIKE THIS = Mon-Thurs: 8:00am-7:00pm, Fri: 8:00am - 1:30pm
 const parseLocationTime = (hoursString) => {
-  const timeRanges = hoursString.split(',');
+  const timeRangesSeparator = ',';
+  // [ 'Mon-Thu: 7:00am-7:00pm', ' Fri: 7:00am-2:00pm' ]
+  const timeRanges = hoursString.split(timeRangesSeparator);
   const timeRangeForToday = timeRanges.find(timeRange => {
-    const daysRange = timeRange.substring(0, timeRange.indexOf(':')).trim();
-    if(daysRange.includes('-')) {
-      const days = daysRange.split('-');
+    const dayRangeAndTimeRangeSeparator = ':';
+    const daysRange = timeRange.substring(0, timeRange.indexOf(dayRangeAndTimeRangeSeparator)).trim();
+    const currentDay = getCurrentDay();
+    const daySeparator = '-';
+    if(daysRange.includes(daySeparator)) {
+      const days = daysRange.split(daySeparator);
       const startDay = map[days[0]];
       const endDay = map[days[1]];
-      return startDay <= new Date().getDay() && endDay >= new Date().getDay();
+      return startDay <= currentDay && endDay >= currentDay;
     } else {
       const day = map[daysRange];
-      return day <= new Date().getDay() && day >= new Date().getDay();
+      return day <= currentDay && day >= currentDay;
     }
   }).trim();
 
@@ -66,20 +83,25 @@ const parseLocationTime = (hoursString) => {
   // 7:30am
   const startTime = times[0];
   const endTime = times[1];
-  let startHour = getHour(startTime);
-  let endHour = getHour(endTime);
-  // 10:30PM - 4:30AM and it is somewhere between midnight and 4:30AM
-  if(endHour < startHour) endHour += 24;
+  let startHour = getHourFromTimeString(startTime);
+  let endHour = getHourFromTimeString(endTime);
 
-  // 30
-  const startMinutes = parseInt(startTime.replace(/am|pm/g,'').split(':')[1]);
-  const endMinutes = parseInt(endTime.replace(/am|pm/g,'').split(':')[1]);
+  const timeRangeCrossesDay = isPm(startTime) && isAm(endTime);
+  if (timeRangeCrossesDay) {
+    const onAmSideOfRange = getCurrentHour() <= endHour;
+    if (onAmSideOfRange) {
+      startHour -= HOURS_IN_DAY;
+    }
+    // on pm side of range
+    else {
+      endHour += HOURS_IN_DAY;
+    }
+  }
 
-  const startDate = new Date();
-  startDate.setHours(startHour, startMinutes);
-
-  const endDate = new Date();
-  endDate.setHours(endHour, endMinutes);
+  const startMinutes = getMinutesFromTimeString(startTime);
+  const endMinutes = getMinutesFromTimeString(endTime);
+  const startDate = makeDate(startHour, startMinutes);
+  const endDate = makeDate(endHour, endMinutes);
   return {
     startTime: startDate,
     endTime: endDate
@@ -128,7 +150,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
     // const locationObjectRequested = getRequestedLocation(req.body.queryResult.parameters.locationName);
     res.json({
-      fulfillment_text: isLocationOpen("Rathbone")//getOpenLocations().map(location => location.title).join(',')
+      fulfillment_text: getOpenLocations().map(location => location.title).join(',')
     });
 
     // request(options, function(error, response, body) {
