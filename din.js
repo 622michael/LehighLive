@@ -25,8 +25,13 @@ const getAllLocations = () => {
 const getHour = (hour) => {
   if(hour === "12:00am") return 0;
   if(hour === "12:00pm") return 12;
-  else return hour.indexOf("am") !== -1 ? parseInt(hour.replace('am')) : parseInt(hour.replace('pm')) + 12;
+  else return hour.includes("am") ? parseInt(hour.replace('am')) : parseInt(hour.replace('pm')) + 12;
 };
+
+const getCurrentHour = () => new Date().getHours();
+
+const isAm = (hour) => hour.includes("am");
+const isPm = (hour) => hour.includes("pm");
 
 const parseLocationTime = (hoursString) => {
   const timeRanges = hoursString.split(',');
@@ -61,13 +66,14 @@ const parseLocationTime = (hoursString) => {
   // 7:30am
   const startTime = times[0];
   const endTime = times[1];
-  const startHour = getHour(startTime);
+  let startHour = getHour(startTime);
   let endHour = getHour(endTime);
+  // 10:30PM - 4:30AM and it is somewhere between midnight and 4:30AM
   if(endHour < startHour) endHour += 24;
 
   // 30
-  const startMinutes = parseInt(startTime.replace('am').split(':')[1]);
-  const endMinutes = parseInt(startTime.replace('am').split(':')[1]);
+  const startMinutes = parseInt(startTime.replace(/am|pm/g,'').split(':')[1]);
+  const endMinutes = parseInt(endTime.replace(/am|pm/g,'').split(':')[1]);
 
   const startDate = new Date();
   startDate.setHours(startHour, startMinutes);
