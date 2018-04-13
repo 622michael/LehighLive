@@ -13,6 +13,8 @@ const map = {
   'Sat': 6
 };
 
+const DAYS_IN_MILLIS = 86400000;
+
 const json = require('./testdata/formatLocations');
 const allLocations = json.locations.category.map(element => {
   return element.location
@@ -87,20 +89,29 @@ const parseLocationTime = (hoursString) => {
   const startMinutes = parseInt(times[0].replace('am').split(':')[1]);
   const endMinutes = parseInt(times[1].replace('am').split(':')[1]);
 
+
+  let startDate = new Date();
+  startDate.setHours(startHour, startMinutes);
+
+  let endDate = new Date();
+  console.log('BEFORE: END DAY=', endDate.getDay());
+  console.log('BEFORE: END HOUR=', endDate.getHours());
+  endDate.setHours(endHour, endMinutes);
+  console.log('AFTER: END DAY=', endDate.getDay());
+  console.log('AFTER: END HOUR=', endDate.getHours());
+
   console.log(replaced);
   console.log('hours:',startHour,endHour);
   console.log('minutes:',startMinutes, endMinutes);
   return {
-    startTime: {
-      hour: startHour,
-      minutes: startMinutes
-    },
-    endTime: {
-      hour: endHour,
-      minutes: endMinutes
-    }
+    startTime: startDate,
+    endTime: endDate
   }
 };
+
+const addDays = (date, days) => {
+  return new Date(date.setTime(date.getTime() + days * DAYS_IN_MILLIS));
+}
 
 const timeIsBetweenStartAndEnd = (time, startTime, endTime) => {
   return (
