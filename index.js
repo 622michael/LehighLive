@@ -20,12 +20,11 @@ const modules = {
     'PRO': proModule,
     'EVT': evtModule,
     'DIN': dinModule
-
 };
 
 const send404 = (res) => {
     res.status(404);
-    res.send('Page not found');
+    res.send('Hello');
 };
 
 app.post('/', (req, res) => {
