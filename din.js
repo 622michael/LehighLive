@@ -28,6 +28,12 @@ const getHour = (hour) => {
   else return hour.indexOf("am") !== -1 ? parseInt(hour.replace('am')) : parseInt(hour.replace('pm')) + 12;
 };
 
+const makeDate = (hour, minutes) => {
+    const date = new Date();
+    date.setHours(hour, minutes);
+    return date;
+}
+
 const parseLocationTime = (hoursString) => {
   const timeRanges = hoursString.split(',');
   const timeRangeForToday = timeRanges.find(timeRange => {
@@ -66,14 +72,11 @@ const parseLocationTime = (hoursString) => {
   if(endHour < startHour) endHour += 24;
 
   // 30
-  const startMinutes = parseInt(startTime.replace('am').split(':')[1]);
-  const endMinutes = parseInt(startTime.replace('am').split(':')[1]);
+  const startMinutes = parseInt(startTime.replace(/am|pm/g,'').split(':')[1]);
+  const endMinutes = parseInt(endTime.replace(/am|pm/g,'').split(':')[1]);
 
-  const startDate = new Date();
-  startDate.setHours(startHour, startMinutes);
-
-  const endDate = new Date();
-  endDate.setHours(endHour, endMinutes);
+  const startDate = makeDate(startHour, startMinutes);
+  const endDate = makeDate(endHour, endMinutes);
   return {
     startTime: startDate,
     endTime: endDate
