@@ -12,7 +12,6 @@ const getAllLocations = () => {
 };
 
 const getCurrentHour = () => moment().hours();
-const getCurrentDay = () => moment().hours();
 
 // STRING LOOKS LIKE THIS = Mon-Thurs: 8:00am-7:00pm, Fri: 8:00am - 1:30pm
 const getStartAndEndTimeForToday = (hoursString) => {
@@ -22,7 +21,6 @@ const getStartAndEndTimeForToday = (hoursString) => {
   const timeRangeForToday = timeRanges.find(timeRange => {
     const dayRangeAndTimeRangeSeparator = ':';
     const daysRange = timeRange.substring(0, timeRange.indexOf(dayRangeAndTimeRangeSeparator)).trim();
-    const currentDay = getCurrentDay();
     const rightNow = moment();
     const dayOfWeekToken = 'ddd';
     const daySeparator = '-';
