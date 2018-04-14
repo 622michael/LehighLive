@@ -93,6 +93,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         //     // console.log(names);
         // });
 
+        console.log("This shit");
         var url = "http://lehighsports.com/services/scores.aspx"; //?non_sport=0&sort=asc&range=future";
         xmlToJson(url, function(err, data) {
             if (err) {
@@ -100,6 +101,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             }
             console.log(JSON.stringify(data, null, 2));
         });
+        console.log("Isn't fucked");
 
 
         // var req = unirest("GET", "https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs");
