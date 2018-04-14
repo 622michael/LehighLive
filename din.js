@@ -184,7 +184,7 @@ const getRequestedLocationObject = (locationName) => {
 };
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
-  'time': (req, res) => {
+  'openlocations': (req, res) => {
     console.log('Dining  reached');
     // const locationObjectRequested = getRequestedLocation(req.body.queryResult.parameters.locationName);
     res.json({
@@ -212,7 +212,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
       fulfillment_text: location + meal + now
     });
   },
-  'islocationopen': (req, res) => {
+  'isopen': (req, res) => {
     const locationName = req.body.queryResult.parameters.location;
     const locationHoursInfo = getLocationHoursInfo(locationName);
     const { isOpen, minutesUntilClose, minutesUntilOpen, openTime, closeTime, isClosedForEntireDay } = locationHoursInfo;
@@ -232,7 +232,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
       fulfillment_text: responseText
     })
   },
-  'islocationclosed': (req, res) => {
+  'isclosed': (req, res) => {
     const locationName = req.body.queryResult.parameters.location;
     const locationHoursInfo = getLocationHoursInfo(locationName);
     const { isOpen, minutesUntilClose, minutesUntilOpen, openTime, closeTime, isClosedForEntireDay } = locationHoursInfo;

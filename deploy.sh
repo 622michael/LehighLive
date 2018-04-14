@@ -1,3 +1,3 @@
 git add .
 git commit -m "Automated deploy"
-git push heroku dining
+git push heroku master 

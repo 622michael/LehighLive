@@ -1,5 +1,37 @@
 const unirest = require("unirest");
 const moment = require("moment");
+var fs = require('fs');
+var parseString = require('xml2js').parseString;
+var http = require('http');
+function xmlToJson(url, callback) {
+    // var req = http.get(url, function(res) {
+    var req = fs.readFile(url, function(res) {
+        var xml = '';
+
+        res.on('data', function(chunk) {
+            xml += chunk;
+            console.log("what");
+        });
+
+        res.on('error', function(e) {
+            callback(e, null);
+            console.log("is");
+        });
+
+        res.on('timeout', function(e) {
+            callback(e, null);
+            console.log("going");
+        });
+
+        res.on('end', function() {
+            parseString(xml, function(err, result) {
+                callback(null, result);
+                console.log("on");
+            });
+        });
+    });
+}
+
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'today': (req, res) => {
         console.log("Event Today reached");
@@ -31,6 +63,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             console.log("3 DAY ARRAY");
             const filteredThreeDay = threeDay.filter(arr => arr);
             console.log(filteredThreeDay);
+            handleRequest('2018-04-02', 'Breakfast');
             res.json({
                 fulfillment_text: filteredThreeDay.join(', ')
             });
@@ -43,33 +76,104 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
     'sports': (req, res) => {
         console.log("Sports reached");
-        var request = require("request");
 
-        var options = { method: 'GET',
-            url: 'https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs',
+        // var request = require("request");
+        //
+        // var options = { method: 'GET',
+        //     url: 'https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs',
+        //
+        //     headers:
+        //         { 'Postman-Token': 'd42a0f1d-b3ae-4f3a-847e-2879508c1ef9',
+        //             'Cache-Control': 'no-cache' } };
+        //
+        // request(options, function (error, response, body) {
+        //     if (error) throw new Error(error);
+        //
+        //     console.log(body);
+        //     // let itemList = JSON.parse(body.items);
+        //     // var eventnames = new Array();
+        //     // let names = itemList.map (event => {
+        //     //     eventnames.push(event);
+        //     // })
+        //     // console.log(names);
+        // });
 
-            headers:
-                { 'Postman-Token': 'd42a0f1d-b3ae-4f3a-847e-2879508c1ef9',
-                    'Cache-Control': 'no-cache' } };
-
-        request(options, function (error, response, body) {
-            if (error) throw new Error(error);
-
-            console.log(body);
-            let itemList = JSON.parse(body.items);
-            var eventnames = new Array();
-            let names = itemList.map (event => {
-                eventnames.push(event);
-            })
-            console.log(names);
+        console.log("This shit");
+        var url = "xml/athletics.xml"//http://lehighsports.com/services/scores.aspx"; //?non_sport=0&sort=asc&range=future";
+        xmlToJson(url, function(err, data) {
+            if (err) {
+                return console.err(err);
+            }
+            console.log(JSON.stringify(data, null, 2));
         });
+        console.log("Isn't fucked");
+
+
+        // var req = unirest("GET", "https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs");
+
+        // req.headers({
+        //     "Postman-Token": "3c269766-2b96-474a-a246-f6da16cd16f0",
+        //     "Cache-Control": "no-cache"
+        // });
+
+
+        // unirest.get('https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs').end(function (res) {
+        //     if (res.error) throw new Error(res.error);
+        //
+        //     console.log(res.body);
+        //
+        //     //     var eventnames = new Array();
+        //     //     console.log("Before Map");
+        //     //     let names = itemList.map (event => {
+        //     //         eventnames.push(event);
+        //     //     });
+        //     console.log("After Map");
+        //     let itemList = JSON.parse(res.body.items);
+
+
+            // console.log(names);
+        // });
 
         res.json({
             fulfillment_text: "Sports Reached"
-
         });
     }
 }
 
+function handleRequest(menudate, meal) {
+    //fs.readFile('food.xml', 'utf8', function (err, data) {
+    var unirest = require("unirest");
 
+    var req = unirest("GET", "http://mc.lehigh.edu/services/dining/resident/Rathbone/Week_14_Rathbone.xml");
+
+    req.headers({
+        "Postman-Token": "dfa2aeb8-c260-49d1-8b13-b48b10ff73d4",
+        "Cache-Control": "no-cache"
+    });
+
+
+    unirest.get("http://mc.lehigh.edu/services/dining/resident/Rathbone/Week_14_Rathbone.xml").end( (function (res) {
+        if (res.error) throw new Error(res.error);
+        console.log(res.body);
+        fs.writeFile('/food2.xml',res.body,null,null);
+        var weeklyMenus = JSON.parse(res.body).VFPData.weeklymenu;
+        var station = "";
+        for (i in weeklyMenus) {
+            var menu = weeklyMenus[i];
+            if (menu['menudate'] == menudate && menu['meal'] == meal) {
+                if (menu['station'] != station) {
+                    station = menu['station'];
+                    console.log(station + ' Station:');
+                }
+                console.log('\tItem: ' + menu['item_name']);
+                if (menu['allergens'] != "") console.log('\t-', menu['allergens']);
+                if (menu['station'] != "") console.log('\t-', menu['station']);
+            }
+        }
+        console.log(res.body);
+    }));
+
+
+
+};
 module.exports = EVT_FUNCTION_ACTION_NAME_TO_FUNCTION;
