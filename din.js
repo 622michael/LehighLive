@@ -28,34 +28,25 @@ const getCurrentHour = () => moment().hours();
 // Returns a single one of the above and it returns todays
 const extractTodaysDayAndTimeRangeFromTimeRanges = (timeRanges) => {
   return timeRanges.find(timeRange => {
-    console.log('------------------------------------------------------');
     const dayRangeAndTimeRangeSeparator = ':';
     const daysRange = timeRange.substring(0, timeRange.indexOf(dayRangeAndTimeRangeSeparator)).trim();
-    const rightNow = moment();
+    const now = moment();
     const daySeparator = '-';
+    const { endTime } = extractStartAndEndTimeFromDayAndTimeRangeString(timeRange);
+    const isOneDayBefore = (first, second) => first.isSame(moment(second).subtract(1, 'day'), 'day');
+    const withinClosingTime = now.isBefore(endTime);
     if (daysRange.includes(daySeparator)) {
       const days = daysRange.split(daySeparator).map(day => day.substring(0, 3));
       const startDay = moment(days[0], dayOfWeekToken);
       const endDay = moment(days[1], dayOfWeekToken);
-      const l = extractStartAndEndTimeFromDayAndTimeRangeString(timeRange);
-      console.log('thingafterreturn',l);
-      console.log('endtimehere',l.endTime);
-      console.log('make it back');
-      const endTime = l.endTime;
       const inclusiveDayToken = '[]';
-      console.log('first', endDay.isSame(moment(endTime).subtract(1, 'day'), 'day'));
-      const first = endDay.isSame(moment(endTime).subtract(1, 'day'), 'day');
-      console.log('first', first);
-      console.log('endtimeinif',endTime);
-      console.log('second',rightNow.isBefore(endTime));
-      const second = rightNow.isBefore(endTime);
-      console.log('second',second);
-      const isBetween = rightNow.isBetween(startDay, endDay, 'day', inclusiveDayToken);
-      console.log('third', isBetween || (first && second));
-      return isBetween || (first && second);
+      const lastDayInRangeCrossedPastMidnight = isOneDayBefore(endDay, endTime);
+      const dayIsWithinRange = now.isBetween(startDay, endDay, 'day', inclusiveDayToken);
+      return dayIsWithinRange || (lastDayInRangeCrossedPastMidnight && withinClosingTime);
     } else {
       const day = moment(daysRange, dayOfWeekToken);
-      return rightNow.isSame(day, 'day');
+      const dayCrossedPastMidnight = isOneDayBefore(day, endTime);
+      return now.isSame(day, 'day') || (dayCrossedPastMidnight && withinClosingTime);
     }
   }).trim();
 };
@@ -86,13 +77,9 @@ const extractStartAndEndTimeFromDayAndTimeRangeString = (timeRange) => {
   // 7:30am
   const startTime = moment(times[0], hourMinuteFormat);
   const endTime = moment(times[1], hourMinuteFormat);
-  console.log('starttime',startTime);
-  console.log('endtime', endTime);
   const isPm = (momentTime) => momentTime.hours() >= 12;
   const isAm = (momentTime) => momentTime.hours() < 12;
   const singleDayObject = {days: 1};
-  console.log('ispm',isPm(startTime));
-  console.log('isam',isAm(endTime));
   if (isPm(startTime) && isAm(endTime)) {
     const onAmSideOfRange = getCurrentHour() <= endTime.hours();
     if (onAmSideOfRange) {
@@ -113,15 +100,11 @@ const extractStartAndEndTimeFromDayAndTimeRangeString = (timeRange) => {
       endTime.add(singleDayObject);
     }
   }
-  console.log('starttimeafter',startTime);
-  console.log('endtimeafter', endTime);
 
-  const thing = {
+  return {
     startTime: startTime,
     endTime: endTime
   };
-  console.log('thingbeforereturn', thing);
-  return thing;
 };
 
 const getStartAndEndTimeForToday = (hoursString) => {
@@ -132,12 +115,7 @@ const getStartAndEndTimeForToday = (hoursString) => {
   if (!timeRangeForToday) {
     return undefined;
   }
-  console.log('===========================================');
-  console.log('todaytimerange=',timeRangeForToday);
-  console.log('-----------------------------------------');
-  const thing = extractStartAndEndTimeFromDayAndTimeRangeString(timeRangeForToday);
-  console.log('beforereturn',thing);
-  return thing;
+  return extractStartAndEndTimeFromDayAndTimeRangeString(timeRangeForToday);
 };
 
 const getOpenLocations = () => {
@@ -226,7 +204,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     const locationName = req.body.queryResult.parameters.location;
     const locationHoursInfo = getLocationHoursInfo(locationName);
     const { isOpen, minutesUntilClose, minutesUntilOpen, openTime, closeTime } = locationHoursInfo;
-    //console.log(locationHoursInfo);
     let responseText;
     if (minutesUntilClose > 0 && minutesUntilClose <= 45) {
       responseText = `Yes, but it's closing in ${minutesUntilClose.toFixed()} minutes. Better hurry!`;
