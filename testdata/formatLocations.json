@@ -50,6 +50,12 @@
         "name": "Retail Locations",
         "location": [
           {
+            "title": "Upper",
+            "fulltitle": "Upper Cort",
+            "mapsearch": "Upper Cort",
+            "hours": "Mon-Fri: 10:30am-8:00pm, Sat-Sun: 11:00am-8:00pm"
+          },
+          {
             "logo": "../dining/logos/bakersjunction.gif",
             "title": "Bakers",
             "fulltitle": "Baker's Junction",
