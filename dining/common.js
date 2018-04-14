@@ -35,11 +35,12 @@ const extractTodaysDayAndTimeRangeFromTimeRanges = (timeRanges) => {
       const days = daysRange.split(daySeparator).map(day => day.substring(0, 3));
       const startDay = moment(days[0], dayOfWeekToken);
       const endDay = moment(days[1], dayOfWeekToken);
+      if (endDay.isBefore(startDay, 'day')) endDay.add(1, 'week');
       const inclusiveDayToken = '[]';
       const lastDayInRangeCrossedPastMidnight = isOneDayBefore(endDay, endTime);
       const dayIsWithinRange = now.isBetween(startDay, endDay, 'day', inclusiveDayToken);
-      // console.log('first',lastDayInRangeCrossedPastMidnight);
-      // console.log('second',dayIsWithinRange);
+      console.log('first',lastDayInRangeCrossedPastMidnight);
+      console.log('second',dayIsWithinRange);
       return dayIsWithinRange || (lastDayInRangeCrossedPastMidnight && withinClosingTime);
     } else {
       const day = moment(daysRange, dayOfWeekToken);
