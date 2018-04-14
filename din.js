@@ -4,6 +4,14 @@ const parser = require('xml2json');
 // DINtime
 // What's open now?
 
+const hourMinuteFormat = 'h:mma';
+
+const RATHBONE_TITLE = 'Rathbone';
+const CORT_TITLE = 'Cort';
+const BRODHEAD_TITLE = 'Brodhead';
+const residentDiningLocations = new Set([RATHBONE_TITLE, CORT_TITLE, BRODHEAD_TITLE]);
+const isResidentDiningLocation = (locationName) => residentDiningLocations.has(locationName);
+
 const json = require('./testdata/formatLocations');
 const allLocations = json.locations.category.map(element => {
   return element.location;
@@ -11,10 +19,6 @@ const allLocations = json.locations.category.map(element => {
 
 const getAllLocations = () => {
   return allLocations;
-};
-
-const isResidentDiningLocation = (locationName) => {
-  return locationName.title !== 'Rathbone' && locationName.title !== 'Cort' && locationName.title !== 'Brodhead'
 };
 
 const getCurrentHour = () => moment().hours();
@@ -57,7 +61,6 @@ const getStartAndEndTimeForToday = (hoursString) => {
   const times = replaced.substring(startOfTimeRangeIndex).split('-'); // separate into the start time and end time
 
   // 7:30am
-  const hourMinuteFormat = 'h:mma';
   const startTime = moment(times[0], hourMinuteFormat);
   const endTime = moment(times[1], hourMinuteFormat);
   const isPm = (momentTime) => momentTime.hours() >= 12;
@@ -98,7 +101,18 @@ const isLocationOpen = (locationName) => {
 };
 
 const isOpenDuringPeriod = (location, period) => {
-  return true; // for now
+  const startDinnerTime = moment("4:30pm", hourMinuteFormat);
+  const startLunchTime = moment("10:30am", hourMinuteFormat);
+  const endLunchTime = moment("2:00pm", hourMinuteFormat);
+  const endBreakfastTime = moment("9:45am", hourMinuteFormat);
+  const locationTimes = getStartAndEndTimeForToday(location.hours);
+  if (period === "Dinner") {
+    return startDinnerTime.isBefore(locationTimes.endTime);
+  } else if (period === "Lunch") {
+    return startLunchTime.isSameOrAfter(locationTimes.startTime) && endLunchTime.isSameOrBefore(locationTimes.endTime);
+  } else {
+    return endBreakfastTime.isAfter(locationTimes.startTime);
+  }
 };
 
 const isOpenNow = (location) => {
@@ -160,7 +174,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     }
     if (!isOpenDuringPeriod(getRequestedLocationObject(location), meal)) {
       res.json({
-        fulfillment_text: `${location} is not open for ${meal}`
+        fulfillment_text: `${location} is not open for ${meal} today`
       })
     }
     console.log(location);
