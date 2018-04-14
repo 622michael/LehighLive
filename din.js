@@ -1,4 +1,6 @@
 const moment = require('moment');
+const momentDurationFormatSetup = require("moment-duration-format");
+momentDurationFormatSetup(moment);
 const fs = require('fs');
 const parser = require('xml2json');
 // DINtime
@@ -23,6 +25,10 @@ const getAllLocations = () => {
 };
 
 const getCurrentHour = () => moment().hours();
+const minutesAsHoursAndMinutes = (minutes) => {
+  const prettyPrintHoursAndMinutesFormat = "h [hours and] m [minutes]";
+  return moment.duration(minutes, "minutes").format(prettyPrintHoursAndMinutesFormat);
+};
 
 // STRING LOOKS LIKE THIS = Mon-Thurs: 8:00am-7:00pm, Fri: 8:00am - 1:30pm
 // Returns a single one of the above and it returns todays
@@ -242,11 +248,53 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     } else if (minutesUntilOpen > 0 && minutesUntilOpen <= 30) {
       responseText = `Yes, but it will be open in ${minutesUntilOpen.toFixed()} minutes.`;
     } else if (isOpen) {
-      responseText = `No. It's open from ${openTime} to ${closeTime} today.`;
+      responseText = `It's not closed. It's open from ${openTime} to ${closeTime} today.`;
     } else if (isClosedForEntireDay) {
       responseText = `Yes, it's closed for the whole day.`;
     } else {
-      responseText = `Yes, the hours are from ${openTime} to ${closeTime} today`;
+      responseText = `Yes, but it's open from ${openTime} to ${closeTime} today`;
+    }
+    res.json({
+      fulfillment_text: responseText
+    })
+  },
+  'whenislocationopen': (req, res) => {
+    const locationName = req.body.queryResult.parameters.location;
+    const locationHoursInfo = getLocationHoursInfo(locationName);
+    const { isOpen, minutesUntilClose, minutesUntilOpen, openTime, closeTime, isClosedForEntireDay } = locationHoursInfo;
+    let responseText;
+    const hoursString = `The hours are ${openTime}-${closeTime}`;
+    if (minutesUntilClose > 0 && minutesUntilClose <= 45) {
+      responseText = `It's open right now, but it's closing in ${minutesUntilClose.toFixed()} minutes. Better hurry!`;
+    } else if (minutesUntilOpen > 0 && minutesUntilOpen <= 30) {
+      responseText = `It opens in ${minutesUntilOpen.toFixed()} minutes. ${hoursString}`;
+    } else if (isOpen) {
+      responseText = `It's already open! ${hoursString}`;
+    } else if (isClosedForEntireDay) {
+      responseText = `${locationName} is closed for the whole day.`;
+    } else {
+      responseText = `It opens at ${openTime} and closes at ${closeTime} today.`;
+    }
+    res.json({
+      fulfillment_text: responseText
+    })
+  },
+  'whenislocationclosed': (req, res) => {
+    const locationName = req.body.queryResult.parameters.location;
+    const locationHoursInfo = getLocationHoursInfo(locationName);
+    const { isOpen, minutesUntilClose, minutesUntilOpen, openTime, closeTime, isClosedForEntireDay } = locationHoursInfo;
+    let responseText;
+    const hoursString = `The hours are ${openTime}-${closeTime}`;
+    if (minutesUntilClose > 0 && minutesUntilClose <= 45) {
+      responseText = `It's closing in ${minutesUntilClose.toFixed()} minutes. Better hurry!`;
+    } else if (minutesUntilOpen > 0 && minutesUntilOpen <= 30) {
+      responseText = `It doesn't close for awhile. It's open in ${minutesUntilOpen.toFixed()} minutes. ${hoursString}`;
+    } else if (isClosedForEntireDay) {
+      responseText = `${locationName} is closed for the whole day.`;
+    } else if (!isOpen) {
+      responseText = `It's already closed but the hours are ${openTime} to ${closeTime} today.`;
+    }  else {
+      responseText = `It closes at ${closeTime} today. ${hoursString}`;
     }
     res.json({
       fulfillment_text: responseText
