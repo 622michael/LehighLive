@@ -34,7 +34,6 @@ const extractTodaysDayAndTimeRangeFromTimeRanges = (timeRanges) => {
     const daySeparator = '-';
     const { endTime } = extractStartAndEndTimeFromDayAndTimeRangeString(timeRange);
     const isOneDayBefore = (first, second) => first.isSame(moment(second).subtract(1, 'day'), 'day');
-    console.log('endtime',endTime);
     const withinClosingTime = now.isBefore(endTime);
     if (daysRange.includes(daySeparator)) {
       const days = daysRange.split(daySeparator).map(day => day.substring(0, 3));
@@ -49,8 +48,6 @@ const extractTodaysDayAndTimeRangeFromTimeRanges = (timeRanges) => {
     } else {
       const day = moment(daysRange, dayOfWeekToken);
       const dayCrossedPastMidnight = isOneDayBefore(day, endTime);
-      console.log('first',dayCrossedPastMidnight);
-      console.log('second',withinClosingTime);
       return now.isSame(day, 'day') || (dayCrossedPastMidnight && withinClosingTime);
     }
   });
@@ -90,28 +87,22 @@ const extractStartAndEndTimeFromDayAndTimeRangeString = (timeRange) => {
   const isAm = (momentTime) => momentTime.hours() < 12;
   const singleDayObject = {days: 1};
   if (isPm(startTime) && isAm(endTime)) {
-    console.log('helloother',days.endDay);
     const onAmSideOfRange = getCurrentHour() <= endTime.hours();
     if (onAmSideOfRange) {
-      console.log('hellaaaao',days.endDay);
       startTime.subtract(singleDayObject);
     }
     // on pm side of range
     else {
-      console.log('hellaaafjkejekfjkeao',days.endDay);
       endTime.add(singleDayObject);
     }
   } else if (isAm(startTime) && isAm(endTime)) {
-    console.log('hello',days.endDay);
     const movedPastEndTimeOfPreviousDay = moment().isSame(days.endDay, 'day');
     const onRightSideOfRange = getCurrentHour() <= endTime.hours() && !movedPastEndTimeOfPreviousDay;
     if (onRightSideOfRange) {
-      console.log('xxxx',days.endDay);
       startTime.subtract(singleDayObject);
     }
     // on left side of range
     else {
-      console.log('zzzzzzzzz',days.endDay);
       endTime.add(singleDayObject);
     }
   } else if ((isPm(startTime) && isPm(endTime)) || (isAm(startTime) && isPm(endTime))) {
