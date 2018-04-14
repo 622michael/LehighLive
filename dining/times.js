@@ -155,7 +155,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   },
 
   'hours': (req, res) => {
-    const { name, isOpen, minutesUntilClose, minutesUntilOpen, openTime, closeTime, isClosedForEntireDay } = getLocationHoursInfoFromRequest(req);
+    const { name, openTime, closeTime } = getLocationHoursInfoFromRequest(req);
     res.json({
       fulfillment_text: `The hours for ${name} today are ${openTime}-${closeTime}`
     });
