@@ -59,8 +59,13 @@ const getRequestedLocationObject = (locationName) => {
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   'openlocations': (req, res) => {
     // const locationObjectRequested = getRequestedLocation(req.body.queryResult.parameters.locationName);
+
     res.json({
-      fulfillment_text: getOpenLocations().map(location => location.title).join(',')
+      fulfillment_text: (
+        `Here's what's open right now: 
+        ${getOpenLocations().map(location => location.title).join('\n')}
+        `
+      )
     });
   },
 
