@@ -69,7 +69,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         //     // console.log(names);
         // });
         var unirest = require("unirest");
-        var xmlparser = require('xml2js');
+        var parseString = require('xml2js').parseString;
         var http = require('http');
         function xmlToJson(url, callback) {
             var req = http.get(url, function(res) {
