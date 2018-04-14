@@ -1,7 +1,7 @@
 const unirest = require("unirest");
 const moment = require("moment");
 var fs = require('fs');
-var parser = require('xml2json');
+var parser = require('xml2js');
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'today': (req, res) => {
@@ -47,7 +47,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
     'sports': (req, res) => {
         console.log("Sports reached");
-        console.log("Sup");
+
         // var request = require("request");
         //
         // var options = { method: 'GET',
@@ -69,6 +69,39 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         //     // console.log(names);
         // });
         var unirest = require("unirest");
+        var xmlparser = require('xml2js');
+        var http = require('http');
+        function xmlToJson(url, callback) {
+            var req = http.get(url, function(res) {
+                var xml = '';
+
+                res.on('data', function(chunk) {
+                    xml += chunk;
+                });
+
+                res.on('error', function(e) {
+                    callback(e, null);
+                });
+
+                res.on('timeout', function(e) {
+                    callback(e, null);
+                });
+
+                res.on('end', function() {
+                    parseString(xml, function(err, result) {
+                        callback(null, result);
+                    });
+                });
+            });
+        }
+        var url = "http://lehighsports.com/services/scores.aspx?non_sport=0&sort=asc&range=future";
+        xmlToJson(url, function(err, data) {
+            if (err) {
+                return console.err(err);
+            }
+            console.log(JSON.stringify(data, null, 2));
+        });
+
 
         // var req = unirest("GET", "https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs");
 
@@ -78,18 +111,18 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // });
 
 
-        unirest.get('https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs').end(function (res) {
-            if (res.error) throw new Error(res.error);
-
-            console.log(res.body);
-
-            //     var eventnames = new Array();
-            //     console.log("Before Map");
-            //     let names = itemList.map (event => {
-            //         eventnames.push(event);
-            //     });
-            console.log("After Map");
-            let itemList = JSON.parse(res.body.items);
+        // unirest.get('https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs').end(function (res) {
+        //     if (res.error) throw new Error(res.error);
+        //
+        //     console.log(res.body);
+        //
+        //     //     var eventnames = new Array();
+        //     //     console.log("Before Map");
+        //     //     let names = itemList.map (event => {
+        //     //         eventnames.push(event);
+        //     //     });
+        //     console.log("After Map");
+        //     let itemList = JSON.parse(res.body.items);
 
 
             // console.log(names);
