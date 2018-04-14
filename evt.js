@@ -94,6 +94,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 });
             });
         }
+
         var url = "http://lehighsports.com/services/scores.aspx?non_sport=0&sort=asc&range=future";
         xmlToJson(url, function(err, data) {
             if (err) {
@@ -126,7 +127,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
 
             // console.log(names);
-        });
+        // });
 
         res.json({
             fulfillment_text: "Sports Reached"
