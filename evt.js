@@ -1,7 +1,31 @@
 const unirest = require("unirest");
 const moment = require("moment");
 var fs = require('fs');
-var parser = require('xml2js');
+var parseString = require('xml2js').parseString;
+var http = require('http');
+function xmlToJson(url, callback) {
+    var req = http.get(url, function(res) {
+        var xml = '';
+
+        res.on('data', function(chunk) {
+            xml += chunk;
+        });
+
+        res.on('error', function(e) {
+            callback(e, null);
+        });
+
+        res.on('timeout', function(e) {
+            callback(e, null);
+        });
+
+        res.on('end', function() {
+            parseString(xml, function(err, result) {
+                callback(null, result);
+            });
+        });
+    });
+}
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'today': (req, res) => {
@@ -68,32 +92,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         //     // })
         //     // console.log(names);
         // });
-        var unirest = require("unirest");
-        var parseString = require('xml2js').parseString;
-        var http = require('http');
-        function xmlToJson(url, callback) {
-            var req = http.get(url, function(res) {
-                var xml = '';
-
-                res.on('data', function(chunk) {
-                    xml += chunk;
-                });
-
-                res.on('error', function(e) {
-                    callback(e, null);
-                });
-
-                res.on('timeout', function(e) {
-                    callback(e, null);
-                });
-
-                res.on('end', function() {
-                    parseString(xml, function(err, result) {
-                        callback(null, result);
-                    });
-                });
-            });
-        };
 
         var url = "http://lehighsports.com/services/scores.aspx"; //?non_sport=0&sort=asc&range=future";
         xmlToJson(url, function(err, data) {
