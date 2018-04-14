@@ -13,6 +13,10 @@ const getAllLocations = () => {
   return allLocations;
 };
 
+const isResidentDiningLocation = (locationName) => {
+  return locationName.title !== 'Rathbone' && locationName.title !== 'Cort' && locationName.title !== 'Brodhead'
+};
+
 const getCurrentHour = () => moment().hours();
 
 // STRING LOOKS LIKE THIS = Mon-Thurs: 8:00am-7:00pm, Fri: 8:00am - 1:30pm
@@ -90,7 +94,11 @@ const getOpenLocations = () => {
 };
 
 const isLocationOpen = (locationName) => {
-  return isOpenNow(getRequestedLocation(locationName));
+  return isOpenNow(getRequestedLocationObject(locationName));
+};
+
+const isOpenDuringPeriod = (location, period) => {
+  return true; // for now
 };
 
 const isOpenNow = (location) => {
@@ -100,7 +108,7 @@ const isOpenNow = (location) => {
   return currentTime.isBetween(locationTimes.startTime, locationTimes.endTime);
 };
 
-const getRequestedLocation = (locationName) => {
+const getRequestedLocationObject = (locationName) => {
   return getAllLocations().find(location => {
     const locationNames = new Set([location.title, location.fulltitle, location.mapsearch]);
     return locationNames.has(locationName);
@@ -145,6 +153,16 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   'menu': (req, res) => {
     const location = req.body.queryResult.parameters.location;
     const meal = req.body.queryResult.parameters.meal;
+    if (!isResidentDiningLocation(location)) {
+      res.json({
+        fulfillment_text: `I only know how to tell you what's for ${meal} at Rathbone, Lower Cort, and Brodhead`
+      })
+    }
+    if (!isOpenDuringPeriod(getRequestedLocationObject(location), meal)) {
+      res.json({
+        fulfillment_text: `${location} is not open for ${meal}`
+      })
+    }
     console.log(location);
     console.log(meal);
     const now = moment();
