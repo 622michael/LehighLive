@@ -9,19 +9,23 @@ function xmlToJson(url, callback) {
 
         res.on('data', function(chunk) {
             xml += chunk;
+            console.log("thomas");
         });
 
         res.on('error', function(e) {
             callback(e, null);
+            console.log("bryan");
         });
 
         res.on('timeout', function(e) {
             callback(e, null);
+            console.log("is");
         });
 
         res.on('end', function() {
             parseString(xml, function(err, result) {
                 callback(null, result);
+                console.log("lord");
             });
         });
     });
