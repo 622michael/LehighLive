@@ -24,11 +24,8 @@ const getAllLocations = () => {
 const getCurrentHour = () => moment().hours();
 
 // STRING LOOKS LIKE THIS = Mon-Thurs: 8:00am-7:00pm, Fri: 8:00am - 1:30pm
-const getStartAndEndTimeForToday = (hoursString) => {
-  const timeRangesSeparator = ',';
-  // [ 'Mon-Thu: 7:00am-7:00pm', ' Fri: 7:00am-2:00pm' ]
-  const timeRanges = hoursString.split(timeRangesSeparator);
-  const timeRangeForToday = timeRanges.find(timeRange => {
+const extractTodaysTimeRangeFromTimeRanges = (timeRanges) => {
+  return timeRanges.find(timeRange => {
     const dayRangeAndTimeRangeSeparator = ':';
     const daysRange = timeRange.substring(0, timeRange.indexOf(dayRangeAndTimeRangeSeparator)).trim();
     const rightNow = moment();
@@ -45,6 +42,13 @@ const getStartAndEndTimeForToday = (hoursString) => {
       return rightNow.isSame(day, 'day');
     }
   }).trim();
+};
+
+const getStartAndEndTimeForToday = (hoursString) => {
+  const timeRangesSeparator = ',';
+  // [ 'Mon-Thu: 7:00am-7:00pm', ' Fri: 7:00am-2:00pm' ]
+  const timeRanges = hoursString.split(timeRangesSeparator).map(range => range.trim());
+  const timeRangeForToday = extractTodaysTimeRangeFromTimeRanges(timeRanges);
   if (!timeRangeForToday) {
     return undefined;
   }
@@ -132,37 +136,10 @@ const getRequestedLocationObject = (locationName) => {
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   'time': (req, res) => {
     console.log('Dining  reached');
-    const request = require('request');
-
-    const options = {
-      method: 'GET',
-      url: 'http://mc.lehigh.edu/services/dining/diningjson.html',
-      headers:
-        {
-          'Postman-Token': '0941584f-e6b8-471e-b562-bd3f487a71a9',
-          'Cache-Control': 'no-cache'
-        }
-    };
-
     // const locationObjectRequested = getRequestedLocation(req.body.queryResult.parameters.locationName);
     res.json({
       fulfillment_text: getOpenLocations().map(location => location.title).join(',')
     });
-
-    // request(options, function(error, response, body) {
-    //   if (error) {
-    //     throw new Error(error);
-    //   }
-    //   // console.log(body);
-    //   body = JSON.parse(body.substr(10));
-    //   console.log(body);
-    //   console.log();
-    //   console.log(body.locations.category[0].location);
-    //   //console.log(req.body.queryResult.parameters.Dining);
-    //   res.json({
-    //     fulfillment_text: body
-    //   });
-    // });
   },
   'menu': (req, res) => {
     const location = req.body.queryResult.parameters.location;
@@ -186,6 +163,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     });
   }
 };
+
 const getMenu = (location, date, period) => {
   const fileName = 'testdata/xml/rathbone-week15.xml';
   const time = date.format('YYYY-MM-DD');
@@ -215,4 +193,5 @@ const getMenu = (location, date, period) => {
     return menuString;
   });
 };
+
 module.exports = EVT_FUNCTION_ACTION_NAME_TO_FUNCTION;
