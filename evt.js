@@ -1,36 +1,49 @@
 const unirest = require("unirest");
 const moment = require("moment");
 var fs = require('fs');
-var parseString = require('xml2js').parseString;
+var parser = require('xml2json').parseString;
 var http = require('http');
-function xmlToJson(url, callback) {
-    // var req = http.get(url, function(res) {
-    var req = fs.readFile(url, function(res) {
-        var xml = '';
+function handleAthletics() {
+    var fileName = 'xml/athletics.xml';
 
-        res.on('data', function(chunk) {
-            xml += chunk;
-            console.log("what");
-        });
-
-        res.on('error', function(e) {
-            callback(e, null);
-            console.log("is");
-        });
-
-        res.on('timeout', function(e) {
-            callback(e, null);
-            console.log("going");
-        });
-
-        res.on('end', function() {
-            parseString(xml, function(err, result) {
-                callback(null, result);
-                console.log("on");
-            });
-        });
-    });
+    fs.readFile(fileName, 'utf8', function(err, data) {
+        if (err) throw err;
+        var jsontext = parser.toJson(data);
+        var upcomingGames = JSON.parse(jsontext).scores.game;
+        for (i in upcomingGames) {
+            var game = upcomingGames[i];
+            console.log(game);
+        }
+    }
 }
+// function xmlToJson(url, callback) {
+//     // var req = http.get(url, function(res) {
+//     var req = fs.readFile(url, function(res) {
+//         var xml = '';
+//
+//         res.on('data', function(chunk) {
+//             xml += chunk;
+//             console.log("what");
+//         });
+//
+//         res.on('error', function(e) {
+//             callback(e, null);
+//             console.log("is");
+//         });
+//
+//         res.on('timeout', function(e) {
+//             callback(e, null);
+//             console.log("going");
+//         });
+//
+//         res.on('end', function() {
+//             parseString(xml, function(err, result) {
+//                 callback(null, result);
+//                 console.log("on");
+//             });
+//         });
+//     });
+// }
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'today': (req, res) => {
@@ -99,14 +112,15 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // });
 
         console.log("This shit");
-        var url = "xml/athletics.xml"//http://lehighsports.com/services/scores.aspx"; //?non_sport=0&sort=asc&range=future";
-        xmlToJson(url, function(err, data) {
-            if (err) {
-                return console.err(err);
-            }
-            console.log(JSON.stringify(data, null, 2));
-        });
-        console.log("Isn't fucked");
+        handleAthletics();
+        // var url = "xml/athletics.xml"//http://lehighsports.com/services/scores.aspx"; //?non_sport=0&sort=asc&range=future";
+        // xmlToJson(url, function(err, data) {
+        //     if (err) {
+        //         return console.err(err);
+        //     }
+        //     console.log(JSON.stringify(data, null, 2));
+        // });
+        // console.log("Isn't fucked");
 
 
         // var req = unirest("GET", "https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs");
