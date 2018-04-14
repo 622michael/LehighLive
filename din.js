@@ -27,13 +27,14 @@ const getCurrentHour = () => moment().hours();
 // STRING LOOKS LIKE THIS = Mon-Thurs: 8:00am-7:00pm, Fri: 8:00am - 1:30pm
 // Returns a single one of the above and it returns todays
 const extractTodaysDayAndTimeRangeFromTimeRanges = (timeRanges) => {
-  return timeRanges.find(timeRange => {
+  const todaysRange = timeRanges.find(timeRange => {
     const dayRangeAndTimeRangeSeparator = ':';
     const daysRange = timeRange.substring(0, timeRange.indexOf(dayRangeAndTimeRangeSeparator)).trim();
     const now = moment();
     const daySeparator = '-';
     const { endTime } = extractStartAndEndTimeFromDayAndTimeRangeString(timeRange);
     const isOneDayBefore = (first, second) => first.isSame(moment(second).subtract(1, 'day'), 'day');
+    console.log('endtime',endTime);
     const withinClosingTime = now.isBefore(endTime);
     if (daysRange.includes(daySeparator)) {
       const days = daysRange.split(daySeparator).map(day => day.substring(0, 3));
@@ -42,13 +43,21 @@ const extractTodaysDayAndTimeRangeFromTimeRanges = (timeRanges) => {
       const inclusiveDayToken = '[]';
       const lastDayInRangeCrossedPastMidnight = isOneDayBefore(endDay, endTime);
       const dayIsWithinRange = now.isBetween(startDay, endDay, 'day', inclusiveDayToken);
+      // console.log('first',lastDayInRangeCrossedPastMidnight);
+      // console.log('second',dayIsWithinRange);
       return dayIsWithinRange || (lastDayInRangeCrossedPastMidnight && withinClosingTime);
     } else {
       const day = moment(daysRange, dayOfWeekToken);
       const dayCrossedPastMidnight = isOneDayBefore(day, endTime);
+      console.log('first',dayCrossedPastMidnight);
+      console.log('second',withinClosingTime);
       return now.isSame(day, 'day') || (dayCrossedPastMidnight && withinClosingTime);
     }
-  }).trim();
+  });
+  if (todaysRange) {
+    return todaysRange.trim();
+  }
+  return todaysRange;
 };
 
 const extractStartAndEndDayFromDayAndTimeRangeString = (timeRange) => {
@@ -81,24 +90,33 @@ const extractStartAndEndTimeFromDayAndTimeRangeString = (timeRange) => {
   const isAm = (momentTime) => momentTime.hours() < 12;
   const singleDayObject = {days: 1};
   if (isPm(startTime) && isAm(endTime)) {
+    console.log('helloother',days.endDay);
     const onAmSideOfRange = getCurrentHour() <= endTime.hours();
     if (onAmSideOfRange) {
+      console.log('hellaaaao',days.endDay);
       startTime.subtract(singleDayObject);
     }
     // on pm side of range
     else {
+      console.log('hellaaafjkejekfjkeao',days.endDay);
       endTime.add(singleDayObject);
     }
   } else if (isAm(startTime) && isAm(endTime)) {
+    console.log('hello',days.endDay);
     const movedPastEndTimeOfPreviousDay = moment().isSame(days.endDay, 'day');
     const onRightSideOfRange = getCurrentHour() <= endTime.hours() && !movedPastEndTimeOfPreviousDay;
     if (onRightSideOfRange) {
+      console.log('xxxx',days.endDay);
       startTime.subtract(singleDayObject);
     }
     // on left side of range
     else {
+      console.log('zzzzzzzzz',days.endDay);
       endTime.add(singleDayObject);
     }
+  } else if ((isPm(startTime) && isPm(endTime)) || (isAm(startTime) && isPm(endTime))) {
+    startTime.day(days.endDay.days());
+    endTime.day(days.endDay.days());
   }
 
   return {
@@ -126,9 +144,11 @@ const getLocationHoursInfo = (locationName) => {
   const location = getRequestedLocationObject(locationName);
   const locationTimes = getStartAndEndTimeForToday(location.hours);
   const currentTime = moment();
+  console.log(locationTimes);
   if (!locationTimes) {
     return {
-      isOpen: false
+      isOpen: false,
+      isClosedForEntireDay: true
     }
   }
   const { startTime, endTime } = locationTimes;
@@ -137,7 +157,8 @@ const getLocationHoursInfo = (locationName) => {
     minutesUntilClose: moment.duration(endTime.diff(currentTime)).asMinutes(),
     minutesUntilOpen: moment.duration(startTime.diff(currentTime)).asMinutes(),
     openTime: startTime.format(hourMinuteFormat),
-    closeTime: endTime.format(hourMinuteFormat)
+    closeTime: endTime.format(hourMinuteFormat),
+    isClosedForEntireDay: false
   }
 };
 
@@ -203,7 +224,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   'islocationopen': (req, res) => {
     const locationName = req.body.queryResult.parameters.location;
     const locationHoursInfo = getLocationHoursInfo(locationName);
-    const { isOpen, minutesUntilClose, minutesUntilOpen, openTime, closeTime } = locationHoursInfo;
+    const { isOpen, minutesUntilClose, minutesUntilOpen, openTime, closeTime, isClosedForEntireDay } = locationHoursInfo;
     let responseText;
     if (minutesUntilClose > 0 && minutesUntilClose <= 45) {
       responseText = `Yes, but it's closing in ${minutesUntilClose.toFixed()} minutes. Better hurry!`;
@@ -211,8 +232,30 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
       responseText = `It's not open now, but it will be in ${minutesUntilOpen.toFixed()} minutes.`;
     } else if (isOpen) {
       responseText = `Yep! It's open from ${openTime} to ${closeTime} today.`;
+    } else if (isClosedForEntireDay) {
+      responseText = `No, it's closed for the whole day`;
     } else {
       responseText = `It's not... the hours are from ${openTime} to ${closeTime} today`;
+    }
+    res.json({
+      fulfillment_text: responseText
+    })
+  },
+  'islocationclosed': (req, res) => {
+    const locationName = req.body.queryResult.parameters.location;
+    const locationHoursInfo = getLocationHoursInfo(locationName);
+    const { isOpen, minutesUntilClose, minutesUntilOpen, openTime, closeTime, isClosedForEntireDay } = locationHoursInfo;
+    let responseText;
+    if (minutesUntilClose > 0 && minutesUntilClose <= 45) {
+      responseText = `No, but it's closing in ${minutesUntilClose.toFixed()} minutes. Better hurry!`;
+    } else if (minutesUntilOpen > 0 && minutesUntilOpen <= 30) {
+      responseText = `Yes, but it will be open in ${minutesUntilOpen.toFixed()} minutes.`;
+    } else if (isOpen) {
+      responseText = `No. It's open from ${openTime} to ${closeTime} today.`;
+    } else if (isClosedForEntireDay) {
+      responseText = `Yes, it's closed for the whole day.`;
+    } else {
+      responseText = `Yes, the hours are from ${openTime} to ${closeTime} today`;
     }
     res.json({
       fulfillment_text: responseText
