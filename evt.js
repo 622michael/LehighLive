@@ -100,7 +100,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             if (err) {
                 return console.err(err);
             }
-            console.log(JSON.stringify(data, null, 2));
+            console.log(data);//JSON.stringify(data, null, 2));
         });
 
 
