@@ -1,4 +1,6 @@
 const moment = require('moment');
+const fs = require('fs');
+const parser = require('xml2json');
 // DINtime
 // What's open now?
 
@@ -141,49 +143,42 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     // });
   },
   'menu': (req, res) => {
-    let location = req.body.queryResult.parameters.location;
-    let meal = req.body.queryResult.parameters.meal;
+    const location = req.body.queryResult.parameters.location;
+    const meal = req.body.queryResult.parameters.meal;
     console.log(location);
     console.log(meal);
-    let now = moment();
-    console.log(getMenu(location, now, meal));
+    const now = moment();
+    getMenu(location, now, meal);
     res.json({
       fulfillment_text: location + meal + now
     });
   }
 };
 const getMenu = (location, date, period) => {
-  let menuString = '';
-  let fs = require('fs');
-  let parser = require('xml2json');
-  let fileName = 'testdata/xml/' + location;
-
-  let time = date.format('YYYY-MM-DD');
+  const fileName = 'testdata/xml/rathbone-week15.xml';
+  const time = date.format('YYYY-MM-DD');
   console.log(time);
-
-  fs.readFile(fileName + '.xml', 'utf8', function(err, data) {
+  fs.readFile(fileName, 'utf8', function(err, data) {
     if (err) {
       return 'No information on ' + location + ' found.';
     }
-    let jsonText = parser.toJson(data);
-    let weeklyMenus = JSON.parse(jsonText)['VFPData']['weeklymenu'];
-    let station = '';
-    let i = 0;
-    // goes through all the listed items on a menu
-
-    for (i in weeklyMenus) {
-      let menu = weeklyMenus[i];
-      if (menu['menudate'] === time && menu['meal'] === period) {
+    const jsonText = parser.toJson(data);
+    const weeklyMenus = JSON.parse(jsonText)['VFPData']['weeklymenu'];
+    let currentStationName = undefined;
+    const menuString = weeklyMenus.reduce((menuString, currentMenu) => {
+      if (currentMenu['menudate'] === time && currentMenu['meal'] === period) {
         // Because items are listed sequentially by station, this is a switch to label what station the item is from
-        if (menu['station'] !== station) {
-          station = menu['station'];
-          menuString += station + ' Station:\n';
+        const listItem = '- ' + currentMenu['item_name'] + '\n';
+        if (currentMenu['station'] !== currentStationName) {
+          currentStationName = currentMenu['station'];
+          return menuString + currentStationName + ' Station:\n' + listItem;
         }
-        menuString += '- ' + menu['item_name'] + '\n';
-        // if(menu['allergens'] !== "") menuString += '- ' + menu['allergens'] + '\n';
-        // if(menu['calories'] !== "") menuString += '- Calories: ' + menu['calories'] + '\n';
+        return menuString + listItem;
+        // if(currentMenu['allergens'] !== "") menuString += '- ' + currentMenu['allergens'] + '\n';
+        // if(currentMenu['calories'] !== "") menuString += '- Calories: ' + currentMenu['calories'] + '\n';
       }
-    }
+      return menuString;
+    }, '');
     console.log(menuString);
     return menuString;
   });
