@@ -8,6 +8,7 @@ const BRODHEAD_TITLE = 'Brodhead';
 const residentDiningLocations = new Set([RATHBONE_TITLE, CORT_TITLE, BRODHEAD_TITLE]);
 
 const getCurrentHour = () => moment().hours();
+const getCurrentDay = () => moment().days();
 
 const getStartAndEndTimeForToday = (hoursString) => {
   const timeRangesSeparator = ',';
@@ -17,7 +18,7 @@ const getStartAndEndTimeForToday = (hoursString) => {
   if (!timeRangeForToday) {
     return undefined;
   }
-  return extractStartAndEndTimeFromDayAndTimeRangeString(timeRangeForToday);
+  return extractStartAndEndDateFromDayAndTimeRange(timeRangeForToday);
 };
 
 // STRING LOOKS LIKE THIS = Mon-Thurs: 8:00am-7:00pm, Fri: 8:00am - 1:30pm
@@ -28,23 +29,23 @@ const extractTodaysDayAndTimeRangeFromTimeRanges = (timeRanges) => {
     const daysRange = timeRange.substring(0, timeRange.indexOf(dayRangeAndTimeRangeSeparator)).trim();
     const now = moment();
     const daySeparator = '-';
-    const { endTime } = extractStartAndEndTimeFromDayAndTimeRangeString(timeRange);
+    const endDate = extractStartAndEndDateFromDayAndTimeRange(timeRange).endTime;
     const isOneDayBefore = (first, second) => first.isSame(moment(second).subtract(1, 'day'), 'day');
-    const withinClosingTime = now.isBefore(endTime);
+    const withinClosingTime = now.isBefore(endDate);
     if (daysRange.includes(daySeparator)) {
       const days = daysRange.split(daySeparator).map(day => day.substring(0, 3));
       const startDay = moment(days[0], dayOfWeekToken);
       const endDay = moment(days[1], dayOfWeekToken);
       if (endDay.isBefore(startDay)) endDay.add(1, 'week');
       const inclusiveDayToken = '[]';
-      const lastDayInRangeCrossedPastMidnight = isOneDayBefore(endDay, endTime);
+      const lastDayInRangeCrossedPastMidnight = isOneDayBefore(endDay, endDate);
       const dayIsWithinRange = now.isBetween(startDay, endDay, 'day', inclusiveDayToken);
       console.log('first',lastDayInRangeCrossedPastMidnight);
       console.log('second',dayIsWithinRange);
       return dayIsWithinRange || (lastDayInRangeCrossedPastMidnight && withinClosingTime);
     } else {
       const day = moment(daysRange, dayOfWeekToken);
-      const dayCrossedPastMidnight = isOneDayBefore(day, endTime);
+      const dayCrossedPastMidnight = isOneDayBefore(day, endDate);
       return now.isSame(day, 'day') || (dayCrossedPastMidnight && withinClosingTime);
     }
   });
@@ -63,7 +64,7 @@ const extractStartAndEndDayFromDayAndTimeRangeString = (timeRange) => {
 };
 
 // STRING LOOKS LIKE THIS = Mon-Thurs: 8:00am-7:00pm OR Fri: 8:00am - 1:30pm
-const extractStartAndEndTimeFromDayAndTimeRangeString = (timeRange) => {
+const extractStartAndEndDateFromDayAndTimeRange = (timeRange) => {
   const replaced =
     timeRange
       .replace('a.m.', 'am')
@@ -77,12 +78,13 @@ const extractStartAndEndTimeFromDayAndTimeRangeString = (timeRange) => {
 
   const days = extractStartAndEndDayFromDayAndTimeRangeString(timeRange);
 
-  // 7:30am
+  // 7:30am. For now we just assume we're being passed the current day's time range
   const startTime = moment(times[0], hourMinuteFormat);
   const endTime = moment(times[1], hourMinuteFormat);
   const isPm = (momentTime) => momentTime.hours() >= 12;
   const isAm = (momentTime) => momentTime.hours() < 12;
   const singleDayObject = {days: 1};
+
   if (isPm(startTime) && isAm(endTime)) {
     const onAmSideOfRange = getCurrentHour() <= endTime.hours();
     if (onAmSideOfRange) {
@@ -103,8 +105,8 @@ const extractStartAndEndTimeFromDayAndTimeRangeString = (timeRange) => {
       endTime.add(singleDayObject);
     }
   } else if ((isPm(startTime) && isPm(endTime)) || (isAm(startTime) && isPm(endTime))) {
-    startTime.day(days.startDay.days());
-    endTime.day(days.endDay.days());
+    startTime.day(getCurrentDay());
+    endTime.day(getCurrentDay());
   }
 
   return {
@@ -112,6 +114,8 @@ const extractStartAndEndTimeFromDayAndTimeRangeString = (timeRange) => {
     endTime: endTime
   };
 };
+
+// const adjustDateRangeBasedOnAmPm = (startTime, endTime, )
 
 module.exports = {
   getStartAndEndTimeForToday: getStartAndEndTimeForToday,
