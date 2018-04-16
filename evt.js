@@ -64,7 +64,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           console.log("3 DAY ARRAY");
           const filteredThreeDay = threeDay.filter(arr => arr);
           console.log(filteredThreeDay);
-          console.log(req);
         let outputName = req.body.session + "/contexts/generic";
         console.log(outputName);
           var outputContextsVal = [{
