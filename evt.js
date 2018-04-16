@@ -66,12 +66,12 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           console.log(filteredThreeDay);
           // handleRequest('2018-04-02', 'Breakfast');
           res.json({
-            fulfillment_text: filteredThreeDay.join(', '),
-            outputContexts : [{
-              parameters: {
-                param: "param value",
-              }
-            }]
+            fulfillment_text: filteredThreeDay.join(', ')
+            // outputContexts : [{
+            //   parameters: {
+            //     param: "param value",
+            //   }
+            // }]
 
           })
           ;
