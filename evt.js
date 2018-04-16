@@ -64,21 +64,21 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           console.log("3 DAY ARRAY");
           const filteredThreeDay = threeDay.filter(arr => arr);
           console.log(filteredThreeDay);
-        let outputName = req.body.session + "/contexts/event";
-        console.log(outputName);
-          var outputContextsVal = [{
-            name: outputName,
-            "lifespanCount": 5,
-            parameters: {
-              event: filteredThreeDay
-            }
-          }];
-          console.log("outputContextsVal");
-          console.log(outputContextsVal);
+        // let outputName = req.body.session + "/contexts/event";
+        // console.log(outputName);
+        //   var outputContextsVal = [{
+        //     name: outputName,
+        //     "lifespanCount": 5,
+        //     parameters: {
+        //       event: filteredThreeDay
+        //     }
+        //   }];
+        //   console.log("outputContextsVal");
+        //   console.log(outputContextsVal);
           // handleRequest('2018-04-02', 'Breakfast');
         let returnedJson = {
           fulfillment_text: filteredThreeDay.join(', '),
-          outputContexts: outputContextsVal
+          // outputContexts: outputContextsVal
         };
         console.log(returnedJson);
         res.json(returnedJson);
