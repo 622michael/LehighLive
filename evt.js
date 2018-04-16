@@ -122,7 +122,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
              if (error) throw new Error(error);
 
              console.log("hi");
-            console.log(body);
+            console.dir(body);
             console.log("hello");
         });
 
