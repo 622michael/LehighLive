@@ -176,8 +176,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 //         }
 //         console.log(res.body);
 //     }));
-
-
   }
 ;
 module.exports = EVT_FUNCTION_ACTION_NAME_TO_FUNCTION;
