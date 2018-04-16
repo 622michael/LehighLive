@@ -90,6 +90,15 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'sports':
       (req, res) => {
         console.log("Sports reached");
+        const fileName = 'testdata/xml/athletics.xml';
+        fs.readFile(fileName, 'utf8', function(err, data) {
+            if (err) {
+                return 'No athletics info found';
+            }
+            const jsonText = parser.toJson(data);
+            const games = JSON.parse(jsonText)['scores']['game'];
+            console.log(games);
+        });
 
         // var request = require("request");
         //
@@ -125,25 +134,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         //     console.dir(body);
         //     console.log("hello");
         // });
-          var req = unirest("GET", "http://lehighsports.com/services/scores.aspx");
 
-          req.query({
-              "non_sport": "0",
-              "sort": "asc",
-              "range": "future"
-          });
-
-          req.headers({
-              "Postman-Token": "07fa4dd5-72c3-47d8-b74d-0421b9250d4b",
-              "Cache-Control": "no-cache"
-          });
-
-
-          req.end(function (res) {
-              if (res.error) throw new Error(res.error);
-
-              console.log(res.body);
-          });
 
 
 
