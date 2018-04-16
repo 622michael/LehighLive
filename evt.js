@@ -65,25 +65,20 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           const filteredThreeDay = threeDay.filter(arr => arr);
           console.log(filteredThreeDay);
           var outputContexts = [{
-          parameters: {
-            param: "param value"
-          }
-        }]
+            parameters: {
+              param: "param value"
+            }
+          }];
 
-        console.log(outputContexts);
+          console.log(outputContexts);
           // handleRequest('2018-04-02', 'Breakfast');
           res.json({
             fulfillment_text: filteredThreeDay.join(', '),
-            outputContexts : outputContexts
-          })
-          ;
+            outputContexts: outputContexts
+          });
         }
-      )
-      ;
-
+      );
       console.log("Does this reach")
-
-
     },
 
     'sports':
