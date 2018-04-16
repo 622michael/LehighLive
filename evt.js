@@ -72,10 +72,12 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           console.log("outputContextsVal");
           console.log(outputContextsVal);
           // handleRequest('2018-04-02', 'Breakfast');
-          res.json({
-            fulfillment_text: filteredThreeDay.join(', '),
-            outputContexts: outputContextsVal
-          });
+        let returnedJson = {
+          fulfillment_text: filteredThreeDay.join(', '),
+          outputContexts: outputContextsVal
+        };
+        console.log(returnedJson);
+        res.json(returnedJson);
         }
       );
       console.log("Does this reach")
