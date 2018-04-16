@@ -103,7 +103,7 @@ const extractStartAndEndTimeFromDayAndTimeRangeString = (timeRange) => {
       endTime.add(singleDayObject);
     }
   } else if ((isPm(startTime) && isPm(endTime)) || (isAm(startTime) && isPm(endTime))) {
-    startTime.day(days.endDay.days());
+    startTime.day(days.startDay.days());
     endTime.day(days.endDay.days());
   }
 

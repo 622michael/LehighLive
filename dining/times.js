@@ -33,6 +33,10 @@ const getLocationHoursInfo = (locationName) => {
     }
   }
   const { startTime, endTime } = locationTimes;
+  console.log('start', startTime);
+  console.log('current time', currentTime);
+  console.log('end', endTime);
+  console.log('isOpen', currentTime.isBetween(startTime, endTime));
   return {
     name: locationName,
     isOpen: currentTime.isBetween(startTime, endTime),
