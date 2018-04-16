@@ -69,7 +69,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               param: "param value"
             }
           }];
-          console.log("outputContexts");
+          console.log("outputContextsVal");
           console.log(outputContextsVal);
           // handleRequest('2018-04-02', 'Breakfast');
           res.json({
