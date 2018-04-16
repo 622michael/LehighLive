@@ -5,8 +5,7 @@ var parseString = require('xml2js').parseString;
 var http = require('http');
 
 function xmlToJson(url, callback) {
-  // var req = http.get(url, function(res) {
-  var req = fs.readFile(url, function (res) {
+   var req = http.get(url, function(res) {
     var xml = '';
 
     res.on('data', function (chunk) {
@@ -113,7 +112,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // });
 
         console.log("This shit");
-        var url = "xml/athletics.xml"//http://lehighsports.com/services/scores.aspx"; //?non_sport=0&sort=asc&range=future";
+        var url = "http://lehighsports.com/services/scores.aspx"; //?non_sport=0&sort=asc&range=future";
         xmlToJson(url, function (err, data) {
           if (err) {
             return console.err(err);
