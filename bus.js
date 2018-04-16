@@ -82,6 +82,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         const app = new DialogflowApp({req, res});
         if (app.isPermissionGranted()) {
             app.tell("You have granted permission");
+            app.getDeviceLocation().coordinates;
         } else {
             app.askForPermission('To locate you', app.SupportedPermissions.DEVICE_PRECISE_LOCATION);
         }
@@ -118,7 +119,6 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                         break;
                 }
             }
-
             res.json({
                 fulfillment_text: fullfillment
             })
