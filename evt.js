@@ -68,8 +68,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         let outputName = req.body.session + "/contexts/generic";
         console.log(outputName);
           var outputContextsVal = [{
+            name: outputName,
             parameters: {
-              name: outputName,
               param: "param value"
             }
           }];
