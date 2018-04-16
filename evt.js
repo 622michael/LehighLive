@@ -64,15 +64,17 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           console.log("3 DAY ARRAY");
           const filteredThreeDay = threeDay.filter(arr => arr);
           console.log(filteredThreeDay);
+          var outputContexts = [{
+          parameters: {
+            param: "param value"
+          }
+        }]
+
+        console.log(outputContexts);
           // handleRequest('2018-04-02', 'Breakfast');
           res.json({
-            fulfillment_text: filteredThreeDay.join(', ')
-            // outputContexts : [{
-            //   parameters: {
-            //     param: "param value",
-            //   }
-            // }]
-
+            fulfillment_text: filteredThreeDay.join(', '),
+            outputContexts : outputContexts
           })
           ;
         }
