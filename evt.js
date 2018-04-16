@@ -121,7 +121,9 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         request(options, function (error, response, body) {
              if (error) throw new Error(error);
 
+             console.log("hi");
             console.log(body);
+            console.log("hello");
         });
 
 
