@@ -111,56 +111,43 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         //     // })
         //     // console.log(names);
         // });
-
-        var options = { method: 'GET',
-              url: 'http://lehighsports.com/services/scores.aspx',
-              qs: { non_sport: '0', sort: 'asc', range: 'future' },
-              headers:
-                  { 'Postman-Token': '7b587394-dae6-4299-92f9-5e6208ff964e',
-                      'Cache-Control': 'no-cache' } };
-        request(options, function (error, response, body) {
-             if (error) throw new Error(error);
-
-             console.log("hi");
-            console.dir(body);
-            console.log("hello");
-        });
-
-
-          // xmlToJson(url, function (err, data) {
-        //   if (err) {
-        //     return console.err(err);
-        //   }
-        //   console.log(JSON.stringify(data, null, 2));
-        // });
-
-
-        // var req = unirest("GET", "https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs");
-
-        // req.headers({
-        //     "Postman-Token": "3c269766-2b96-474a-a246-f6da16cd16f0",
-        //     "Cache-Control": "no-cache"
-        // });
-
-
-        // unirest.get('https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs').end(function (res) {
-        //     if (res.error) throw new Error(res.error);
         //
-        //     console.log(res.body);
+        // var options = { method: 'GET',
+        //       url: 'http://lehighsports.com/services/scores.aspx',
+        //       qs: { non_sport: '0', sort: 'asc', range: 'future' },
+        //       headers:
+        //           { 'Postman-Token': '7b587394-dae6-4299-92f9-5e6208ff964e',
+        //               'Cache-Control': 'no-cache' } };
+        // request(options, function (error, response, body) {
+        //      if (error) throw new Error(error);
         //
-        //     //     var eventnames = new Array();
-        //     //     console.log("Before Map");
-        //     //     let names = itemList.map (event => {
-        //     //         eventnames.push(event);
-        //     //     });
-        //     console.log("After Map");
-        //     let itemList = JSON.parse(res.body.items);
-
-
-        // console.log(names);
+        //      console.log("hi");
+        //     console.dir(body);
+        //     console.log("hello");
         // });
+          var req = unirest("GET", "http://lehighsports.com/services/scores.aspx");
 
-        res.json({
+          req.query({
+              "non_sport": "0",
+              "sort": "asc",
+              "range": "future"
+          });
+
+          req.headers({
+              "Postman-Token": "07fa4dd5-72c3-47d8-b74d-0421b9250d4b",
+              "Cache-Control": "no-cache"
+          });
+
+
+          req.end(function (res) {
+              if (res.error) throw new Error(res.error);
+
+              console.log(res.body);
+          });
+
+
+
+          res.json({
           fulfillment_text: "Sports Reached"
         });
         //}
