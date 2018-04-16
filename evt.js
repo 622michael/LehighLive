@@ -2,7 +2,7 @@ const unirest = require("unirest");
 const moment = require("moment");
 const request = require("request");
 var fs = require('fs');
-var parseString = require('xml2js').parseString;
+const parser = require('xml2json');
 
 
 // function xmlToJson(url, callback) {
