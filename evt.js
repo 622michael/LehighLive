@@ -1,36 +1,37 @@
 const unirest = require("unirest");
 const moment = require("moment");
+const request = require("request");
 var fs = require('fs');
 var parseString = require('xml2js').parseString;
-var http = require('http');
 
-function xmlToJson(url, callback) {
-    var req = http.get(url, function(res) {
-    var xml = '';
 
-    res.on('data', function (chunk) {
-      xml += chunk;
-      console.log("what");
-    });
-
-    res.on('error', function (e) {
-      callback(e, null);
-      console.log("is");
-    });
-
-    res.on('timeout', function (e) {
-      callback(e, null);
-      console.log("going");
-    });
-
-    res.on('end', function () {
-      parseString(xml, function (err, result) {
-        callback(null, result);
-        console.log("on");
-      });
-    });
-  });
-}
+// function xmlToJson(url, callback) {
+//     var req = http.get(url, function(res) {
+//     var xml = '';
+//
+//     res.on('data', function (chunk) {
+//       xml += chunk;
+//       console.log("what");
+//     });
+//
+//     res.on('error', function (e) {
+//       callback(e, null);
+//       console.log("is");
+//     });
+//
+//     res.on('timeout', function (e) {
+//       callback(e, null);
+//       console.log("going");
+//     });
+//
+//     res.on('end', function () {
+//       parseString(xml, function (err, result) {
+//         callback(null, result);
+//         console.log("on");
+//       });
+//     });
+//   });
+// }
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'today': (req, res) => {
@@ -111,13 +112,25 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         //     // console.log(names);
         // });
 
-        var url = "http://lehighsports.com/services/scores.aspx"; //?non_sport=0&sort=asc&range=future";
-        xmlToJson(url, function (err, data) {
-          if (err) {
-            return console.err(err);
-          }
-          console.log(JSON.stringify(data, null, 2));
+        var options = { method: 'GET',
+              url: 'http://lehighsports.com/services/scores.aspx',
+              qs: { non_sport: '0', sort: 'asc', range: 'future' },
+              headers:
+                  { 'Postman-Token': '7b587394-dae6-4299-92f9-5e6208ff964e',
+                      'Cache-Control': 'no-cache' } };
+        request(options, function (error, response, body) {
+             if (error) throw new Error(error);
+
+            console.log(body);
         });
+
+
+          // xmlToJson(url, function (err, data) {
+        //   if (err) {
+        //     return console.err(err);
+        //   }
+        //   console.log(JSON.stringify(data, null, 2));
+        // });
 
 
         // var req = unirest("GET", "https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs");
