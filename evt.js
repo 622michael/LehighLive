@@ -71,7 +71,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             name: outputName,
             "lifespanCount": 5,
             parameters: {
-              param: "param value"
+              param: filteredThreeDay
             }
           }];
           console.log("outputContextsVal");
