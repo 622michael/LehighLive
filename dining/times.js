@@ -4,12 +4,20 @@ const common = require('./common');
 momentDurationFormatSetup(moment);
 
 const json = require('../testdata/formatLocations');
+
 const allLocations = json.locations.category.map(element => {
   return element.location;
 }).reduce((acc, val) => acc.concat(val), []);
 
 const getAllLocations = () => {
   return allLocations;
+};
+
+const getRequestedLocationObject = (locationName) => {
+    return getAllLocations().find(location => {
+        const locationNames = new Set([location.title, location.fulltitle, location.mapsearch]);
+        return locationNames.has(locationName);
+    });
 };
 
 const minutesAsHoursAndMinutes = (minutes) => {
@@ -51,13 +59,6 @@ const isOpen = (location, time) => {
   const locationTimes = common.getStartAndEndTimeForToday(location.hours);
   if (!locationTimes) return false;
   return time.isBetween(locationTimes.startTime, locationTimes.endTime);
-};
-
-const getRequestedLocationObject = (locationName) => {
-  return getAllLocations().find(location => {
-    const locationNames = new Set([location.title, location.fulltitle, location.mapsearch]);
-    return locationNames.has(locationName);
-  });
 };
 
 const getLocationHoursInfoFromRequest = (request) => {
