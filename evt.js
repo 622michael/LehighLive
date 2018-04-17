@@ -100,7 +100,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             const games = JSON.parse(jsonText)['scores']['game'];
             const gameString = games.reduce((gameString, currentGame) => {
                 var currentTime = moment();
-                if(moment(currentGame['time']).isBetween(currentTime, currentTime.add(3, 'd'))) {
+                var gameTime = moment(currentGame['time'], 'MM-DD-YYYY hh:mm:ss A')
+                if(gameTime.isBetween(currentTime, currentTime.add(3, 'd'))) {
                     const listItem = '- ' + currentGame['sport_abbrev'] + '\n';
                     return gameString + listItem;
                 }
