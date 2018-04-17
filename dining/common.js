@@ -57,11 +57,11 @@ const extractTodaysDayAndTimeRangeFromTimeRanges = (timeRanges) => {
 
 // STRING LOOKS LIKE THIS = Mon-Thurs: 8:00am-7:00pm OR Fri: 8:00am - 1:30pm
 const extractStartAndEndDateFromDayAndTimeRange = (timeRange) => {
-  const days = extractStartAndEndDayFromDayAndTimeRange(timeRange);
+  const { startDay, endDay } = extractStartAndEndDayFromDayAndTimeRange(timeRange);
 
   // 7:30am. For now we just assume we're being passed the current day's time range
   const { startTime, endTime } = extractStartAndEndTimeFromDayAndTimeRange(timeRange);
-  adjustDatesBasedOnAmPm(startTime, endTime, days.endDay);
+  adjustDatesBasedOnAmPm(startTime, endTime, startDay, endDay);
 
   return {
     startTime: startTime,
@@ -94,14 +94,14 @@ const extractStartAndEndTimeFromDayAndTimeRange = (timeRange) => {
   };
 };
 
-const adjustDatesBasedOnAmPm = (startTime, endTime, endDay) => {
+const adjustDatesBasedOnAmPm = (startTime, endTime, startDay, endDay) => {
   const isPm = (momentTime) => momentTime.hours() >= 12;
   const isAm = (momentTime) => momentTime.hours() < 12;
 
   if (isPm(startTime) && isAm(endTime)) {
     adjustDatesForPmAmCase(startTime, endTime);
   } else if (isAm(startTime) && isAm(endTime)) {
-    adjustDatesForAmAmCase(startTime, endTime, endDay);
+    adjustDatesForAmAmCase(startTime, endTime, startDay, endDay);
   } else if ((isPm(startTime) && isPm(endTime)) || (isAm(startTime) && isPm(endTime))) {
     startTime.day(getCurrentDay());
     endTime.day(getCurrentDay());
@@ -112,22 +112,30 @@ const adjustDatesForPmAmCase = (startTime, endTime) => {
   const onAmSideOfRange = getCurrentHour() <= endTime.hours();
   const singleDayObject = {days: 1};
   if (onAmSideOfRange) {
+    // day was created based on current day, which is one day past the range, for example: Fri: 7:00PM - 2:00AM.
+    // day was created on Saturday in the above example so the start time is 7:00PM on saturday. Subtract one day to bring it back to Friday.
     startTime.subtract(singleDayObject);
   }
   // on pm side of range
   else {
+    // Opposite occurred, and we got 2AM on Friday, so add a day to make it 2AM on Saturday.
     endTime.add(singleDayObject);
   }
 };
 
-const adjustDatesForAmAmCase = (startTime, endTime, endDay) => {
-  const movedPastEndTimeOfPreviousDay = moment().isSame(endDay, 'day');
-  const onRightSideOfRange = getCurrentHour() <= endTime.hours() && !movedPastEndTimeOfPreviousDay;
+const adjustDatesForAmAmCase = (startTime, endTime, startDay, endDay) => {
+  console.log(startTime);
+  console.log(endTime);
+  // Example time: Mon: 10:30AM - 2:00AM. If this is the time, our start time is ahead of our end time
+  // because the range is actually saying Monday 10:30AM to 2:00AM Tuesday. We need to adjust.
+  // If we're within midnight to 2:00AM range, our start time is ahead of where it should be by a day so we need to subtract from start time.
+  const onRightSideOfRange = getCurrentHour() <= endTime.hours() && moment().isAfter(startDay);
+  console.log('onrightside=',onRightSideOfRange);
   const singleDayObject = {days: 1};
   if (onRightSideOfRange) {
     startTime.subtract(singleDayObject);
   }
-  // on left side of range
+  // If we're within 10:30AM - midnight range, end time is 1 day behind where it should be so we need to add a day
   else {
     endTime.add(singleDayObject);
   }
