@@ -129,7 +129,7 @@ const adjustDatesForAmAmCase = (startTime, endTime, startDay, endDay) => {
   // Example time: Mon: 10:30AM - 2:00AM. If this is the time, our start time is ahead of our end time
   // because the range is actually saying Monday 10:30AM to 2:00AM Tuesday. We need to adjust.
   // If we're within midnight to 2:00AM range, our start time is ahead of where it should be by a day so we need to subtract from start time.
-  const onRightSideOfRange = getCurrentHour() <= endTime.hours() && moment().isAfter(startDay);
+  const onRightSideOfRange = getCurrentHour() <= endTime.hours() && moment().isBetween(moment(startDay).add(1, 'day'), moment(endDay).add(1, 'day'));
   console.log('onrightside=',onRightSideOfRange);
   const singleDayObject = {days: 1};
   if (onRightSideOfRange) {

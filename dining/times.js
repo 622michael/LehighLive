@@ -18,13 +18,12 @@ const minutesAsHoursAndMinutes = (minutes) => {
 };
 
 const getOpenLocations = () => {
-  return getAllLocations().filter(isOpenNow);
+  return getAllLocations().filter(location => isOpen(location, moment()));
 };
 
-const getLocationHoursInfo = (locationName) => {
+const getLocationHoursInfo = (locationName, time) => {
   const location = getRequestedLocationObject(locationName);
   const locationTimes = common.getStartAndEndTimeForToday(location.hours);
-  const currentTime = moment();
   if (!locationTimes) {
     return {
       name: locationName,
@@ -34,25 +33,24 @@ const getLocationHoursInfo = (locationName) => {
   }
   const { startTime, endTime } = locationTimes;
   console.log('start', startTime);
-  console.log('current time', currentTime);
+  console.log('current time', time);
   console.log('end', endTime);
-  console.log('isOpen', currentTime.isBetween(startTime, endTime));
+  console.log('isOpen', time.isBetween(startTime, endTime));
   return {
     name: locationName,
-    isOpen: currentTime.isBetween(startTime, endTime),
-    minutesUntilClose: moment.duration(endTime.diff(currentTime)).asMinutes(),
-    minutesUntilOpen: moment.duration(startTime.diff(currentTime)).asMinutes(),
+    isOpen: time.isBetween(startTime, endTime),
+    minutesUntilClose: moment.duration(endTime.diff(time)).asMinutes(),
+    minutesUntilOpen: moment.duration(startTime.diff(time)).asMinutes(),
     openTime: startTime.format(common.hourMinuteFormat),
     closeTime: endTime.format(common.hourMinuteFormat),
     isClosedForEntireDay: false
   }
 };
 
-const isOpenNow = (location) => {
+const isOpen = (location, time) => {
   const locationTimes = common.getStartAndEndTimeForToday(location.hours);
   if (!locationTimes) return false;
-  const currentTime = moment();
-  return currentTime.isBetween(locationTimes.startTime, locationTimes.endTime);
+  return time.isBetween(locationTimes.startTime, locationTimes.endTime);
 };
 
 const getRequestedLocationObject = (locationName) => {
@@ -64,7 +62,7 @@ const getRequestedLocationObject = (locationName) => {
 
 const getLocationHoursInfoFromRequest = (request) => {
   const locationName = request.body.queryResult.parameters.location;
-  return getLocationHoursInfo(locationName);
+  return getLocationHoursInfo(locationName, moment());
 };
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
