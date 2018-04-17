@@ -161,7 +161,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     const { name, isClosedForEntireDay, openTime, closeTime } = getLocationHoursInfoFromRequest(req);
     let responseText;
     if (isClosedForEntireDay) {
-      responseText = `${name} is closed for the day.`;
+      responseText = `${name} is closed for the entire day.`;
     } else {
       responseText = `The hours for ${name} today are ${openTime}-${closeTime}`;
     }
