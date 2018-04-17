@@ -82,7 +82,6 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         const app = new DialogflowApp({req, res});
         if (app.isPermissionGranted()) {
             app.tell("You have granted permission");
-            console.log(app.getDeviceLocation().coordinates);
         } else {
             app.askForPermission('To locate you', app.SupportedPermissions.DEVICE_PRECISE_LOCATION);
         }
@@ -145,6 +144,11 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 fulfillment_text: prettySpeech
             });
         });
+    },
+    'from' :(req, res) => {
+      res.json({
+        fulfillment_text: "Bus from reached"
+      });
     }
 };
 
