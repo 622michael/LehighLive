@@ -1,8 +1,9 @@
 const unirest = require("unirest");
 const moment = require("moment");
-const request = require("request");
-var fs = require('fs');
+//const request = require("request");
+const fs = require('fs');
 const parser = require('xml2json');
+const moment = require('moment');
 
 
 // function xmlToJson(url, callback) {
@@ -91,6 +92,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
       (req, res) => {
         console.log("Sports reached");
         const fileName = 'testdata/xml/athletics.xml';
+        //const time = moment().format('')
         fs.readFile(fileName, 'utf8', function(err, data) {
             if (err) {
                 return 'No athletics info found';
@@ -98,8 +100,9 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             const jsonText = parser.toJson(data);
             const games = JSON.parse(jsonText)['scores']['game'];
             const gameString = games.reduce((gameString, currentGame) => {
-                if(currentGame['sport_abbrev'] === 'WLAX') {
-                    const listItem = '- ' + currentGame['date'] + '\n';
+                var currentTime = moment();
+                if(moment(currentGame['time']).isBetween(currentTime, currentTime.add(3, 'd'))) {
+                    const listItem = '- ' + currentGame['sport_abbrev'] + '\n';
                     return gameString + listItem;
                 }
                 return gameString;
