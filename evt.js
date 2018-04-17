@@ -3,8 +3,7 @@ const moment = require("moment");
 //const request = require("request");
 const fs = require('fs');
 const parser = require('xml2json');
-const moment = require('moment');
- 
+
 
 // function xmlToJson(url, callback) {
 //     var req = http.get(url, function(res) {
