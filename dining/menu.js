@@ -4,6 +4,52 @@ const parser = require('xml2json');
 const common = require('./common');
 const isResidentDiningLocation = (locationName) => common.residentDiningLocations.has(locationName);
 
+// {
+//     "items": [
+//         {
+//
+//         },
+//         {
+//             "description": "Item Two Description",
+//             "image": {
+//                 "url": "http://imageTwoUrl.com"
+//             },
+//             "optionInfo": {
+//                 "key": "itemTwo",
+//                 "synonyms": [
+//                     "thing two",
+//                     "object two"
+//                 ]
+//             },
+//             "title": "Item Two"
+//         }
+//     ],
+//     "platform": "google",
+//     "title": "Title",
+//     "type": "list_card"
+// }
+
+const stationItemList = (stationList) => {
+
+    let itemList = [];
+
+    Array.from(stationList).forEach((stationStr) => {
+        let item = {
+            "title": stationStr,
+            "optionInfo": {
+                "key": stationStr,
+                "synonyms": [
+                    stationStr + 's',
+                    stationStr + '\'s'
+                ]
+            }
+        };
+        console.log('?');
+        itemList.push(item);
+    });
+    return itemList;
+};
+
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'menu': (req, res) => {
         const location = req.body.queryResult.parameters.location;
@@ -17,10 +63,23 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         console.log('Location:', location);
         console.log('Meal:', meal);
         console.log('Time:', now.format('YYYY-MM-DD'));
-        console.log('Station List:\n', getStations(location, now, meal));
-        console.log('Station Menu List:\n', getStationMenu(location, now, meal, 'Entrée'));
+
+        let stationList = getStations(location, now, meal);
+        let stationMenu = getStationMenu(location, now, meal, 'Entrée');
+        let itemList = stationItemList(stationList);
+
+        console.log('Station List:\n', stationList);
+        console.log('Station Menu List:\n', stationMenu);
+        console.log('Station Item List\n', itemList);
         res.json({
-            fulfillment_text: getStationMenu(location, now, meal, 'Entrée')
+            fulfillment_messages: [
+                {
+                    "title": `Stations at ${location}.`,
+                    "items": itemList,
+                    "platform": "google",
+                    "type": "list_card"
+                }
+            ]
         });
     },
 };
