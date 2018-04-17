@@ -104,7 +104,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 }
                 return gameString;
             })
-            console.log(games);
+            console.log(gameString);
         });
 
         // var request = require("request");
