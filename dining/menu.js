@@ -4,35 +4,8 @@ const parser = require('xml2json');
 const common = require('./common');
 const isResidentDiningLocation = (locationName) => common.residentDiningLocations.has(locationName);
 
-// {
-//     "items": [
-//         {
-//
-//         },
-//         {
-//             "description": "Item Two Description",
-//             "image": {
-//                 "url": "http://imageTwoUrl.com"
-//             },
-//             "optionInfo": {
-//                 "key": "itemTwo",
-//                 "synonyms": [
-//                     "thing two",
-//                     "object two"
-//                 ]
-//             },
-//             "title": "Item Two"
-//         }
-//     ],
-//     "platform": "google",
-//     "title": "Title",
-//     "type": "list_card"
-// }
-
 const stationItemList = (stationList) => {
-
     let itemList = [];
-
     Array.from(stationList).forEach((stationStr) => {
         let item = {
             "title": stationStr,
@@ -44,7 +17,6 @@ const stationItemList = (stationList) => {
                 ]
             }
         };
-        console.log('?');
         itemList.push(item);
     });
     return itemList;
@@ -52,8 +24,9 @@ const stationItemList = (stationList) => {
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'menu': (req, res) => {
-        const location = req.body.queryResult.parameters.location;
-        const meal = req.body.queryResult.parameters.meal;
+        const parameters = req.body.queryResult.parameters;
+        const location = parameters.location;
+        const meal = parameters.meal;
         if (!isResidentDiningLocation(location)) {
             res.json({
                 fulfillment_text: `I only know how to tell you what's for ${meal} at Rathbone, Lower Cort, and Brodhead`
@@ -68,9 +41,9 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         let stationMenu = getStationMenu(location, now, meal, 'Entrée');
         let itemList = stationItemList(stationList);
 
-        console.log('Station List:\n', stationList);
-        console.log('Station Menu List:\n', stationMenu);
-        console.log('Station Item List\n', itemList);
+        // console.log('Station List:\n', stationList);
+        // console.log('Station Menu List:\n', stationMenu);
+        // console.log('Station Item List\n', itemList);
         res.json({
             fulfillment_messages: [
                 {
@@ -85,32 +58,32 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 };
 
 const getStations = (location, date, period) => {
-    const fileName = 'testdata/xml/rathbone.xml';
+    const xmLFile = 'testdata/xml/rathbone.xml';
+    const xmlData = fs.readFileSync(xmLFile, 'utf8');
+    const jsonText = parser.toJson(xmlData);
+    const item = JSON.parse(jsonText)['VFPData']['weeklymenu'];
     const time = date.format('YYYY-MM-DD');
-    const data = fs.readFileSync(fileName, 'utf8');
-    const jsonText = parser.toJson(data);
-    const weeklyMenus = JSON.parse(jsonText)['VFPData']['weeklymenu'];
 
     let stationList = [];
-    weeklyMenus.forEach((itemInMenu) => {
-        const item = itemInMenu['station'];
-        if (itemInMenu['menudate'] === time && itemInMenu['meal'] === period && stationList.indexOf(item) === -1)
-            stationList.push(item);
+    item.forEach((attribute) => {
+        const station = attribute['station'];
+        if (attribute['menudate'] === time && attribute['meal'] === period && stationList.indexOf(station) === -1)
+            stationList.push(station);
     });
     return stationList;
 };
 
 const getStationMenu = (location, date, period, station) => {
-    const fileName = 'testdata/xml/rathbone.xml';
+    const xmLFile = 'testdata/xml/rathbone.xml';
+    const xmlData = fs.readFileSync(xmLFile, 'utf8');
+    const jsonText = parser.toJson(xmlData);
+    const item = JSON.parse(jsonText)['VFPData']['weeklymenu'];
     const time = date.format('YYYY-MM-DD');
-    const data = fs.readFileSync(fileName, 'utf8');
-    const jsonText = parser.toJson(data);
-    const weeklyMenus = JSON.parse(jsonText)['VFPData']['weeklymenu'];
 
     let stationItems = "";
-    weeklyMenus.forEach((itemInMenu) => {
-        if (itemInMenu['menudate'] === time && itemInMenu['meal'] === period && itemInMenu['station'] === station)
-            stationItems += '- ' + itemInMenu['item_name'] + '\n';
+    item.forEach((attribute) => {
+        if (attribute['menudate'] === time && attribute['meal'] === period && attribute['station'] === station)
+            stationItems += '- ' + attribute['item_name'] + '\n';
     });
     return stationItems;
 };
