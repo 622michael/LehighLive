@@ -97,7 +97,14 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             }
             const jsonText = parser.toJson(data);
             const games = JSON.parse(jsonText)['scores']['game'];
-            console.log(games);
+            const gameString = games.reduce((gameString, currentGame) => {
+                if(currentGame['sport_abbrev'] === 'WLAX') {
+                    const listItem = '- ' + currentGame['date'] + '\n';
+                    return gameString + listItem;
+                }
+                return gameString;
+            })
+            console.log(gameString);
         });
 
         // var request = require("request");
