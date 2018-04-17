@@ -55,7 +55,21 @@ const extractTodaysDayAndTimeRangeFromTimeRanges = (timeRanges) => {
   return todaysRange;
 };
 
-const extractStartAndEndDayFromDayAndTimeRangeString = (timeRange) => {
+// STRING LOOKS LIKE THIS = Mon-Thurs: 8:00am-7:00pm OR Fri: 8:00am - 1:30pm
+const extractStartAndEndDateFromDayAndTimeRange = (timeRange) => {
+  const days = extractStartAndEndDayFromDayAndTimeRange(timeRange);
+
+  // 7:30am. For now we just assume we're being passed the current day's time range
+  const { startTime, endTime } = extractStartAndEndTimeFromDayAndTimeRange(timeRange);
+  adjustDatesBasedOnAmPm(startTime, endTime, days.endDay);
+
+  return {
+    startTime: startTime,
+    endTime: endTime
+  };
+};
+
+const extractStartAndEndDayFromDayAndTimeRange = (timeRange) => {
   const split = timeRange.split(' ').join('').split(':')[0].split('-');
   return {
     startDay: moment(split[0], dayOfWeekToken),
@@ -63,8 +77,7 @@ const extractStartAndEndDayFromDayAndTimeRangeString = (timeRange) => {
   };
 };
 
-// STRING LOOKS LIKE THIS = Mon-Thurs: 8:00am-7:00pm OR Fri: 8:00am - 1:30pm
-const extractStartAndEndDateFromDayAndTimeRange = (timeRange) => {
+const extractStartAndEndTimeFromDayAndTimeRange = (timeRange) => {
   const replaced =
     timeRange
       .replace('a.m.', 'am')
@@ -75,47 +88,50 @@ const extractStartAndEndDateFromDayAndTimeRange = (timeRange) => {
   // [7:30am, 8:30pm]
   const startOfTimeRangeIndex = replaced.indexOf(':') + 1;
   const times = replaced.substring(startOfTimeRangeIndex).split('-'); // separate into the start time and end time
+  return {
+    startTime: moment(times[0], hourMinuteFormat),
+    endTime: moment(times[1], hourMinuteFormat)
+  };
+};
 
-  const days = extractStartAndEndDayFromDayAndTimeRangeString(timeRange);
-
-  // 7:30am. For now we just assume we're being passed the current day's time range
-  const startTime = moment(times[0], hourMinuteFormat);
-  const endTime = moment(times[1], hourMinuteFormat);
+const adjustDatesBasedOnAmPm = (startTime, endTime, endDay) => {
   const isPm = (momentTime) => momentTime.hours() >= 12;
   const isAm = (momentTime) => momentTime.hours() < 12;
-  const singleDayObject = {days: 1};
 
   if (isPm(startTime) && isAm(endTime)) {
-    const onAmSideOfRange = getCurrentHour() <= endTime.hours();
-    if (onAmSideOfRange) {
-      startTime.subtract(singleDayObject);
-    }
-    // on pm side of range
-    else {
-      endTime.add(singleDayObject);
-    }
+    adjustDatesForPmAmCase(startTime, endTime);
   } else if (isAm(startTime) && isAm(endTime)) {
-    const movedPastEndTimeOfPreviousDay = moment().isSame(days.endDay, 'day');
-    const onRightSideOfRange = getCurrentHour() <= endTime.hours() && !movedPastEndTimeOfPreviousDay;
-    if (onRightSideOfRange) {
-      startTime.subtract(singleDayObject);
-    }
-    // on left side of range
-    else {
-      endTime.add(singleDayObject);
-    }
+    adjustDatesForAmAmCase(startTime, endTime, endDay);
   } else if ((isPm(startTime) && isPm(endTime)) || (isAm(startTime) && isPm(endTime))) {
     startTime.day(getCurrentDay());
     endTime.day(getCurrentDay());
   }
-
-  return {
-    startTime: startTime,
-    endTime: endTime
-  };
 };
 
-// const adjustDateRangeBasedOnAmPm = (startTime, endTime, )
+const adjustDatesForPmAmCase = (startTime, endTime) => {
+  const onAmSideOfRange = getCurrentHour() <= endTime.hours();
+  const singleDayObject = {days: 1};
+  if (onAmSideOfRange) {
+    startTime.subtract(singleDayObject);
+  }
+  // on pm side of range
+  else {
+    endTime.add(singleDayObject);
+  }
+};
+
+const adjustDatesForAmAmCase = (startTime, endTime, endDay) => {
+  const movedPastEndTimeOfPreviousDay = moment().isSame(endDay, 'day');
+  const onRightSideOfRange = getCurrentHour() <= endTime.hours() && !movedPastEndTimeOfPreviousDay;
+  const singleDayObject = {days: 1};
+  if (onRightSideOfRange) {
+    startTime.subtract(singleDayObject);
+  }
+  // on left side of range
+  else {
+    endTime.add(singleDayObject);
+  }
+};
 
 module.exports = {
   getStartAndEndTimeForToday: getStartAndEndTimeForToday,
