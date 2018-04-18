@@ -8,15 +8,15 @@ const stationItemList = (stationList) => {
     let itemList = [];
     Array.from(stationList).forEach((stationStr) => {
         let item = {
-            "description": stationStr,
-            "optionInfo": {
+            "info": {
                 "key": stationStr,
                 "synonyms": [
                     stationStr + 's',
                     stationStr + '\'s'
-                ]
+                ],
+                "title": stationStr
             },
-            "title": stationStr
+
         };
         itemList.push(item);
     });
@@ -84,10 +84,11 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         const result = {
             fulfillmentMessages: [
                 {
-                    "items": itemList,
-                    "platform": "google",
-                    "title": "Title",
-                    "type": "list_card"
+                    "platform": "ACTIONS_ON_GOOGLE",
+                    "listSelect": {
+                        "title": "Stations",
+                        "items": itemList
+                    }
                 }
             ]
         };
