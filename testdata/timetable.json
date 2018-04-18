@@ -1,0 +1,774 @@
+{
+   "1":{
+      "name":"Mountaintop Express",
+      "status":"1",
+      "scheduleobjs":{
+         "1523305200":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"4:20 PM",
+            "last":0
+         },
+         "1523305800":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"4:30 PM",
+            "last":0
+         },
+         "1523306400":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"4:40 PM",
+            "last":0
+         },
+         "1523307000":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"4:50 PM",
+            "last":0
+         },
+         "1523307600":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"5:00 PM",
+            "last":0
+         },
+         "1523308200":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"5:10 PM",
+            "last":0
+         },
+         "1523308800":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"5:20 PM",
+            "last":0
+         },
+         "1523309400":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"5:30 PM",
+            "last":0
+         },
+         "1523310600":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"5:50 PM",
+            "last":1
+         },
+         "1523311200":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"6:00 PM",
+            "last":0
+         }
+      },
+      "schedule":{
+         "1523305200":"Departs Packer Ave at 4:20 PM",
+         "1523305800":"Departs Iacocca Hall at 4:30 PM",
+         "1523306400":"Departs Packer Ave at 4:40 PM",
+         "1523307000":"Departs Iacocca Hall at 4:50 PM",
+         "1523307600":"Departs Packer Ave at 5:00 PM",
+         "1523308200":"Departs Iacocca Hall at 5:10 PM",
+         "1523308800":"Departs Packer Ave at 5:20 PM",
+         "1523309400":"Departs Iacocca Hall at 5:30 PM",
+         "1523310600":"<strong>Last Departs<\/strong> Packer Ave at 5:50 PM",
+         "1523311200":"Departs Iacocca Hall at 6:00 PM"
+      },
+      "stops":{
+         "1":{
+            "id":1,
+            "name":"Packer Ave",
+            "lat":"40.608241",
+            "long":"-75.377968",
+            "arrival":"4:16 PM"
+         },
+         "2":{
+            "id":12,
+            "name":"Alpha Phi",
+            "lat":"40.602276",
+            "long":"-75.376626",
+            "arrival":"4:24 PM"
+         },
+         "3":{
+            "id":27,
+            "name":"Building C",
+            "lat":"40.599826",
+            "long":"-75.362933",
+            "arrival":"4:26 PM"
+         },
+         "4":{
+            "id":28,
+            "name":"Commuter Lot",
+            "lat":"40.600450",
+            "long":"-75.358885",
+            "arrival":"4:27 PM"
+         },
+         "5":{
+            "id":2,
+            "name":"Iacocca Hall",
+            "lat":"40.601930",
+            "long":"-75.360420",
+            "arrival":"Just Departed"
+         },
+         "6":{
+            "id":11,
+            "name":"ATLSS",
+            "lat":"40.604150",
+            "long":"-75.361266",
+            "arrival":"Arriving Soon"
+         },
+         "7":{
+            "id":7,
+            "name":"Pi Beta Phi",
+            "lat":"40.603580",
+            "long":"-75.379030",
+            "arrival":"Arriving Soon"
+         }
+      },
+      "icon":"http:\/\/bus.lehigh.edu\/img\/icon.php?c=ffffff&bg=1e446d&t=MT",
+      "retinaicon":"http:\/\/bus.lehigh.edu\/img\/icon.php?c=ffffff&bg=1e446d&t=MT&retina"
+   },
+   "2":{
+      "name":"Saucon Village",
+      "status":"0",
+      "scheduleobjs":{
+         "3":{
+            "date":"4\/1",
+            "time":"7:40 AM",
+            "id":"3",
+            "name":"Saucon Village"
+         },
+         "1":{
+            "date":"4\/1",
+            "time":"8:10 AM",
+            "id":"1",
+            "name":"Packer Ave"
+         }
+      },
+      "schedule":{
+         "3":"Departs Saucon Village 4\/1 at 7:40 AM",
+         "1":"Departs Packer Ave 4\/1 at 8:10 AM"
+      },
+      "stops":{
+         "1":{
+            "id":3,
+            "name":"Saucon Village",
+            "lat":"40.579281",
+            "long":"-75.355055",
+            "arrival":"-"
+         },
+         "2":{
+            "id":6,
+            "name":"Gamma Phi Beta",
+            "lat":"40.604050",
+            "long":"-75.376994",
+            "arrival":"-"
+         },
+         "3":{
+            "id":7,
+            "name":"Pi Beta Phi",
+            "lat":"40.603580",
+            "long":"-75.379030",
+            "arrival":"-"
+         },
+         "4":{
+            "id":8,
+            "name":"Taylor College",
+            "lat":"40.605097",
+            "long":"-75.378893",
+            "arrival":"-"
+         },
+         "5":{
+            "id":9,
+            "name":"Alumni Memorial Building",
+            "lat":"40.606943",
+            "long":"-75.381000",
+            "arrival":"-"
+         },
+         "6":{
+            "id":1,
+            "name":"Packer Ave",
+            "lat":"40.608241",
+            "long":"-75.377968",
+            "arrival":"-"
+         },
+         "7":{
+            "id":4,
+            "name":"Williams Hall",
+            "lat":"40.606871",
+            "long":"-75.374867",
+            "arrival":"-"
+         },
+         "8":{
+            "id":5,
+            "name":"Drown Hall",
+            "lat":"40.605557",
+            "long":"-75.377554",
+            "arrival":"-"
+         },
+         "9":{
+            "id":10,
+            "name":"Sigma Phi Epsilon",
+            "lat":"40.602936",
+            "long":"-75.380846",
+            "arrival":"-"
+         },
+         "10":{
+            "id":12,
+            "name":"Alpha Phi",
+            "lat":"40.602276",
+            "long":"-75.376626",
+            "arrival":"-"
+         },
+         "11":{
+            "id":2,
+            "name":"Iacocca Hall",
+            "lat":"40.601930",
+            "long":"-75.360420",
+            "arrival":"-"
+         },
+         "12":{
+            "id":27,
+            "name":"Building C",
+            "lat":"40.599826",
+            "long":"-75.362933",
+            "arrival":"-"
+         }
+      },
+      "icon":"http:\/\/bus.lehigh.edu\/img\/icon.php?c=ffffff&bg=227d09&t=SV",
+      "retinaicon":"http:\/\/bus.lehigh.edu\/img\/icon.php?c=ffffff&bg=227d09&t=SV&retina"
+   },
+   "3":{
+      "name":"T.R.A.C.S.",
+      "status":"0",
+      "scheduleobjs":{
+         "1":{
+            "date":"4\/9",
+            "time":"10:45 PM",
+            "id":"1",
+            "name":"Packer Ave"
+         },
+         "8":{
+            "date":"4\/9",
+            "time":"10:45 PM",
+            "id":"8",
+            "name":"Taylor College"
+         }
+      },
+      "schedule":{
+         "1":"Departs Packer Ave 4\/9 at 10:45 PM",
+         "8":"Departs Taylor College 4\/9 at 10:45 PM"
+      },
+      "stops":{
+         "1":{
+            "id":1,
+            "name":"Packer Ave",
+            "lat":"40.608241",
+            "long":"-75.377968",
+            "arrival":"-"
+         },
+         "2":{
+            "id":4,
+            "name":"Williams Hall",
+            "lat":"40.606871",
+            "long":"-75.374867",
+            "arrival":"-"
+         },
+         "3":{
+            "id":5,
+            "name":"Drown Hall",
+            "lat":"40.605557",
+            "long":"-75.377554",
+            "arrival":"-"
+         },
+         "4":{
+            "id":10,
+            "name":"Sigma Phi Epsilon",
+            "lat":"40.602936",
+            "long":"-75.380846",
+            "arrival":"-"
+         },
+         "5":{
+            "id":20,
+            "name":"Alpha Chi Omega",
+            "lat":"40.601940",
+            "long":"-75.379234",
+            "arrival":"-"
+         },
+         "6":{
+            "id":12,
+            "name":"Alpha Phi",
+            "lat":"40.602276",
+            "long":"-75.376626",
+            "arrival":"-"
+         },
+         "7":{
+            "id":19,
+            "name":"Alpha Tau Omega",
+            "lat":"40.603158",
+            "long":"-75.375347",
+            "arrival":"-"
+         },
+         "8":{
+            "id":6,
+            "name":"Gamma Phi Beta",
+            "lat":"40.604050",
+            "long":"-75.376994",
+            "arrival":"-"
+         },
+         "9":{
+            "id":7,
+            "name":"Pi Beta Phi",
+            "lat":"40.603580",
+            "long":"-75.379030",
+            "arrival":"-"
+         },
+         "10":{
+            "id":8,
+            "name":"Taylor College",
+            "lat":"40.605097",
+            "long":"-75.378893",
+            "arrival":"-"
+         },
+         "11":{
+            "id":29,
+            "name":"University Dr & Taylor St",
+            "lat":"40.605398",
+            "long":"-75.375926",
+            "arrival":"-"
+         },
+         "12":{
+            "id":22,
+            "name":"Rathbone Hall",
+            "lat":"40.606488",
+            "long":"-75.372836",
+            "arrival":"-"
+         },
+         "13":{
+            "id":30,
+            "name":"Ryan St & Fillmore St",
+            "lat":"40.607613",
+            "long":"-75.371763",
+            "arrival":"-"
+         },
+         "14":{
+            "id":31,
+            "name":"E Packer Ave & Polk St",
+            "lat":"40.608589",
+            "long":"-75.373119",
+            "arrival":"-"
+         },
+         "15":{
+            "id":15,
+            "name":"Brodhead House",
+            "lat":"40.609819",
+            "long":"-75.379810",
+            "arrival":"-"
+         },
+         "16":{
+            "id":32,
+            "name":"Warren Square",
+            "lat":"40.606884",
+            "long":"-75.381815",
+            "arrival":"-"
+         },
+         "17":{
+            "id":33,
+            "name":"W Packer Ave & Brodhead Ave",
+            "lat":"40.607956",
+            "long":"-75.381099",
+            "arrival":"-"
+         }
+      },
+      "icon":"http:\/\/bus.lehigh.edu\/img\/icon.php?c=ffffff&bg=8b0020&t=TR",
+      "retinaicon":"http:\/\/bus.lehigh.edu\/img\/icon.php?c=ffffff&bg=8b0020&t=TR&retina"
+   },
+   "4":{
+      "name":"Athletics",
+      "status":"1",
+      "scheduleobjs":{
+         "1523306400":{
+            "id":"25",
+            "name":"Taylor Gym",
+            "time":"4:40 PM",
+            "last":1
+         },
+         "1523312100":{
+            "id":"26",
+            "name":"Goodman Campus",
+            "time":"6:15 PM",
+            "last":0
+         },
+         "1523313900":{
+            "id":"26",
+            "name":"Goodman Campus",
+            "time":"6:45 PM",
+            "last":0
+         },
+         "1523315700":{
+            "id":"26",
+            "name":"Goodman Campus",
+            "time":"7:15 PM",
+            "last":1
+         }
+      },
+      "schedule":{
+         "1523306400":"<strong>Last Departs<\/strong> Taylor Gym at 4:40 PM",
+         "1523312100":"Departs Goodman Campus at 6:15 PM",
+         "1523313900":"Departs Goodman Campus at 6:45 PM",
+         "1523315700":"<strong>Last Departs<\/strong> Goodman Campus at 7:15 PM"
+      },
+      "stops":{
+         "1":{
+            "id":25,
+            "name":"Taylor Gym",
+            "lat":"40.606850",
+            "long":"-75.374345",
+            "arrival":"At Stop"
+         },
+         "2":{
+            "id":26,
+            "name":"Goodman Campus",
+            "lat":"40.585812",
+            "long":"-75.358535",
+            "arrival":"4:49 PM"
+         }
+      },
+      "icon":"http:\/\/bus.lehigh.edu\/img\/icon.php?c=000000&bg=FFA500&t=AT",
+      "retinaicon":"http:\/\/bus.lehigh.edu\/img\/icon.php?c=000000&bg=FFA500&t=AT&retina"
+   },
+   "10":{
+      "name":"Packer Express",
+      "status":"1",
+      "scheduleobjs":{
+         "1523304720":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"4:12 PM",
+            "last":0
+         },
+         "1523305440":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"4:24 PM",
+            "last":0
+         },
+         "1523306160":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"4:36 PM",
+            "last":0
+         },
+         "1523306880":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"4:48 PM",
+            "last":0
+         },
+         "1523307600":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"5:00 PM",
+            "last":0
+         },
+         "1523308320":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"5:12 PM",
+            "last":0
+         },
+         "1523309040":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"5:24 PM",
+            "last":0
+         }
+      },
+      "schedule":{
+         "1523304720":"Departs Packer Ave at 4:12 PM",
+         "1523305440":"Departs Packer Ave at 4:24 PM",
+         "1523306160":"Departs Packer Ave at 4:36 PM",
+         "1523306880":"Departs Packer Ave at 4:48 PM",
+         "1523307600":"Departs Packer Ave at 5:00 PM",
+         "1523308320":"Departs Packer Ave at 5:12 PM",
+         "1523309040":"Departs Packer Ave at 5:24 PM"
+      },
+      "stops":{
+         "1":{
+            "id":1,
+            "name":"Packer Ave",
+            "lat":"40.608241",
+            "long":"-75.377968",
+            "arrival":"At Stop"
+         },
+         "2":{
+            "id":4,
+            "name":"Williams Hall",
+            "lat":"40.606871",
+            "long":"-75.374867",
+            "arrival":"4:16 PM"
+         },
+         "3":{
+            "id":5,
+            "name":"Drown Hall",
+            "lat":"40.605557",
+            "long":"-75.377554",
+            "arrival":"4:16 PM"
+         },
+         "4":{
+            "id":10,
+            "name":"Sigma Phi Epsilon",
+            "lat":"40.602936",
+            "long":"-75.380846",
+            "arrival":"4:18 PM"
+         },
+         "5":{
+            "id":12,
+            "name":"Alpha Phi",
+            "lat":"40.602276",
+            "long":"-75.376626",
+            "arrival":"4:18 PM"
+         },
+         "6":{
+            "id":19,
+            "name":"Alpha Tau Omega",
+            "lat":"40.603158",
+            "long":"-75.375347",
+            "arrival":"4:20 PM"
+         },
+         "7":{
+            "id":6,
+            "name":"Gamma Phi Beta",
+            "lat":"40.604050",
+            "long":"-75.376994",
+            "arrival":"4:20 PM"
+         },
+         "8":{
+            "id":7,
+            "name":"Pi Beta Phi",
+            "lat":"40.603580",
+            "long":"-75.379030",
+            "arrival":"4:21 PM"
+         },
+         "9":{
+            "id":8,
+            "name":"Taylor College",
+            "lat":"40.605097",
+            "long":"-75.378893",
+            "arrival":"4:21 PM"
+         },
+         "10":{
+            "id":9,
+            "name":"Alumni Memorial Building",
+            "lat":"40.606943",
+            "long":"-75.381000",
+            "arrival":"4:23 PM"
+         }
+      },
+      "icon":"http:\/\/bus.lehigh.edu\/img\/icon.php?c=ffffff&bg=502d0e&t=PE",
+      "retinaicon":"http:\/\/bus.lehigh.edu\/img\/icon.php?c=ffffff&bg=502d0e&t=PE&retina"
+   },
+   "11":{
+      "name":"Campus Connector",
+      "status":"1",
+      "scheduleobjs":{
+         "1523305200":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"4:20 PM",
+            "last":0
+         },
+         "1523305201":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"4:20 PM",
+            "last":0
+         },
+         "1523305800":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"4:30 PM",
+            "last":0
+         },
+         "1523305801":{
+            "id":"3",
+            "name":"Saucon Village",
+            "time":"4:30 PM",
+            "last":0
+         },
+         "1523306400":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"4:40 PM",
+            "last":0
+         },
+         "1523306401":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"4:40 PM",
+            "last":0
+         },
+         "1523307000":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"4:50 PM",
+            "last":0
+         },
+         "1523307001":{
+            "id":"3",
+            "name":"Saucon Village",
+            "time":"4:50 PM",
+            "last":0
+         },
+         "1523307600":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"5:00 PM",
+            "last":0
+         },
+         "1523307601":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"5:00 PM",
+            "last":0
+         },
+         "1523308200":{
+            "id":"3",
+            "name":"Saucon Village",
+            "time":"5:10 PM",
+            "last":0
+         },
+         "1523308800":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"5:20 PM",
+            "last":0
+         },
+         "1523309400":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"5:30 PM",
+            "last":0
+         },
+         "1523310000":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"5:40 PM",
+            "last":0
+         },
+         "1523310600":{
+            "id":"3",
+            "name":"Saucon Village",
+            "time":"5:50 PM",
+            "last":0
+         },
+         "1523311200":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"6:00 PM",
+            "last":0
+         },
+         "1523311800":{
+            "id":"3",
+            "name":"Saucon Village",
+            "time":"6:10 PM",
+            "last":0
+         },
+         "1523313000":{
+            "id":"1",
+            "name":"Packer Ave",
+            "time":"6:30 PM",
+            "last":0
+         },
+         "1523313600":{
+            "id":"2",
+            "name":"Iacocca Hall",
+            "time":"6:40 PM",
+            "last":0
+         }
+      },
+      "schedule":{
+         "1523305200":"Departs Iacocca Hall at 4:20 PM",
+         "1523305201":"Departs Iacocca Hall at 4:20 PM",
+         "1523305800":"Departs Packer Ave at 4:30 PM",
+         "1523305801":"Departs Saucon Village at 4:30 PM",
+         "1523306400":"Departs Iacocca Hall at 4:40 PM",
+         "1523306401":"Departs Iacocca Hall at 4:40 PM",
+         "1523307000":"Departs Packer Ave at 4:50 PM",
+         "1523307001":"Departs Saucon Village at 4:50 PM",
+         "1523307600":"Departs Iacocca Hall at 5:00 PM",
+         "1523307601":"Departs Iacocca Hall at 5:00 PM",
+         "1523308200":"Departs Saucon Village at 5:10 PM",
+         "1523308800":"Departs Iacocca Hall at 5:20 PM",
+         "1523309400":"Departs Packer Ave at 5:30 PM",
+         "1523310000":"Departs Iacocca Hall at 5:40 PM",
+         "1523310600":"Departs Saucon Village at 5:50 PM",
+         "1523311200":"Departs Iacocca Hall at 6:00 PM",
+         "1523311800":"Departs Saucon Village at 6:10 PM",
+         "1523313000":"Departs Packer Ave at 6:30 PM",
+         "1523313600":"Departs Iacocca Hall at 6:40 PM"
+      },
+      "stops":{
+         "1":{
+            "id":1,
+            "name":"Packer Ave",
+            "lat":"40.608241",
+            "long":"-75.377968",
+            "arrival":"4:26 PM"
+         },
+         "2":{
+            "id":12,
+            "name":"Alpha Phi",
+            "lat":"40.602276",
+            "long":"-75.376626",
+            "arrival":"Arriving Soon"
+         },
+         "11":{
+            "id":2,
+            "name":"Iacocca Hall",
+            "lat":"40.601930",
+            "long":"-75.360420",
+            "arrival":"Arriving Soon"
+         },
+         "10":{
+            "id":28,
+            "name":"Commuter Lot",
+            "lat":"40.600450",
+            "long":"-75.358885",
+            "arrival":"4:15 PM"
+         },
+         "9":{
+            "id":27,
+            "name":"Building C",
+            "lat":"40.599826",
+            "long":"-75.362933",
+            "arrival":"4:15 PM"
+         },
+         "8":{
+            "id":26,
+            "name":"Goodman Campus",
+            "lat":"40.585812",
+            "long":"-75.358535",
+            "arrival":"4:21 PM"
+         },
+         "7":{
+            "id":3,
+            "name":"Saucon Village",
+            "lat":"40.579281",
+            "long":"-75.355055",
+            "arrival":"4:24 PM"
+         },
+         "12":{
+            "id":7,
+            "name":"Pi Beta Phi",
+            "lat":"40.603580",
+            "long":"-75.379030",
+            "arrival":"4:21 PM"
+         }
+      },
+      "icon":"http:\/\/bus.lehigh.edu\/img\/icon.php?c=ffffff&bg=227d09&t=CC",
+      "retinaicon":"http:\/\/bus.lehigh.edu\/img\/icon.php?c=ffffff&bg=227d09&t=CC&retina"
+   }
+}

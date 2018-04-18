@@ -4,12 +4,26 @@ const common = require('./common');
 momentDurationFormatSetup(moment);
 
 const json = require('../testdata/formatLocations');
+
+const DATE_FROM_REQUEST_FORMAT = "YYYY-MM-DD";
+
 const allLocations = json.locations.category.map(element => {
   return element.location;
 }).reduce((acc, val) => acc.concat(val), []);
 
 const getAllLocations = () => {
   return allLocations;
+};
+
+const getRequestedLocationObject = (locationName) => {
+    return getAllLocations().find(location => {
+        const locationNames = new Set([location.title, location.fulltitle, location.mapsearch]);
+        return locationNames.has(locationName);
+    });
+};
+
+const getLocationHoursStringByName = (locationName) => {
+  return getRequestedLocationObject(locationName).hours;
 };
 
 const minutesAsHoursAndMinutes = (minutes) => {
@@ -21,9 +35,8 @@ const getOpenLocations = () => {
   return getAllLocations().filter(location => isOpen(location, moment()));
 };
 
-const getLocationHoursInfo = (locationName, time) => {
-  const location = getRequestedLocationObject(locationName);
-  const locationTimes = common.getStartAndEndTimeForToday(location.hours);
+const getLocationHoursInfo = (locationName, time = moment()) => {
+  const locationTimes = common.getStartAndEndTimeForToday(getLocationHoursStringByName(locationName));
   if (!locationTimes) {
     return {
       name: locationName,
@@ -53,25 +66,31 @@ const isOpen = (location, time) => {
   return time.isBetween(locationTimes.startTime, locationTimes.endTime);
 };
 
-const getRequestedLocationObject = (locationName) => {
-  return getAllLocations().find(location => {
-    const locationNames = new Set([location.title, location.fulltitle, location.mapsearch]);
-    return locationNames.has(locationName);
-  });
-};
-
 const getLocationHoursInfoFromRequest = (request) => {
   const locationName = request.body.queryResult.parameters.location;
+  const dateRequested = moment(request.body.queryResult.parameters.date, DATE_FROM_REQUEST_FORMAT);
   return getLocationHoursInfo(locationName, moment());
+};
+
+const getResponseTextIfDateSpecified = (request) => {
+  const dateRequested = request.body.queryResult.parameters.date;
+  if (dateRequested && !moment().isSame(moment(dateRequested, DATE_FROM_REQUEST_FORMAT), 'day')) {
+    const locationName = request.body.queryResult.parameters.location;
+    return (
+        `
+        The hours for ${locationName} are: \n 
+        ${getLocationHoursStringByName(locationName)}
+        `
+    );
+  }
+  return undefined;
 };
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   'openlocations': (req, res) => {
-    // const locationObjectRequested = getRequestedLocation(req.body.queryResult.parameters.locationName);
-
     res.json({
       fulfillment_text: (
-        `Here's what's open right now: 
+        `Here's what's open right now: \n
         ${getOpenLocations().map(location => location.title).join('\n')}
         `
       )
@@ -79,6 +98,13 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   },
 
   'isopen': (req, res) => {
+    const fulfillmentTextIfDateSpecified = getResponseTextIfDateSpecified(req);
+    if (fulfillmentTextIfDateSpecified) {
+      res.json({
+        fulfillment_text: fulfillmentTextIfDateSpecified
+      });
+      return;
+    }
     const { isOpen, minutesUntilClose, minutesUntilOpen, openTime, closeTime, isClosedForEntireDay } = getLocationHoursInfoFromRequest(req);
     let responseText;
     if (minutesUntilClose > 0 && minutesUntilClose <= 45) {
@@ -98,6 +124,13 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   },
 
   'isclosed': (req, res) => {
+    const fulfillmentTextIfDateSpecified = getResponseTextIfDateSpecified(req);
+    if (fulfillmentTextIfDateSpecified) {
+      res.json({
+        fulfillment_text: fulfillmentTextIfDateSpecified
+      });
+      return;
+    }
     const { isOpen, minutesUntilClose, minutesUntilOpen, openTime, closeTime, isClosedForEntireDay } = getLocationHoursInfoFromRequest(req);
     let responseText;
     if (minutesUntilClose > 0 && minutesUntilClose <= 45) {
@@ -160,9 +193,9 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     const { name, isClosedForEntireDay, openTime, closeTime } = getLocationHoursInfoFromRequest(req);
     let responseText;
     if (isClosedForEntireDay) {
-      responseText = `${name} is closed for the day.`;
+      responseText = `${name} is closed for the entire day.`;
     } else {
-      responseText = `The hours for ${name} today are ${openTime}-${closeTime}`;
+      responseText = `sThe hours for ${name} today are ${openTime}-${closeTime}`;
     }
     res.json({
       fulfillment_text: responseText

@@ -8,8 +8,8 @@ const stationItemList = (stationList) => {
     let itemList = [];
     Array.from(stationList).forEach((stationStr) => {
         let item = {
-            "title": stationStr,
-            "optionInfo": {
+            "item": {
+                "title": stationStr,
                 "key": stationStr,
                 "synonyms": [
                     stationStr + 's',
@@ -44,7 +44,35 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // console.log('Station List:\n', stationList);
         // console.log('Station Menu List:\n', stationMenu);
         // console.log('Station Item List\n', itemList);
+
+
+        // const { DialogflowApp } = require('actions-on-google')
+        // const googleAssistant = new DialogflowApp();
+        // let testList = [];
+        // testList.push(googleAssistant.buildOptionItem('Item1').setTitle("Item1 Test").setDescription("Please work"));
+        // const bigList = googleAssistant.buildList().addItems(testList);
+        // console.log(JSON.stringify(bigList))
+
         res.json({
+            // fulfillmentMessages: bigList
+
+           "fulfillmentMessages": [
+                {
+                    "platform": "ACTIONS_ON_GOOGLE",
+                    "listSelect": {
+                        "title": "Station",
+                        "items": itemList
+                    }
+                },
+                {
+                    "text": {
+                        "text": [
+                            "Choose a station:"
+                        ]
+                    }
+                }
+            ]
+
             // fulfillmentMessages: [
             //     {
             //       "list_card": {
@@ -55,7 +83,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             //       }
             //     }
             // ]
-            fulfillment_text: stationList.join(', ')
+            //fulfillment_text: stationList.join(', ')
         });
     },
 };
