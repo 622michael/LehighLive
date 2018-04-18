@@ -98,10 +98,10 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             const jsonText = parser.toJson(data);
             const games = JSON.parse(jsonText)['scores']['game'];
             const currentTime = moment();
-            console.log('Current time: ' + currentTime + '\n');
+            console.log('Current time: ' + currentTime.format('MMMM Do YYYY, h:mm:ss a') + '\n');
             const gameString = games.reduce((gameString, currentGame) => {
-                var gameTime = moment(currentGame['time'], 'MM-DD-YYYY hh:mm:ss A')
-                console.log('Game time: ' + gameTime + '\n');
+                var gameTime = moment(currentGame['date'], 'MM-DD-YYYY hh:mm:ss A')
+                console.log('Game time: ' + gameTime.format('MMMM Do YYYY, h:mm:ss a') + '\n');
                 if(gameTime.isBetween(currentTime, currentTime.add(3, 'd'))) {
                     const listItem = '- ' + currentGame['sport_abbrev'] + '\n';
                     return gameString + listItem;
