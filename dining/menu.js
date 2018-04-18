@@ -55,7 +55,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             //       }
             //     }
             // ]
-            fulfillment_text: "Testing"
+            fulfillment_text: stationList
         });
     },
 };
