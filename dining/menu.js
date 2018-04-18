@@ -44,7 +44,17 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // console.log('Station List:\n', stationList);
         // console.log('Station Menu List:\n', stationMenu);
         // console.log('Station Item List\n', itemList);
+
+
+        const { DialogflowApp } = require('actions-on-google')
+        const googleAssistant = new DialogflowApp();
+        let testList = [];
+        testList.push(googleAssistant.buildOptionItem('Item1').setTitle("Item1 Test").setDescription("Please work"));
+        const bigList = googleAssistant.buildList().addItems(testList);
+        console.log(JSON.stringify(bigList))
+
         res.json({
+            fulfillmentMessages: bigList
             // fulfillmentMessages: [
             //     {
             //       "list_card": {
@@ -55,7 +65,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             //       }
             //     }
             // ]
-            fulfillment_text: stationList.join(', ')
+            //fulfillment_text: stationList.join(', ')
         });
     },
 };
