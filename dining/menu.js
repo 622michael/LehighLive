@@ -45,13 +45,13 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // console.log('Station Menu List:\n', stationMenu);
         // console.log('Station Item List\n', itemList);
         res.json({
-            fulfillment_messages: [
+            fulfillmentMessages: [
                 {
-                  "text": {
+                  "list_card": {
                       "title": `Stations at ${location}.`,
-                      "items": JSON.stringify(itemList),
-                      "platform": "google",
-                      "type": "list_card"
+                      "items": JSON.stringify(itemList)
+                      // "platform": "google"
+                      // "type": "list_card"
                   }
                 }
             ]
