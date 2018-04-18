@@ -54,7 +54,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // const bigList = googleAssistant.buildList().addItems(testList);
         // console.log(JSON.stringify(bigList))
 
-        res.json({
+        const result = {
             "fulfillmentMessages": [
                 {
                     "items": itemList,
@@ -63,7 +63,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                     "type": "list_card"
                 }
             ]
-        });
+        };
+        res.json(JSON.stringify(result));
     },
 };
 
