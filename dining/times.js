@@ -84,7 +84,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   },
 
   'isopen': (req, res) => {
-    if (req.body.queryResult.parameters.date) {
+    const dateRequested = req.body.queryResult.parameters.date;
+    if (dateRequested && !moment().isSame(moment(dateRequested, "YYYY-MM-DD"), 'day')) {
       const locationName = req.body.queryResult.parameters.location;
       res.json({
         fulfillment_text: `
@@ -113,7 +114,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   },
 
   'isclosed': (req, res) => {
-    if (req.body.queryResult.parameters.date) {
+    const dateRequested = req.body.queryResult.parameters.date;
+    if (dateRequested && !moment().isSame(moment(dateRequested, "YYYY-MM-DD"), 'day')) {
       const locationName = req.body.queryResult.parameters.location;
       res.json({
         fulfillment_text: `
