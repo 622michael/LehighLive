@@ -60,14 +60,14 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 {
                     "platform": "ACTIONS_ON_GOOGLE",
                     "listSelect": {
-                        "title": "Choose a station:",
+                        "title": "Station",
                         "items": itemList
                     }
                 },
                 {
                     "text": {
                         "text": [
-                            ""
+                            "Choose a station:"
                         ]
                     }
                 }
