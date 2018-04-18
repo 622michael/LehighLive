@@ -106,7 +106,9 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           const gameString = games.reduce((gameString, currentGame) => {
             var gameTime = moment(currentGame['date'], 'MM-DD-YYYY hh:mm:ss A');
             console.log('Game time:' + gameTime.format('MMMM Do YYYY, h:mm:ss a'));
-            console.log(gameTime.isBetween(currentTime, currentTime.add(3, 'd')));
+            console.log('Is after: ' + gameTime.isAfter(currentTime));
+            console.log('Is before: ' + gameTime.isBefore(currentTime));
+            //console.log(gameTime.isBetween(currentTime, currentTime.add(3, 'd')));
             if (gameTime.isBetween(currentTime, currentTime.add(3, 'd'))) {
               const listItem = '- ' + currentGame['sport_abbrev'] + '\n';
               return gameString + listItem;
@@ -115,42 +117,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           });
           console.log(gameString);
         });
-
-        // var request = require("request");
-        //
-        // var options = { method: 'GET',
-        //     url: 'https://clients6.google.com/calendar/v3/calendars/kist2c0k2bugt3p9vo4gsgfuprs4oame@import.calendar.google.com/events?calendarId=kist2c0k2bugt3p9vo4gsgfuprs4oame%40import.calendar.google.com&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-01T00%3A00%3A00-04%3A00&timeMax=2018-05-06T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs',
-        //
-        //     headers:
-        //         { 'Postman-Token': 'd42a0f1d-b3ae-4f3a-847e-2879508c1ef9',
-        //             'Cache-Control': 'no-cache' } };
-        //
-        // request(options, function (error, response, body) {
-        //     if (error) throw new Error(error);
-        //
-        //     console.log(body);
-        //     // let itemList = JSON.parse(body.items);
-        //     // var eventnames = new Array();
-        //     // let names = itemList.map (event => {
-        //     //     eventnames.push(event);
-        //     // })
-        //     // console.log(names);
-        // });
-        //
-        // var options = { method: 'GET',
-        //       url: 'http://lehighsports.com/services/scores.aspx',
-        //       qs: { non_sport: '0', sort: 'asc', range: 'future' },
-        //       headers:
-        //           { 'Postman-Token': '7b587394-dae6-4299-92f9-5e6208ff964e',
-        //               'Cache-Control': 'no-cache' } };
-        // request(options, function (error, response, body) {
-        //      if (error) throw new Error(error);
-        //
-        //      console.log("hi");
-        //     console.dir(body);
-        //     console.log("hello");
-        // });
-
 
         res.json({
           fulfillment_text: 'Sports Reached'
