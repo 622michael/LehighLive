@@ -103,7 +103,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           const currentTime = moment();
           console.log('Current time' + currentTime.format('MMMM Do YYYY, h:mm:ss a'));
           const gameString = games.reduce((gameString, currentGame) => {
-            var gameTime = moment(currentGame['time'], 'MM-DD-YYYY hh:mm:ss A');
+            var gameTime = moment(currentGame['date'], 'MM-DD-YYYY hh:mm:ss A');
             console.log('Game time:' + gameTime.format('MMMM Do YYYY, h:mm:ss a'));
             if (gameTime.isBetween(currentTime, currentTime.add(3, 'd'))) {
               const listItem = '- ' + currentGame['sport_abbrev'] + '\n';
