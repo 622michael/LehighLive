@@ -91,7 +91,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
       (req, res) => {
         console.log("Sports reached");
         const fileName = 'testdata/xml/athletics.xml';
-        //const time = moment().format('')
         fs.readFile(fileName, 'utf8', function(err, data) {
             if (err) {
                 return 'No athletics info found';
