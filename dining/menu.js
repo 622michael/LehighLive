@@ -22,9 +22,16 @@ const stationItemList = (stationList) => {
     });
     return itemList;
 };
+//
+// const functions = require('firebase-functions');
+// const {WebhookClient} = require('dialogflow-fulfillment');
+// const {Card, Suggestion} = require('dialogflow-fulfillment');
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'menu': (req, res) => {
+
+        // const app = new WebhookClient({req, res});
+
         const parameters = req.body.queryResult.parameters;
         const location = parameters.location;
         const meal = parameters.meal;
@@ -54,8 +61,28 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // const bigList = googleAssistant.buildList().addItems(testList);
         // console.log(JSON.stringify(bigList))
 
+
+        // function yourFunctionHandler(agent) {
+        //   agent.add(`This message is from Dialogflow's Cloud Functions for Firebase inline editor!`);
+        //   agent.add(new Card({
+        //       title: `Title: this is a card title`,
+        //       imageUrl: 'https://dialogflow.com/images/api_home_laptop.svg',
+        //       text: `This is the body text of a card.  You can even use line\n  breaks and emoji! 💁`,
+        //       buttonText: 'This is a button',
+        //       buttonUrl: 'https://docs.dialogflow.com/'
+        //     })
+        //   );
+        //   agent.add(new Suggestion(`Quick Reply`));
+        //   agent.add(new Suggestion(`Suggestion`));
+        // }
+        //
+        // let intentMap = new Map();
+        //
+        // intentMap.set('menu', yourFunctionHandler(app));
+        // app.handleRequest(intentMap);
+
         const result = {
-            "fulfillmentMessages": [
+            fulfillmentMessages: [
                 {
                     "items": itemList,
                     "platform": "google",
@@ -64,7 +91,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 }
             ]
         };
-        res.json(JSON.stringify(result));
+        res.json(result)
     },
 };
 

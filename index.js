@@ -43,9 +43,11 @@ app.post('/', (req, res) => {
 
     const module = modules[moduleName];
     const functionInModule = module[functionName];
+
     if (module && functionInModule) {
         functionInModule(req, res);
-    } else {
+
+    }else {
         send404(res);
     }
 });
