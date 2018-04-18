@@ -49,7 +49,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 {
                   "list_card": {
                       "title": `Stations at ${location}.`,
-                      "items": JSON.stringify(itemList)
+                      "items": itemList
                       // "platform": "google"
                       // "type": "list_card"
                   }
