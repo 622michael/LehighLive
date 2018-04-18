@@ -8,14 +8,15 @@ const stationItemList = (stationList) => {
     let itemList = [];
     Array.from(stationList).forEach((stationStr) => {
         let item = {
-            "item": {
-                "title": stationStr,
+            "description": stationStr,
+            "optionInfo": {
                 "key": stationStr,
                 "synonyms": [
                     stationStr + 's',
                     stationStr + '\'s'
                 ]
-            }
+            },
+            "title": stationStr
         };
         itemList.push(item);
     });
@@ -56,33 +57,14 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         res.json({
             // fulfillmentMessages: bigList
 
-           "fulfillmentMessages": [
+           "messages": [
                 {
-                    "platform": "ACTIONS_ON_GOOGLE",
-                    "listSelect": {
-                        "title": "Station",
-                        "items": itemList
-                    }
-                },
-                {
-                    "text": {
-                        "text": [
-                            "Choose a station:"
-                        ]
-                    }
+                    "items": itemList,
+                    "platform": "google",
+                    "title": "Title",
+                    "type": "list_card"
                 }
             ]
-
-            // fulfillmentMessages: [
-            //     {
-            //       "list_card": {
-            //           "title": `Stations at ${location}.`,
-            //           "items": itemList
-            //           // "platform": "google"
-            //           // "type": "list_card"
-            //       }
-            //     }
-            // ]
             //fulfillment_text: stationList.join(', ')
         });
     },
