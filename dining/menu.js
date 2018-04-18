@@ -45,16 +45,17 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // console.log('Station Menu List:\n', stationMenu);
         // console.log('Station Item List\n', itemList);
         res.json({
-            fulfillment_messages: [
-                {
-                  "text": {
-                      "title": `Stations at ${location}.`,
-                      "items": itemList,
-                      "platform": "google",
-                      "type": "list_card"
-                  }
-                }
-            ]
+            // fulfillment_messages: [
+            //     {
+            //       "text": {
+            //           "title": `Stations at ${location}.`,
+            //           "items": itemList,
+            //           "platform": "google",
+            //           "type": "list_card"
+            //       }
+            //     }
+            // ]
+            fulfillment_text: itemList
         });
     },
 };
