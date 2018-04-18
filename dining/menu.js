@@ -8,8 +8,8 @@ const stationItemList = (stationList) => {
     let itemList = [];
     Array.from(stationList).forEach((stationStr) => {
         let item = {
-            "title": stationStr,
-            "optionInfo": {
+            "item": {
+                "title": stationStr,
                 "key": stationStr,
                 "synonyms": [
                     stationStr + 's',
@@ -46,15 +46,33 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // console.log('Station Item List\n', itemList);
 
 
-        const { DialogflowApp } = require('actions-on-google')
-        const googleAssistant = new DialogflowApp();
-        let testList = [];
-        testList.push(googleAssistant.buildOptionItem('Item1').setTitle("Item1 Test").setDescription("Please work"));
-        const bigList = googleAssistant.buildList().addItems(testList);
-        console.log(JSON.stringify(bigList))
+        // const { DialogflowApp } = require('actions-on-google')
+        // const googleAssistant = new DialogflowApp();
+        // let testList = [];
+        // testList.push(googleAssistant.buildOptionItem('Item1').setTitle("Item1 Test").setDescription("Please work"));
+        // const bigList = googleAssistant.buildList().addItems(testList);
+        // console.log(JSON.stringify(bigList))
 
         res.json({
-            fulfillmentMessages: bigList
+            // fulfillmentMessages: bigList
+
+           "fulfillmentMessages": [
+                {
+                    "platform": "ACTIONS_ON_GOOGLE",
+                    "listSelect": {
+                        "title": "Choose a station:",
+                        "items": itemList
+                    }
+                },
+                {
+                    "text": {
+                        "text": [
+                            ""
+                        ]
+                    }
+                }
+            ]
+
             // fulfillmentMessages: [
             //     {
             //       "list_card": {
