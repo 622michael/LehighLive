@@ -33,12 +33,12 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             })
         }
         const now = moment();
-        console.log('Location:', location);
-        console.log('Meal:', meal);
-        console.log('Time:', now.format('YYYY-MM-DD'));
+        // console.log('Location:', location);
+        // console.log('Meal:', meal);
+        // console.log('Time:', now.format('YYYY-MM-DD'));
 
         let stationList = getStations(location, now, meal);
-        let stationMenu = getStationMenu(location, now, meal, 'Entrée');
+        // let stationMenu = getStationMenu(location, now, meal, 'Entrée');
         let itemList = stationItemList(stationList);
 
         // console.log('Station List:\n', stationList);
@@ -47,10 +47,12 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         res.json({
             fulfillment_messages: [
                 {
-                    "title": `Stations at ${location}.`,
-                    "items": itemList,
-                    "platform": "google",
-                    "type": "list_card"
+                  "text": {
+                      "title": `Stations at ${location}.`,
+                      "items": itemList,
+                      "platform": "google",
+                      "type": "list_card"
+                  }
                 }
             ]
         });
