@@ -5,6 +5,8 @@ momentDurationFormatSetup(moment);
 
 const json = require('../testdata/formatLocations');
 
+const DATE_FROM_REQUEST_FORMAT = "YYYY-MM-DD";
+
 const allLocations = json.locations.category.map(element => {
   return element.location;
 }).reduce((acc, val) => acc.concat(val), []);
@@ -66,14 +68,26 @@ const isOpen = (location, time) => {
 
 const getLocationHoursInfoFromRequest = (request) => {
   const locationName = request.body.queryResult.parameters.location;
-  const dateRequested = moment(request.body.queryResult.parameters.date, "YYYY-MM-DD");
+  const dateRequested = moment(request.body.queryResult.parameters.date, DATE_FROM_REQUEST_FORMAT);
   return getLocationHoursInfo(locationName, moment());
+};
+
+const getResponseTextIfDateSpecified = (request) => {
+  const dateRequested = request.body.queryResult.parameters.date;
+  if (dateRequested && !moment().isSame(moment(dateRequested, DATE_FROM_REQUEST_FORMAT), 'day')) {
+    const locationName = request.body.queryResult.parameters.location;
+    return (
+        `
+        The hours for ${locationName} are: \n 
+        ${getLocationHoursStringByName(locationName)}
+        `
+    );
+  }
+  return undefined;
 };
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   'openlocations': (req, res) => {
-    // const locationObjectRequested = getRequestedLocation(req.body.queryResult.parameters.locationName);
-
     res.json({
       fulfillment_text: (
         `Here's what's open right now: \n
@@ -84,14 +98,10 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   },
 
   'isopen': (req, res) => {
-    const dateRequested = req.body.queryResult.parameters.date;
-    if (dateRequested && !moment().isSame(moment(dateRequested, "YYYY-MM-DD"), 'day')) {
-      const locationName = req.body.queryResult.parameters.location;
+    const fulfillmentTextIfDateSpecified = getResponseTextIfDateSpecified(req);
+    if (fulfillmentTextIfDateSpecified) {
       res.json({
-        fulfillment_text: `
-        The hours for ${locationName} are: \n 
-        ${getLocationHoursStringByName(locationName)}
-        `
+        fulfillment_text: fulfillmentTextIfDateSpecified
       });
       return;
     }
@@ -114,14 +124,10 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   },
 
   'isclosed': (req, res) => {
-    const dateRequested = req.body.queryResult.parameters.date;
-    if (dateRequested && !moment().isSame(moment(dateRequested, "YYYY-MM-DD"), 'day')) {
-      const locationName = req.body.queryResult.parameters.location;
+    const fulfillmentTextIfDateSpecified = getResponseTextIfDateSpecified(req);
+    if (fulfillmentTextIfDateSpecified) {
       res.json({
-        fulfillment_text: `
-        The hours for ${locationName} are: \n 
-        ${getLocationHoursStringByName(locationName)}
-        `
+        fulfillment_text: fulfillmentTextIfDateSpecified
       });
       return;
     }
