@@ -55,9 +55,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // console.log(JSON.stringify(bigList))
 
         res.json({
-            // fulfillmentMessages: bigList
-
-           "messages": [
+            "messages": [
                 {
                     "items": itemList,
                     "platform": "google",
@@ -65,7 +63,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                     "type": "list_card"
                 }
             ]
-            //fulfillment_text: stationList.join(', ')
         });
     },
 };
