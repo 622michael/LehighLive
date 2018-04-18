@@ -55,14 +55,16 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // console.log(JSON.stringify(bigList))
 
         res.json({
-            "messages": [
-                {
-                    "items": itemList,
-                    "platform": "google",
-                    "title": "Title",
-                    "type": "list_card"
-                }
-            ]
+            "fulfillmentMessages": {
+                "messages": [
+                    {
+                        "items": itemList,
+                        "platform": "google",
+                        "title": "Title",
+                        "type": "list_card"
+                    }
+                ]
+            }
         });
     },
 };
