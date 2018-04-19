@@ -8,7 +8,7 @@ const getItemsGroupedByStation = (stationList) => {
     return stationList.map((stationStr) => {
         return {
             "title": stationStr,
-            "description": getStationMenu("Rathbone", moment("2018-04-18", "YYYY-MM-DD"), "Dinner", stationStr).join('\n'),
+            "description": getStationMenu("Rathbone", moment("2018-04-18", "YYYY-MM-DD"), "Dinner", stationStr).join(', '),
             "image": {
                 "imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495",
                 "accessibilityText": "Rathbone"
