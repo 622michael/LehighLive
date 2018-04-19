@@ -101,7 +101,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // }
 
         res.json({
-
             "fulfillmentMessages": [
                 {
                     "platform": "ACTIONS_ON_GOOGLE",
@@ -110,12 +109,19 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                             "title": `${meal}: ${location} Stations`,
                             "subtitle": "Lehigh University",
                             "formattedText": "Choose a station.",
-                            "image": { "imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495"},
-                            "buttons": itemList
+                            "image": {
+                                "imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495",
+                                "accessibilityText": "Rathbone"
+                            },
+                            "buttons": {
+                                "title": "Button 1",
+                                "openUriAction": {
+                                    "uri": "http://www.google.com"
+                                }
+                            }
                         }
                 }
-            ],
-            "fulfillmentText": "Choose a station..."
+            ]
         });
 
 
