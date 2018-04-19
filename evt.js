@@ -98,7 +98,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           };
         let googleHomeEventString = filteredThreeDay.join(', ');
 
-        console.log(googleHomeEventString);
+        console.log("Google Home Event String" + googleHomeEventString);
         let returnedJson = {
             // fulfillment_text: filteredThreeDay.join(', ')
             // // outputContexts: outputContextsVal
@@ -143,7 +143,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             }
 
 
-          console.log(returnedJson);
+          console.log("Returned JSON: " + returnedJson);
           res.json(returnedJson);
         }
       );
