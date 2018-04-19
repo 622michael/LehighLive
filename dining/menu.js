@@ -110,7 +110,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // );
     },
 
-    'menu-custom': (req, res) => {
+    'menufollowup': (req, res) => {
         const queryResult = req.body.queryResult;
         const station = queryResult.queryText;
         const contextResult = queryResult.outputContexts.parameters;
