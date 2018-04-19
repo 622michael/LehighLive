@@ -28,8 +28,10 @@ const stationItemList = (stationList) => {
     let itemList = [];
     Array.from(stationList).forEach((stationStr) => {
         let item = {
-            "text": stationStr,
-            "postback": stationStr
+            "title": stationStr,
+            "openUriAction": {
+                "uri": "http://www.google.com"
+            }
         };
         itemList.push(item);
     });
@@ -103,12 +105,12 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             "fulfillmentMessages": [
                 {
                     "platform": "ACTIONS_ON_GOOGLE",
-                    "card":
+                    "basicCard":
                         {
                             "title": `${meal}: ${location} Stations`,
                             "subtitle": "Lehigh University",
-                            // "formattedText": "Choose a station.",
-                            "imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495",
+                            "formattedText": "Choose a station.",
+                            "image": { "imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495"},
                             "buttons": itemList
                         }
                 }
