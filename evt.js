@@ -4,35 +4,6 @@ const moment = require('moment');
 const fs = require('fs');
 const parser = require('xml2json');
 
-
-// function xmlToJson(url, callback) {
-//     var req = http.get(url, function(res) {
-//     var xml = '';
-//
-//     res.on('data', function (chunk) {
-//       xml += chunk;
-//       console.log("what");
-//     });
-//
-//     res.on('error', function (e) {
-//       callback(e, null);
-//       console.log("is");
-//     });
-//
-//     res.on('timeout', function (e) {
-//       callback(e, null);
-//       console.log("going");
-//     });
-//
-//     res.on('end', function () {
-//       parseString(xml, function (err, result) {
-//         callback(null, result);
-//         console.log("on");
-//       });
-//     });
-//   });
-// }
-
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'today': (req, res) => {
       console.log('Event Today reached');
@@ -130,39 +101,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         });
         //}
       }
-
-// function handleRequest(menudate, meal) {
-//     //fs.readFile('food.xml', 'utf8', function (err, data) {
-//     var unirest = require("unirest");
-//
-//     var req = unirest("GET", "http://mc.lehigh.edu/services/dining/resident/Rathbone/Week_14_Rathbone.xml");
-//
-//     req.headers({
-//         "Postman-Token": "dfa2aeb8-c260-49d1-8b13-b48b10ff73d4",
-//         "Cache-Control": "no-cache"
-//     });
-//
-//
-//     unirest.get("http://mc.lehigh.edu/services/dining/resident/Rathbone/Week_14_Rathbone.xml").end( (function (res) {
-//         if (res.error) throw new Error(res.error);
-//         console.log(res.body);
-//         fs.writeFile('/food2.xml',res.body,null,null);
-//         var weeklyMenus = JSON.parse(res.body).VFPData.weeklymenu;
-//         var station = "";
-//         for (i in weeklyMenus) {
-//             var menu = weeklyMenus[i];
-//             if (menu['menudate'] == menudate && menu['meal'] == meal) {
-//                 if (menu['station'] != station) {
-//                     station = menu['station'];
-//                     console.log(station + ' Station:');
-//                 }
-//                 console.log('\tItem: ' + menu['item_name']);
-//                 if (menu['allergens'] != "") console.log('\t-', menu['allergens']);
-//                 if (menu['station'] != "") console.log('\t-', menu['station']);
-//             }
-//         }
-//         console.log(res.body);
-//     }));
   }
 ;
 module.exports = EVT_FUNCTION_ACTION_NAME_TO_FUNCTION;
