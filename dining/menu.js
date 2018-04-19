@@ -86,11 +86,15 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             "fulfillmentText": response
             , "fulfillmentMessages": [
                 {
+                    "name": "TestA",
+                    "displayName": "menu",
+                    "webhookState": "",
                     "messages": [
                         {
                             "platform": "ACTIONS_ON_GOOGLE",
                             "listSelect": {
                                 "title": "Stations",
+
                                 "items": itemList
                             }
                         }
