@@ -28,10 +28,8 @@ const stationItemList = (stationList) => {
     let itemList = [];
     Array.from(stationList).forEach((stationStr) => {
         let item = {
-            "title": stationStr,
-            "openUriAction": {
-                "uri": "http://www.google.com"
-            }
+            "text": stationStr,
+            "postback": stationStr
         };
         itemList.push(item);
     });
