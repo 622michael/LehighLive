@@ -113,6 +113,23 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // );
     },
 
+    'menu-custom': (req, res) => {
+
+        const queryResult = req.body.queryResult;
+        const station = queryResult.queryText;
+        const contextResult = queryResult.outputContexts.parameters;
+        const location = contextResult.location;
+        const meal = contextResult.meal;
+        const time = moment("2018-04-18", "YYYY-MM-DD");
+
+        res.json({
+            fulfillmentText: 'List for this station: ' + getStationMenu(location, time, meal, station)
+        })
+
+
+
+    }
+
 
 };
 
@@ -121,7 +138,7 @@ const getStations = (location, date, period) => {
     const xmlData = fs.readFileSync(xmLFile, 'utf8');
     const jsonText = parser.toJson(xmlData);
     const item = JSON.parse(jsonText)['VFPData']['weeklymenu'];
-    const time = date.format('YYYY-MM-DD');
+    const time = moment("2018-04-18", "YYYY-MM-DD"); // date.format('YYYY-MM-DD');
 
     let stationList = [];
     item.forEach((attribute) => {
