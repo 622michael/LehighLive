@@ -96,7 +96,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               };
             });
           };
-        let googleHomeEventSTring = filteredThreeDay.join(', ');
+        let googleHomeEventString = filteredThreeDay.join(', ');
         let returnedJson = {
             // fulfillment_text: filteredThreeDay.join(', ')
             // // outputContexts: outputContextsVal
@@ -117,7 +117,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 "items": [
                   {
                     "simpleResponse": {
-                      "textToSpeech": "Matt is an awesome coder"
+                      "textToSpeech": googleHomeEventString
                     }
                   }
                 ]
