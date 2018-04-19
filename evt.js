@@ -96,7 +96,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               };
             });
           };
-        let googleHomeEventString = filteredThreeDay.join(', ').toString();
+        let googleHomeEventString = filteredThreeDay.join(', ');
 
         console.log(googleHomeEventString);
         let returnedJson = {
