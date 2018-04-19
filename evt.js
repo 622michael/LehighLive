@@ -96,7 +96,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               };
             });
           };
-          let returnedJson = {
+        let googleHomeEventSTring = filteredThreeDay.join(', ').toString();
+        let returnedJson = {
             // fulfillment_text: filteredThreeDay.join(', ')
             // // outputContexts: outputContextsVal
             'fulfillmentText': 'Heres whats going on:',
@@ -116,7 +117,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             'items': [
               {
                 "simpleResponse": {
-                  "textToSpeech": filteredThreeDay.join(', ')
+                  "textToSpeech": googleHomeEventString
                 }
               }
             ]
