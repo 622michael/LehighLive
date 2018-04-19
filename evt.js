@@ -107,10 +107,25 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                   {
                     'items': getEventItems(filteredThreeDay)
                   }
+              },
+            ],
+            'payload': {
+          'google': {
+          'expectUserResponse': true,
+            'richResponse': {
+            'items': [
+              {
+                "simpleResponse": {
+                  "textToSpeech": filteredThreeDay.join(', ')
+                }
               }
             ]
+          }
+        }
+        }
+            }
 
-          };
+
           console.log(returnedJson);
           res.json(returnedJson);
         }
