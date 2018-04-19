@@ -46,38 +46,16 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // console.log('Station Item List\n', itemList);
 
         res.json({
-            "messages": [
-                {
-                    "items": [
-                        {
-                            "description": "Option One Description",
-                            "image": {},
-                            "optionInfo": {
-                                "key": "itemOne",
-                                "synonyms": [
-                                    "thing one",
-                                    "object one"
-                                ]
-                            },
-                            "title": "Option One Title"
-                        },
-                        {
-                            "description": "Option Two Description",
-                            "image": {},
-                            "optionInfo": {
-                                "key": "itemTwo",
-                                "synonyms": [
-                                    "thing two",
-                                    "object two"
-                                ]
-                            },
-                            "title": "Option Two Title"
+                "fulfillmentText": "Stations provided below:",
+                "fulfillmentMessages": [
+                    {
+                        "platform": "ACTIONS_ON_GOOGLE",
+                        "carouselSelect": {
+                            "title": "Stations",
+                            "items": itemList
                         }
-                    ],
-                    "platform": "google",
-                    "type": "carousel_card"
-                }
-            ]
+                    }
+                ]
             }
         );
     },
