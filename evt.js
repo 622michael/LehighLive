@@ -40,7 +40,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
       unirestReq.headers({
         'Cache-Control': 'no-cache'
       });
-      unirestReq.end(function(result) {
+      unirestReq.end(function (result) {
           if (result.error) {
             throw new Error(result.error);
           }
@@ -58,7 +58,13 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               //events[i] = {"dateTime": dateTime};
               if (moment(dateTime).isBefore(threeDaysFromNow)) {
                 const eventMoment = moment(dateTime);
-                return eventName + ' on ' + eventMoment.format('dddd, MMMM Do') + ' at ' + eventLocation;
+                let time = eventMoment.format('dddd, MMMM Do');
+                // return eventName + ' on ' + time + ' at ' + eventLocation;
+                return {
+                  'name': eventName,
+                  'time': time,
+                  'location': eventLocation
+                }
               }
             }
           });
@@ -79,10 +85,62 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           //   console.log("outputContextsVal");
           //   console.log(outputContextsVal);
           // handleRequest('2018-04-02', 'Breakfast');
-          let returnedJson = {
-            fulfillment_text: filteredThreeDay.join(', ')
-            // outputContexts: outputContextsVal
+          const getEventItems = (eventItems) => {
+            return eventItems.map((event) => {
+              return {
+                'title': event.name,
+                'description': event.time + " at " + event.location,
+                'info': {
+                  'key': event.location
+                }
+              };
+            });
           };
+        let googleHomeEventString = filteredThreeDay.join(', ');
+        let returnedJson = {
+            // fulfillment_text: filteredThreeDay.join(', ')
+            // // outputContexts: outputContextsVal
+            'fulfillmentText': 'Heres whats going on:',
+            'fulfillmentMessages': [
+              {
+                'platform': 'ACTIONS_ON_GOOGLE',
+                'carouselSelect':
+                  {
+                    'items': getEventItems(filteredThreeDay)
+                  }
+              }
+            ],
+          "payload": {
+            "google": {
+              "expectUserResponse": true,
+              "richResponse": {
+                "items": [
+                  {
+                    "simpleResponse": {
+                      "textToSpeech": googleHomeEventString
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        //     'payload': {
+        //   'google': {
+        //   'expectUserResponse': true,
+        //     'richResponse': {
+        //     'items': [
+        //       {
+        //         "simpleResponse": {
+        //           "textToSpeech": googleHomeEventString
+        //         }
+        //       }
+        //     ]
+        //   }
+        // }
+        // }
+            }
+
+
           console.log(returnedJson);
           res.json(returnedJson);
         }
@@ -95,7 +153,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         console.log('Sports reached');
         const fileName = 'testdata/xml/athletics.xml';
         //const time = moment().format('')
-        fs.readFile(fileName, 'utf8', function(err, data) {
+        fs.readFile(fileName, 'utf8', function (err, data) {
           if (err) {
             return 'No athletics info found';
           }
