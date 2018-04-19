@@ -17,7 +17,7 @@ const getItemsGroupedByStation = (stationList) => {
                 "key": stationStr
             }
         };
-    }).filter(el => el);
+    });
 };
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
