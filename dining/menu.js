@@ -88,9 +88,9 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     //         fulfillmentText: 'Sorry, I don\'t understand?'
     //     });
     // }
-
+      console.log('test');
     res.json({
-      fulfillmentText: 'Test to see if follow up is working'
+        fulfillment_text: 'Test to see if follow up is working'
     });
   }
 
