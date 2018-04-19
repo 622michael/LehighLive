@@ -107,7 +107,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
              console.log(currentGame['sport_abbrev'] + ' Is after: ' + gameTime.isAfter(currentTime));
              console.log(currentGame['sport_abbrev'] + ' Is before: ' + gameTime.isBefore(nextTime));
             //console.log(gameTime.isBetween(currentTime, currentTime.add(3, 'd')));
-            if (!(gameTime.isAfter(currentTime)) && gameTime.isBefore(nextTime)) {
+            if (gameTime.isAfter(currentTime) && gameTime.isBefore(nextTime)) {
               const listItem = '- ' + currentGame['sport_abbrev'] + '\n';
               return gameString + listItem;
             }
