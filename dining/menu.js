@@ -12,7 +12,7 @@ const stationItemList = (stationList) => {
             "description": getStationMenu("Rathbone", moment("2018-04-18", "YYYY-MM-DD"), "Dinner", stationStr),
             "image": {
                 "imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495",
-                "accessibilityText": "Google Assistant Bubbles"
+                "accessibilityText": "Rathbone"
             },
             "info": {
                 "key": stationStr
@@ -114,7 +114,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     },
 
     'menu-custom': (req, res) => {
-
         const queryResult = req.body.queryResult;
         const station = queryResult.queryText;
         const contextResult = queryResult.outputContexts.parameters;
@@ -125,9 +124,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         res.json({
             fulfillmentText: 'List for this station: ' + getStationMenu(location, time, meal, station)
         })
-
-
-
     }
 
 
