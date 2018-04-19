@@ -69,18 +69,22 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   },
 
   'menufollowup': (req, res) => {
-    const queryResult = req.body.queryResult;
-    const station = queryResult.queryText;
-    const contextResult = queryResult.outputContexts.parameters;
-    const location = contextResult.location;
-    const meal = contextResult.meal;
-    const time = moment('2018-04-18', YEAR_MONTH_DAY_FORMAT);
+    // const queryResult = req.body.queryResult;
+    // const station = queryResult.queryText;
+    // const contextResult = queryResult.outputContexts.parameters;
+    // const location = contextResult.location;
+    // const meal = contextResult.meal;
+    // const time = moment('2018-04-18', 'YYYY-MM-DD');
+    //
+    // res.json({
+    //   fulfillmentText: 'List for this station: ' + getStationMenu(location, time, meal, station)
+    // });
+
 
     res.json({
-      fulfillmentText: 'List for this station: ' + getStationMenu(location, time, meal, station)
+      fulfillmentText: 'Test to see if follow up works'
     });
   }
-
 
 };
 
