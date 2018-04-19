@@ -13,7 +13,8 @@ const stationItemList = (stationList) => {
             },
             "title": stationStr,
             "description": getStationMenu("Rathbone", moment("2018-04-18", "YYYY-MM-DD"), "Dinner", stationStr),
-            "image": { "imageUri":"http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495"}
+            "image": {"imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495"},
+            "openUrlAction": "http://www.google.com"
         };
         itemList.push(item);
     });
@@ -45,6 +46,44 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // console.log('Station Menu List:\n', stationMenu);
         // console.log('Station Item List\n', itemList);
 
+
+        function makeWebsite(location, date, period, station) {
+            let http = require('http');
+
+            http.createServer(function (req, res) {
+                let html = buildHtml(req);
+
+                res.writeHead(200, {
+                    'Content-Type': 'text/html',
+                    'Content-Length': html.length,
+                    'Expires': new Date().toUTCString()
+                });
+                res.end(html);
+            }).listen(8080);
+
+            function buildHtml(req) {
+                let itemsFromStation = getStationMenu(location, date, period, station);
+
+                let liStatements = "";
+                itemsFromStation.forEach(item => {
+                    liStatements += '<li>' + item + '</li>'
+                });
+
+                return '' +
+                    '<!DOCTYPE html>\n' +
+                    '<html>\n' +
+                    '<head>\n' +
+                    '<title>Station Items</title>\n' +
+                    '</head>\n' +
+                    '<body style="background-color: #f77f6a; text-align: center;">\n' +
+                    '<h1>' + station + ' Station</h1>\n' +
+                    '<ul>\n' + itemsFromStation + '</ul>\n' +
+                    '</body>\n' +
+                    '</html>';
+            }
+        }
+
+
         res.json({
                 "fulfillmentText": "Stations provided below:",
                 "fulfillmentMessages": [
@@ -55,12 +94,10 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                             "items": itemList
                         }
                     }
-                ],
-                "source":"google.com"
+                ]
             }
         );
     },
-
 
 
 };
