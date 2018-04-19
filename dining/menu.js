@@ -81,40 +81,53 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // intentMap.set('menu', yourFunctionHandler(app));
         // app.handleRequest(intentMap);
 
-        let response = "This is a sample response from your webhook!";//Default response from the webhook to show it’s working
-        let responseObj = {
-            "fulfillmentText": response
-            , "fulfillmentMessages": [
-                {
-                    "name": "TestA",
-                    "displayName": "menu",
-                    "webhookState": "",
-                    "messages": [
-                        {
-                            "platform": "ACTIONS_ON_GOOGLE",
-                            "listSelect": {
-                                "title": "Stations",
-
-                                "items": itemList
-                            }
-                        }
-                    ]
-
-                }
-            ]
-            , "source": ""
-        };
-        //
-        // const result = {
-        //     fulfillmentMessages: [
+        // let response = "This is a sample response from your webhook!";//Default response from the webhook to show it’s working
+        // let responseObj = {
+        //     "fulfillmentText": response
+        //     , "fulfillmentMessages": [
         //         {
+        //             "name": "TestA",
+        //             "displayName": "menu",
+        //             "webhookState": "",
+        //             "messages": [
+        //                 {
+        //                     "platform": "ACTIONS_ON_GOOGLE",
+        //                     "listSelect": {
+        //                         "title": "Stations",
+        //
+        //                         "items": itemList
+        //                     }
+        //                 }
+        //             ]
         //
         //         }
         //     ]
+        //     , "source": ""
         // };
-        res.json(responseObj
-        )
-    },
+        // res.json(responseObj);
+
+
+
+        res.json(
+            {
+                "fulfillmentMessages": [
+                    {
+                        "platform": "ACTIONS_ON_GOOGLE",
+                        "simpleResponses": {
+                            "simpleResponses": [
+                                {
+                                    "textToSpeech": "Response you will hear.",
+                                    "displayText": "Response you will see."
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+
+        );
+
+    }
 };
 
 const getStations = (location, date, period) => {
