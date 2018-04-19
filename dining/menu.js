@@ -90,22 +90,24 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             "fulfillmentText": "Stations provided below:",
             "fulfillmentMessages": [
                 {
+                    "title": "Station List",
+                    "subtitle": "Choose One",
+                    "formattedText": "testing",
+                    "image": {"imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495"},
                     "buttons": [
                         {
-                            "openUrlAction": {
-                                "url": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495"
-                            },
-                            "title": "AoG Card Link title"
+                            "title": "Station Item",
+                            "openUriAction": {
+                                "uri": "http://www.google.com"
+                            }
+                        },
+                        {
+                            "title": "Station Item 2",
+                            "openUriAction": {
+                                "uri": "http://www.google.com"
+                            }
                         }
-                    ],
-                    "formattedText": "AoG Card Description",
-                    "image": {
-                        "url": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495"
-                    },
-                    "platform": "google",
-                    "subtitle": "AoG Card Subtitle",
-                    "title": "AoG Card Title",
-                    "type": "basic_card"
+                    ]
                 }
             ]
         });
