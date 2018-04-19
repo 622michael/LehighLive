@@ -10,13 +10,9 @@ const stationItemList = (stationList) => {
         let item = {
             "info": {
                 "key": stationStr,
-                "synonyms": [
-                    stationStr + 's',
-                    stationStr + '\'s'
-                ],
-                "title": stationStr
+                "image": {}
             },
-
+            "title": stationStr
         };
         itemList.push(item);
     });
@@ -113,22 +109,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                         "platform": "ACTIONS_ON_GOOGLE",
                         "listSelect": {
                             "title": "Stations",
-                            "items": [
-                                {
-                                    "info": {
-                                        "key": "Station #3"
-                                    },
-                                    "title": "Station #1",
-                                    "image": {}
-                                },
-                                {
-                                    "info": {
-                                        "key": "Station #4"
-                                    },
-                                    "title": "Station #2",
-                                    "image": {}
-                                }
-                            ]
+                            "items": itemList
                         }
                     }
                 ]
