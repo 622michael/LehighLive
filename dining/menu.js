@@ -18,10 +18,6 @@ const stationItemList = (stationList) => {
     });
     return itemList;
 };
-//
-// const functions = require('firebase-functions');
-// const {WebhookClient} = require('dialogflow-fulfillment');
-// const {Card, Suggestion} = require('dialogflow-fulfillment');
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'menu': (req, res) => {
@@ -49,95 +45,45 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // console.log('Station Menu List:\n', stationMenu);
         // console.log('Station Item List\n', itemList);
 
-
-        // const { DialogflowApp } = require('actions-on-google')
-        // const googleAssistant = new DialogflowApp();
-        // let testList = [];
-        // testList.push(googleAssistant.buildOptionItem('Item1').setTitle("Item1 Test").setDescription("Please work"));
-        // const bigList = googleAssistant.buildList().addItems(testList);
-        // console.log(JSON.stringify(bigList))
-
-
-        // function yourFunctionHandler(agent) {
-        //   agent.add(`This message is from Dialogflow's Cloud Functions for Firebase inline editor!`);
-        //   agent.add(new Card({
-        //       title: `Title: this is a card title`,
-        //       imageUrl: 'https://dialogflow.com/images/api_home_laptop.svg',
-        //       text: `This is the body text of a card.  You can even use line\n  breaks and emoji! 💁`,
-        //       buttonText: 'This is a button',
-        //       buttonUrl: 'https://docs.dialogflow.com/'
-        //     })
-        //   );
-        //   agent.add(new Suggestion(`Quick Reply`));
-        //   agent.add(new Suggestion(`Suggestion`));
-        // }
-        //
-        // let intentMap = new Map();
-        //
-        // intentMap.set('menu', yourFunctionHandler(app));
-        // app.handleRequest(intentMap);
-
-        // let response = "This is a sample response from your webhook!";//Default response from the webhook to show it’s working
-        // let responseObj = {
-        //     "fulfillmentText": response
-        //     , "fulfillmentMessages": [
-        //         {
-        //             "name": "TestA",
-        //             "displayName": "menu",
-        //             "webhookState": "",
-        //             "messages": [
-        //                 {
-        //                     "platform": "ACTIONS_ON_GOOGLE",
-        //                     "listSelect": {
-        //                         "title": "Stations",
-        //
-        //                         "items": itemList
-        //                     }
-        //                 }
-        //             ]
-        //
-        //         }
-        //     ]
-        //     , "source": ""
-        // };
-        // res.json(responseObj);
-
-
         res.json({
-                "fulfillmentText": "Stations provided below:",
-                "fulfillmentMessages": [
-                    {
-                        "platform": "ACTIONS_ON_GOOGLE",
-                        "listSelect": {
-                            "title": "Stations",
-                            "items": itemList
+            "messages": [
+                {
+                    "items": [
+                        {
+                            "description": "Option One Description",
+                            "image": {},
+                            "optionInfo": {
+                                "key": "itemOne",
+                                "synonyms": [
+                                    "thing one",
+                                    "object one"
+                                ]
+                            },
+                            "title": "Option One Title"
+                        },
+                        {
+                            "description": "Option Two Description",
+                            "image": {},
+                            "optionInfo": {
+                                "key": "itemTwo",
+                                "synonyms": [
+                                    "thing two",
+                                    "object two"
+                                ]
+                            },
+                            "title": "Option Two Title"
                         }
-                    }
-                ]
+                    ],
+                    "platform": "google",
+                    "type": "carousel_card"
+                }
+            ]
             }
         );
+    },
 
 
-        // res.json(
-        //     {
-        //         "fulfillmentMessages": [
-        //             {
-        //                 "platform": "ACTIONS_ON_GOOGLE",
-        //                 "simpleResponses": {
-        //                     "simpleResponses": [
-        //                         {
-        //                             "textToSpeech": "Response you will hear.",
-        //                             "displayText": "Response you will see."
-        //                         }
-        //                     ]
-        //                 }
-        //             }
-        //         ]
-        //     }
-        //
-        // );
 
-    }
 };
 
 const getStations = (location, date, period) => {
