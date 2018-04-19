@@ -4,33 +4,19 @@ const parser = require('xml2json');
 const common = require('./common');
 const isResidentDiningLocation = (locationName) => common.residentDiningLocations.has(locationName);
 
-// const stationItemList = (stationList) => {
-//     let itemList = [];
-//     Array.from(stationList).forEach((stationStr) => {
-//         let item = {
-//             "info": {
-//                 "key": stationStr
-//             },
-//             "title": stationStr,
-//             "description": getStationMenu("Rathbone", moment("2018-04-18", "YYYY-MM-DD"), "Dinner", stationStr),
-//             "image": {"imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495"}
-//
-//             // "openUrlAction": {
-//             //     "url": "http://www.google.com"
-//             // }
-//         };
-//         itemList.push(item);
-//     });
-//     return itemList;
-// };
-
 const stationItemList = (stationList) => {
     let itemList = [];
     Array.from(stationList).forEach((stationStr) => {
         let item = {
-            "title": stationStr,
-            "openUriAction": {
-                "uri": "http://www.google.com"
+            "title": "Title of item 1",
+            "description": "Description of item 1",
+            "footer": "Item 1 footer",
+            "image": {
+                "url": "https://www.gstatic.com/mobilesdk/170329_assistant/assistant_color_96dp.png",
+                "accessibilityText": "Google Assistant Bubbles"
+            },
+            "openUrlAction": {
+                "url": "https://github.com"
             }
         };
         itemList.push(item);
@@ -101,41 +87,16 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // }
 
         res.json({
-            "expectedInputs": [
+            "fulfillmentText": "Stations provided below:",
+            "fulfillmentMessages": [
                 {
-                    "inputPrompt": {
-                        "richInitialPrompt": {
-                            "items": [
-                                {
-                                    "simpleResponse": {
-                                        "textToSpeech": "Choose one of the stations."
-                                    }
-                                },
-                                {
-                                    "basicCard":
-                                        {
-                                            "title": `${meal}: ${location} Stations`,
-                                            "subtitle": "Lehigh University",
-                                            "formattedText": "Choose a station.",
-                                            "image": {
-                                                "imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495",
-                                                "accessibilityText": "Rathbone"
-                                            },
-                                            "buttons": [
-                                                {
-                                                    "title": "Button 1",
-                                                    "openUriAction": {
-                                                        "uri": "http://www.google.com"
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                    "platform": "ACTIONS_ON_GOOGLE"
-                                }
-                            ]
+                    "platform": "ACTIONS_ON_GOOGLE",
+                    "carouselBrowse":
+                        {
+                            "items" :
                         }
-                    }
-                }]
+                }
+            ]
         });
 
 
