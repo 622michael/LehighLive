@@ -101,38 +101,41 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // }
 
         res.json({
-            "inputPrompt": {
-                "richInitialPrompt": {
-                    "items": [
-                        {
-                            "simpleResponse": {
-                                "textToSpeech": "Choose one of the stations."
-                            }
-                        },
-                        {
-                            "basicCard":
+            "expectedInputs": [
+                {
+                    "inputPrompt": {
+                        "richInitialPrompt": {
+                            "items": [
                                 {
-                                    "title": `${meal}: ${location} Stations`,
-                                    "subtitle": "Lehigh University",
-                                    "formattedText": "Choose a station.",
-                                    "image": {
-                                        "imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495",
-                                        "accessibilityText": "Rathbone"
-                                    },
-                                    "buttons": [
-                                        {
-                                            "title": "Button 1",
-                                            "openUriAction": {
-                                                "uri": "http://www.google.com"
-                                            }
-                                        }
-                                    ]
+                                    "simpleResponse": {
+                                        "textToSpeech": "Choose one of the stations."
+                                    }
                                 },
-                            "platform": "ACTIONS_ON_GOOGLE"
+                                {
+                                    "basicCard":
+                                        {
+                                            "title": `${meal}: ${location} Stations`,
+                                            "subtitle": "Lehigh University",
+                                            "formattedText": "Choose a station.",
+                                            "image": {
+                                                "imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495",
+                                                "accessibilityText": "Rathbone"
+                                            },
+                                            "buttons": [
+                                                {
+                                                    "title": "Button 1",
+                                                    "openUriAction": {
+                                                        "uri": "http://www.google.com"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                    "platform": "ACTIONS_ON_GOOGLE"
+                                }
+                            ]
                         }
-                    ]
-                }
-            }
+                    }
+                }]
         });
 
 
