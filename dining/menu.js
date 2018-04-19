@@ -107,6 +107,34 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // res.json(responseObj);
 
 
+        res.json({
+                "fulfillmentMessages": [
+                    {
+                        "platform": "ACTIONS_ON_GOOGLE",
+                        "listSelect": {
+                            "title": "Stations",
+                            "items": [
+                                {
+                                    "info": {
+                                        "key": "Station #3"
+                                    },
+                                    "title": "Station #1",
+                                    "image": {}
+                                },
+                                {
+                                    "info": {
+                                        "key": "Station #4"
+                                    },
+                                    "title": "Station #2",
+                                    "image": {}
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        );
+
 
         // res.json(
         //     {
