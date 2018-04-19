@@ -50,7 +50,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 "fulfillmentMessages": [
                     {
                         "platform": "ACTIONS_ON_GOOGLE",
-                        "textToSpeech": `Here are the ${meal} stations at ${location}.`,
+                        
                         "carouselSelect": {
                             "items": itemList
                         }
