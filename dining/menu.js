@@ -14,7 +14,9 @@ const stationItemList = (stationList) => {
             "title": stationStr,
             "description": getStationMenu("Rathbone", moment("2018-04-18", "YYYY-MM-DD"), "Dinner", stationStr),
             "image": {"imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495"},
-            "openUrlAction": "http://www.google.com"
+            "openUrlAction": {
+                "url": "http://www.google.com"
+            }
         };
         itemList.push(item);
     });
@@ -91,7 +93,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                         "platform": "ACTIONS_ON_GOOGLE",
 
                         "carouselSelect": {
-                            "items": itemList
+                            "items": itemList,
+                            "imageDisplayOptions": 2
                         }
                     }
                 ]
