@@ -17,7 +17,9 @@ const getItemsGroupedByStation = (stationList) => {
   return stationList.map((stationStr) => {
     return {
       'title': stationStr,
-      'description': getStationMenu(RATHBONE, moment('2018-04-18', YEAR_MONTH_DAY_FORMAT), DINNER_PERIOD, stationStr).join(', '),
+      'description': getStationMenu(RATHBONE, moment('2018-04-18', YEAR_MONTH_DAY_FORMAT), DINNER_PERIOD, stationStr).map(el => {
+          return "• " + el;
+      }).join('\n'),
       'image': {
         'imageUri': 'http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495',
         'accessibilityText': RATHBONE
