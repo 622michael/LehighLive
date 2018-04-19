@@ -12,7 +12,7 @@ const stationItemList = (stationList) => {
                 "key": stationStr,
             },
             "title": stationStr,
-            "image": {}
+            "description": "hello"
         };
         itemList.push(item);
     });
@@ -51,7 +51,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                     {
                         "platform": "ACTIONS_ON_GOOGLE",
                         "carouselSelect": {
-                            "title": "Stations",
                             "items": itemList
                         }
                     }
