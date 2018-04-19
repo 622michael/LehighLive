@@ -101,7 +101,12 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // }
 
         res.json({
-            "fulfillmentMessages": [
+            "items": [
+                {
+                    "simpleResponse": {
+                        "textToSpeech": "Choose one of the stations."
+                    }
+                },
                 {
                     "basicCard":
                         {
