@@ -24,13 +24,6 @@ const isResidentDiningLocation = (locationName) => common.residentDiningLocation
 //     return itemList;
 // };
 
-{
-    "title": "Button #1",
-    "openUriAction": {
-    "uri": "http://www.google.com"
-}
-}
-
 const stationItemList = (stationList) => {
     let itemList = [];
     Array.from(stationList).forEach((stationStr) => {
