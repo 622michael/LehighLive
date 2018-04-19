@@ -86,17 +86,26 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             "fulfillmentText":response
             ,"fulfillmentMessages":[
                 {
-                    "text": {
-                        "text": [
-                            "Hello I m Responding to intent"
-                        ]
+                    "platform": "ACTIONS_ON_GOOGLE",
+                    "listSelect": {
+                        "title": "Stations",
+                        "items": itemList
                     }
                 }
             ]
             ,"source":""
         };
-        return res.json(responseObj);
-    }
+        //
+        // const result = {
+        //     fulfillmentMessages: [
+        //         {
+        //
+        //         }
+        //     ]
+        // };
+        res.json(responseObj
+        )
+    },
 };
 
 const getStations = (location, date, period) => {
