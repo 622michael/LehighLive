@@ -49,10 +49,16 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           console.log(moment(Date.now()));
           const threeDaysFromNow = moment(Date.now()).add(4, 'd');
           const aWeekFromNow = moment(Date.now()).add(7, 'd');
+
+
+        const events = [];
+
+
           const threeDay = result.body.items.map(event => {
             const dateTime = event.start.dateTime;
             const eventName = event.summary;
             const eventLocation = event.location;
+            events.push(eventName);
             console.log('moment : ' + moment(dateTime).fromNow() + ' ' + moment(dateTime).isAfter(Date.now()) + ' ' + moment(dateTime).isBefore(threeDaysFromNow));
             if (moment(dateTime).isAfter(Date.now())) {
               //events[i] = {"dateTime": dateTime};
@@ -96,10 +102,11 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               };
             });
           };
-        let googleHomeEventString = filteredThreeDay.join(',').toString();
+          let googleHomeEventString = filteredThreeDay.join(',').toString();
 
-        console.log("Google Home Event String" + googleHomeEventString);
-        let returnedJson = {
+
+          console.log("Google Home Event String" + googleHomeEventString);
+          let returnedJson = {
             // fulfillment_text: filteredThreeDay.join(', ')
             // // outputContexts: outputContextsVal
             'fulfillmentText': 'Heres whats going on:',
@@ -112,36 +119,36 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                   }
               }
             ],
-          "payload": {
-            "google": {
-              "expectUserResponse": true,
-              "richResponse": {
-                "items": [
-                  {
-                    "simpleResponse": {
-                      "displayText" : 'Here are the events',
-                      "textToSpeech": filteredThreeDay[0]
+            "payload": {
+              "google": {
+                "expectUserResponse": true,
+                "richResponse": {
+                  "items": [
+                    {
+                      "simpleResponse": {
+                        "displayText": 'Here are the events',
+                        "textToSpeech": events.join(',')
+                      }
                     }
-                  }
-                ]
+                  ]
+                }
               }
             }
-          }
-        //     'payload': {
-        //   'google': {
-        //   'expectUserResponse': true,
-        //     'richResponse': {
-        //     'items': [
-        //       {
-        //         "simpleResponse": {
-        //           "textToSpeech": googleHomeEventString
-        //         }
-        //       }
-        //     ]
-        //   }
-        // }
-        // }
-            };
+            //     'payload': {
+            //   'google': {
+            //   'expectUserResponse': true,
+            //     'richResponse': {
+            //     'items': [
+            //       {
+            //         "simpleResponse": {
+            //           "textToSpeech": googleHomeEventString
+            //         }
+            //       }
+            //     ]
+            //   }
+            // }
+            // }
+          };
 
 
           console.log("Returned JSON: " + returnedJson);
