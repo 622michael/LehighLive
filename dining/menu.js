@@ -10,9 +10,9 @@ const stationItemList = (stationList) => {
         let item = {
             "info": {
                 "key": stationStr,
-                "image": {}
             },
-            "title": stationStr
+            "title": stationStr,
+            "image": {}
         };
         itemList.push(item);
     });
