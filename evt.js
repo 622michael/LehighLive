@@ -96,7 +96,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               };
             });
           };
-        let googleHomeEventString = filteredThreeDay.join(',');
+        let googleHomeEventString = filteredThreeDay.join(',').toString();
 
         console.log("Google Home Event String" + googleHomeEventString);
         let returnedJson = {
