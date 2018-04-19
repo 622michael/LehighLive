@@ -10,6 +10,7 @@ const stationItemList = (stationList) => {
         let item = {
             "info": {
                 "key": stationStr,
+                "image": { "url":"https://allo.google.com/images/allo-logo.png", "accessibilityText":"Google Allo Logo" }
             },
             "title": stationStr,
             "description": getStationMenu("Rathbone", moment("2018-04-18", "YYYY-MM-DD"), "Dinner", stationStr)
@@ -21,7 +22,6 @@ const stationItemList = (stationList) => {
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'menu': (req, res) => {
-
         // const app = new WebhookClient({req, res});
 
         const parameters = req.body.queryResult.parameters;
@@ -50,6 +50,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 "fulfillmentMessages": [
                     {
                         "platform": "ACTIONS_ON_GOOGLE",
+                        "textToSpeech": `Here are the ${meal} stations at ${location}.`,
                         "carouselSelect": {
                             "items": itemList
                         }
