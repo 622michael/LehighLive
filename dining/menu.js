@@ -92,7 +92,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                         }
                     ],
                     "imageUrl": "http://urltoimage.com",
-                    "platform": "facebook",
+                    "platform": "google",
                     "subtitle": "Card Subtitle",
                     "title": "Card Title",
                     "type": 1
