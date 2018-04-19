@@ -82,18 +82,23 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // app.handleRequest(intentMap);
 
         let response = "This is a sample response from your webhook!";//Default response from the webhook to show it’s working
-        let responseObj={
-            "fulfillmentText":response
-            ,"fulfillmentMessages":[
+        let responseObj = {
+            "fulfillmentText": response
+            , "fulfillmentMessages": [
                 {
-                    "platform": "ACTIONS_ON_GOOGLE",
-                    "listSelect": {
-                        "title": "Stations",
-                        "items": itemList
-                    }
+                    "messages": [
+                        {
+                            "platform": "ACTIONS_ON_GOOGLE",
+                            "listSelect": {
+                                "title": "Stations",
+                                "items": itemList
+                            }
+                        }
+                    ]
+
                 }
             ]
-            ,"source":""
+            , "source": ""
         };
         //
         // const result = {
