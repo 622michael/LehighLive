@@ -120,7 +120,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                   {
                     "simpleResponse": {
                       "displayText" : 'Here are the events',
-                      "textToSpeech": 'test'
+                      "ssml": '<speak> Test </speak>'
                     }
                   }
                 ]
