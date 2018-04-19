@@ -111,7 +111,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               },{
                 "simpleResponses": [
                   {
-                    "textToSpeech": "Matt is the best coder."
+                    "textToSpeech": 'Matt is the best coder.',
+                    "ssml": 'Matt is an awesome coder.'
                   }
                 ]
               }
