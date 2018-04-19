@@ -70,10 +70,18 @@ const getStations = (location, date, period) => {
     const item = JSON.parse(jsonText)['VFPData']['weeklymenu'];
     const time = date.format('YYYY-MM-DD');
 
-    return item.map(attribute => {
+    let stationList = [];
+
+    item.forEach(attribute => {
+        const station = attribute['station'];
         if (attribute['menudate'] === time && attribute['meal'] === period && stationList.indexOf(station) === -1)
-            return attribute['station'];
+            stationList.push(station);
     });
+    return stationList;
+    // return item.map(attribute => {
+    //     if (attribute['menudate'] === time && attribute['meal'] === period && stationList.indexOf(station) === -1)
+    //         return attribute['station'];
+    // });
 };
 
 const getStationMenu = (location, date, period, station) => {
