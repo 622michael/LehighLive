@@ -77,7 +77,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     if(!contextResult)
     {
         res.json({
-            fulfillmentText: 'Sorry, can you say that again?'
+            fulfillment_text: 'Sorry, can you say that again?'
         });
     }
 
@@ -85,15 +85,14 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     const meal = contextResult.meal;
     const time = moment('2018-04-18', 'YYYY-MM-DD');
 
-    if(location && meal && time && station)
-    {
+    if(location && meal && time && station) {
         res.json({
-           fulfillmentText: 'List for this station: ' + getStationMenu(location, time, meal, station)
+           fulfillment_text: 'List for this station: ' + getStationMenu(location, time, meal, station)
         });
     }
     else {
         res.json({
-            fulfillmentText: 'Sorry, I don\'t understand?'
+            fulfillment_text: 'Sorry, I don\'t understand?'
         });
     }
     //   console.log('test');
