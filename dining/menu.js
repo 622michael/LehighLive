@@ -9,11 +9,11 @@ const stationItemList = (stationList) => {
     Array.from(stationList).forEach((stationStr) => {
         let item = {
             "info": {
-                "key": stationStr,
-                "image": { "url":"https://allo.google.com/images/allo-logo.png", "accessibilityText":"Google Allo Logo" }
+                "key": stationStr
             },
             "title": stationStr,
-            "description": getStationMenu("Rathbone", moment("2018-04-18", "YYYY-MM-DD"), "Dinner", stationStr)
+            "description": getStationMenu("Rathbone", moment("2018-04-18", "YYYY-MM-DD"), "Dinner", stationStr),
+            "image": { "url":"https://allo.google.com/images/allo-logo.png", "accessibilityText":"Google Allo Logo" }
         };
         itemList.push(item);
     });
@@ -50,7 +50,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 "fulfillmentMessages": [
                     {
                         "platform": "ACTIONS_ON_GOOGLE",
-                        
+
                         "carouselSelect": {
                             "items": itemList
                         }
