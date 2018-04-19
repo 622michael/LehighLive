@@ -113,12 +113,14 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                                 "imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495",
                                 "accessibilityText": "Rathbone"
                             },
-                            "buttons": {
-                                "title": "Button 1",
-                                "openUriAction": {
-                                    "uri": "http://www.google.com"
+                            "buttons": [
+                                {
+                                    "title": "Button 1",
+                                    "openUriAction": {
+                                        "uri": "http://www.google.com"
+                                    }
                                 }
-                            }
+                            ]
                         }
                 }
             ]
