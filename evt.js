@@ -101,14 +101,14 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           const jsonText = parser.toJson(data);
           const games = JSON.parse(jsonText)['scores']['game'];
           const currentTime = moment();
-          const nextTime = currentTime.add(3, 'd');
+          const nextTime = moment().add(3, 'd');
           console.log('Current time: ' + currentTime.format('MMMM Do YYYY, h:mm:ss a'));
           console.log('Three days: ' + nextTime.format('MMMM Do YYYY, h:mm:ss a'));
           const gameString = games.reduce((gameString, currentGame) => {
             var gameTime = moment(currentGame['date'], 'MM-DD-YYYY hh:mm:ss A');
             console.log('Game time:' + gameTime.format('MMMM Do YYYY, h:mm:ss a'));
-            console.log('Is after: ' + currentTime.isAfter(gameTime));
-            console.log('Is before: ' + nextTime.isBefore(gameTime));
+            console.log('Is after: ' + gameTime.isAfter(currentTime));
+            console.log('Is before: ' + gameTime.isBefore(nextTime));
             //console.log(gameTime.isBetween(currentTime, currentTime.add(3, 'd')));
             if (gameTime.isBetween(currentTime, currentTime.add(3, 'd'))) {
               const listItem = '- ' + currentGame['sport_abbrev'] + '\n';
