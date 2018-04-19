@@ -58,7 +58,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             const dateTime = event.start.dateTime;
             const eventName = event.summary;
             const eventLocation = event.location;
-            events.push(eventName);
             console.log('moment : ' + moment(dateTime).fromNow() + ' ' + moment(dateTime).isAfter(Date.now()) + ' ' + moment(dateTime).isBefore(threeDaysFromNow));
             if (moment(dateTime).isAfter(Date.now())) {
               //events[i] = {"dateTime": dateTime};
@@ -66,6 +65,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 const eventMoment = moment(dateTime);
                 let time = eventMoment.format('dddd, MMMM Do');
                 // return eventName + ' on ' + time + ' at ' + eventLocation;
+                events.push(eventName);
                 return {
                   'name': eventName,
                   'time': time,
