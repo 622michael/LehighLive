@@ -80,9 +80,19 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           //   console.log(outputContextsVal);
           // handleRequest('2018-04-02', 'Breakfast');
           let returnedJson = {
-            fulfillment_text: filteredThreeDay.join(', ')
-            // outputContexts: outputContextsVal
-          };
+          // fulfillment_text: filteredThreeDay.join(', ')
+          // // outputContexts: outputContextsVal
+            'fulfillmentText': 'Heres whats going on:',
+            'fulfillmentMessages': [
+              {
+                'platform': 'ACTIONS_ON_GOOGLE',
+                'carouselSelect':
+                  {
+                    'items': threeDay
+                  }
+              }
+            ]
+        };
           console.log(returnedJson);
           res.json(returnedJson);
         }
