@@ -135,7 +135,7 @@ const getStations = (location, date, period) => {
   const time = date.format('YYYY-MM-DD');
 
   const stationsAdded = {};
-  return item.map((attribute, index, stationList) => {
+  return item.map(attribute => {
     const station = attribute['station'];
     if (attribute['menudate'] === time && attribute['meal'] === period && !stationsAdded[station]) {
       stationsAdded[station] = 1;
