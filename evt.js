@@ -96,7 +96,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               };
             });
           };
-        let googleHomeEventString = filteredThreeDay;
+        let googleHomeEventString = filteredThreeDay.join(',');
 
         console.log("Google Home Event String" + googleHomeEventString);
         let returnedJson = {
@@ -120,7 +120,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                   {
                     "simpleResponse": {
                       "displayText" : 'Here are the events',
-                      "textToSpeech": getEventItems(filteredThreeDay)
+                      "textToSpeech": googleHomeEventString
                     }
                   }
                 ]
