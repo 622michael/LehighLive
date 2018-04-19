@@ -88,10 +88,10 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           const getEventItems = (eventItems) => {
             return eventItems.map((event) => {
               return {
-                'title': event,
-                'description': event,
+                'title': event.eventName,
+                'description': event.time,
                 'info': {
-                  'key': event
+                  'key': event.location
                 }
               };
             });
