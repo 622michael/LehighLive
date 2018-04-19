@@ -58,7 +58,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               //events[i] = {"dateTime": dateTime};
               if (moment(dateTime).isBefore(threeDaysFromNow)) {
                 const eventMoment = moment(dateTime);
-                return eventName + ' on ' + eventMoment.format('dddd, MMMM Do') + ' at ' + eventLocation``;
+                return eventName + ' on ' + eventMoment.format('dddd, MMMM Do') + ' at ' + eventLocation;
               }
             }
           });
