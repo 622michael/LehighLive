@@ -119,6 +119,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 "items": [
                   {
                     "simpleResponse": {
+                      "displayText" : 'Here are the events',
                       "textToSpeech": googleHomeEventString
                     }
                   }
