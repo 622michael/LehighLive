@@ -4,10 +4,9 @@ const parser = require('xml2json');
 const common = require('./common');
 const isResidentDiningLocation = (locationName) => common.residentDiningLocations.has(locationName);
 
-const stationItemList = (stationList) => {
-    let itemList = [];
-    Array.from(stationList).forEach((stationStr) => {
-        let item = {
+const getItemsGroupedByStation = (stationList) => {
+    return stationList.map((stationStr) => {
+        return {
             "title": stationStr,
             "description": getStationMenu("Rathbone", moment("2018-04-18", "YYYY-MM-DD"), "Dinner", stationStr),
             "image": {
@@ -18,9 +17,7 @@ const stationItemList = (stationList) => {
                 "key": stationStr
             }
         };
-        itemList.push(item);
     });
-    return itemList;
 };
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
@@ -42,7 +39,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
         let stationList = getStations(location, now, meal);
         // let stationMenu = getStationMenu(location, now, meal, 'Entrée');
-        let itemList = stationItemList(stationList);
+        let itemList = getItemsGroupedByStation(stationList);
 
         // console.log('Station List:\n', stationList);
         // console.log('Station Menu List:\n', stationMenu);
@@ -136,15 +133,11 @@ const getStations = (location, date, period) => {
     const item = JSON.parse(jsonText)['VFPData']['weeklymenu'];
     const time = date.format('YYYY-MM-DD');
 
-    let stationList = [];
-    item.forEach((attribute) => {
-        const station = attribute['station'];
-        if (attribute['menudate'] === time && attribute['meal'] === period && stationList.indexOf(station) === -1)
-            stationList.push(station);
-
-
-    });
-    return stationList;
+    return item.map((attribute, index, stationList) => {
+      const station = attribute['station'];
+      if (attribute['menudate'] === time && attribute['meal'] === period && !stationList.includes(station))
+        return station;
+    }).filter(el => el);
 };
 
 const getStationMenu = (location, date, period, station) => {
@@ -154,12 +147,10 @@ const getStationMenu = (location, date, period, station) => {
     const item = JSON.parse(jsonText)['VFPData']['weeklymenu'];
     const time = date.format('YYYY-MM-DD');
 
-    let stationItems = "";
-    item.forEach((attribute) => {
-        if (attribute['menudate'] === time && attribute['meal'] === period && attribute['station'] === station)
-            stationItems += '- ' + attribute['item_name'] + '\n';
-    });
-    return stationItems;
+    return item.map(attribute => {
+      if (attribute['menudate'] === time && attribute['meal'] === period && attribute['station'] === station)
+        return attribute['item_name'];
+    }).filter(el => el);
 };
 
 const isOpenDuringPeriod = (location, period) => {
