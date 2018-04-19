@@ -134,13 +134,15 @@ const getStations = (location, date, period) => {
     const xmlData = fs.readFileSync(xmLFile, 'utf8');
     const jsonText = parser.toJson(xmlData);
     const item = JSON.parse(jsonText)['VFPData']['weeklymenu'];
-    const time = moment("2018-04-18", "YYYY-MM-DD"); // date.format('YYYY-MM-DD');
+    const time = date.format('YYYY-MM-DD');
 
     let stationList = [];
     item.forEach((attribute) => {
         const station = attribute['station'];
         if (attribute['menudate'] === time && attribute['meal'] === period && stationList.indexOf(station) === -1)
             stationList.push(station);
+
+
     });
     return stationList;
 };
