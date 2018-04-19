@@ -141,7 +141,7 @@ const getStations = (location, date, period) => {
       stationsAdded[station] = 1;
       return station;
     }
-  }).filter(el => el);
+  }).filter(el => el && el !== 'Sodexo');
 };
 
 const getStationMenu = (location, date, period, station) => {
