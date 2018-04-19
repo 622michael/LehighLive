@@ -108,15 +108,22 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                   {
                     'items': getEventItems(filteredThreeDay)
                   }
-              },{
-                "simpleResponses": [
+              }
+            ],
+          "payload": {
+            "google": {
+              "expectUserResponse": true,
+              "richResponse": {
+                "items": [
                   {
-                    "textToSpeech": 'Matt is the best coder.',
-                    "ssml": 'Matt is an awesome coder.'
+                    "simpleResponse": {
+                      "textToSpeech": "Matt is an awesome coder"
+                    }
                   }
                 ]
               }
-            ],
+            }
+          }
         //     'payload': {
         //   'google': {
         //   'expectUserResponse': true,
