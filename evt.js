@@ -84,10 +84,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             return {
               'title': event,
               'description': event,
-              'image': {
-                'imageUri': 'http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495',
-                'accessibilityText': event
-              },
               'info': {
                 'key': event
               }
