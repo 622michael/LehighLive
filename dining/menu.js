@@ -108,24 +108,24 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
 
 
-        res.json(
-            {
-                "fulfillmentMessages": [
-                    {
-                        "platform": "ACTIONS_ON_GOOGLE",
-                        "simpleResponses": {
-                            "simpleResponses": [
-                                {
-                                    "textToSpeech": "Response you will hear.",
-                                    "displayText": "Response you will see."
-                                }
-                            ]
-                        }
-                    }
-                ]
-            }
-
-        );
+        // res.json(
+        //     {
+        //         "fulfillmentMessages": [
+        //             {
+        //                 "platform": "ACTIONS_ON_GOOGLE",
+        //                 "simpleResponses": {
+        //                     "simpleResponses": [
+        //                         {
+        //                             "textToSpeech": "Response you will hear.",
+        //                             "displayText": "Response you will see."
+        //                         }
+        //                     ]
+        //                 }
+        //             }
+        //         ]
+        //     }
+        //
+        // );
 
     }
 };
