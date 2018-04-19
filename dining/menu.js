@@ -90,10 +90,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             "fulfillmentText": "Stations provided below:",
             "fulfillmentMessages": [
                 {
-                    "title": "Station List",
-                    "subtitle": "Choose One",
-                    "formattedText": "testing",
-                    "image": {"imageUri": "http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495"},
                     "buttons": [
                         {
                             "title": "Station Item",
