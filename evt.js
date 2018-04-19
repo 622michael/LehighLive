@@ -104,7 +104,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           const nextTime = moment().add(3, 'd');
           const gameString = games.reduce((gameString, currentGame) => {
             const gameTime = moment(currentGame['date'], 'MM-DD-YYYY hh:mm:ss A');
-             console.log(currentGame['sport_abbrev'] + ' Is after: ' + !(gameTime.isAfter(currentTime)));
+             console.log(currentGame['sport_abbrev'] + ' Is after: ' + gameTime.isAfter(currentTime));
              console.log(currentGame['sport_abbrev'] + ' Is before: ' + gameTime.isBefore(nextTime));
             //console.log(gameTime.isBetween(currentTime, currentTime.add(3, 'd')));
             if (!(gameTime.isAfter(currentTime)) && gameTime.isBefore(nextTime)) {
