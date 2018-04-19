@@ -12,7 +12,7 @@ const stationItemList = (stationList) => {
                 "key": stationStr,
             },
             "title": stationStr,
-            "description": "hello"
+            "description": getStationMenu(null, null, "Dinner", stationStr).join('\n')
         };
         itemList.push(item);
     });
@@ -70,13 +70,10 @@ const getStations = (location, date, period) => {
     const item = JSON.parse(jsonText)['VFPData']['weeklymenu'];
     const time = date.format('YYYY-MM-DD');
 
-    let stationList = [];
-    item.forEach((attribute) => {
-        const station = attribute['station'];
+    return item.map(attribute => {
         if (attribute['menudate'] === time && attribute['meal'] === period && stationList.indexOf(station) === -1)
-            stationList.push(station);
+            return attribute['station'];
     });
-    return stationList;
 };
 
 const getStationMenu = (location, date, period, station) => {
@@ -86,12 +83,10 @@ const getStationMenu = (location, date, period, station) => {
     const item = JSON.parse(jsonText)['VFPData']['weeklymenu'];
     const time = date.format('YYYY-MM-DD');
 
-    let stationItems = "";
-    item.forEach((attribute) => {
+    return item.map(attribute => {
         if (attribute['menudate'] === time && attribute['meal'] === period && attribute['station'] === station)
-            stationItems += '- ' + attribute['item_name'] + '\n';
+            return attribute['item_name'];
     });
-    return stationItems;
 };
 
 const isOpenDuringPeriod = (location, period) => {
