@@ -93,7 +93,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                     "platform": "ACTIONS_ON_GOOGLE",
                     "carouselBrowse":
                         {
-                            "items" :
+                            "items" : itemList
                         }
                 }
             ]
