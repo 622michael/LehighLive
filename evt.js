@@ -108,7 +108,13 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                   {
                     'items': getEventItems(filteredThreeDay)
                   }
-              },
+              },{
+                "simpleResponses": [
+                  {
+                    "textToSpeech": "Matt is the best coder."
+                  }
+                ]
+              }
             ],
         //     'payload': {
         //   'google': {
