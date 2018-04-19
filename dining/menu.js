@@ -12,7 +12,7 @@ const stationItemList = (stationList) => {
                 "key": stationStr,
             },
             "title": stationStr,
-            "description": getStationMenu("Rathbone", "2018-04-18", "Dinner", stationStr).join('\n')
+            "description": getStationMenu("Rathbone", moment("2018-04-18", "YYYY-MM-DD"), "Dinner", stationStr).join('\n')
         };
         itemList.push(item);
     });
