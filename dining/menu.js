@@ -68,7 +68,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     });
   },
 
-  'stationMenu': (req, res) => {
+  'Menu.stationMenu': (req, res) => {
     // const queryResult = req.body.queryResult;
     // const station = queryResult.parameters.station;
     //
