@@ -69,29 +69,29 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   },
 
   'Meals.stationMenu': (req, res) => {
-    // const queryResult = req.body.queryResult;
-    // const station = queryResult.parameters.station;
-    //
-    // const contextResult = queryResult.outputContexts.parameters;
-    // const location = contextResult.location;
-    // const meal = contextResult.meal;
-    // const time = moment('2018-04-18', 'YYYY-MM-DD');
-    //
-    // if(location && meal && time && station)
-    // {
-    //     res.json({
-    //        fulfillmentText: 'List for this station: ' + getStationMenu(location, time, meal, station)
-    //     });
-    // }
-    // else {
-    //     res.json({
-    //         fulfillmentText: 'Sorry, I don\'t understand?'
-    //     });
-    // }
-      console.log('test');
-    res.json({
-        fulfillment_text: 'Test to see if follow up is working'
-    });
+    const queryResult = req.body.queryResult;
+    const station = queryResult.parameters.station;
+
+    const contextResult = queryResult.outputContexts.parameters;
+    const location = contextResult.location;
+    const meal = contextResult.meal;
+    const time = moment('2018-04-18', 'YYYY-MM-DD');
+
+    if(location && meal && time && station)
+    {
+        res.json({
+           fulfillmentText: 'List for this station: ' + getStationMenu(location, time, meal, station)
+        });
+    }
+    else {
+        res.json({
+            fulfillmentText: 'Sorry, I don\'t understand?'
+        });
+    }
+    //   console.log('test');
+    // res.json({
+    //     fulfillment_text: 'Test to see if follow up is working'
+    // });
   }
 
 };
