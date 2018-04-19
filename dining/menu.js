@@ -9,7 +9,7 @@ const stationItemList = (stationList) => {
     Array.from(stationList).forEach((stationStr) => {
         let item = {
             "title": stationStr,
-            "description": getStationMenu("Rathbone", "2018-04-18", "Dinner", stationStr),
+            "description": getStationMenu("Rathbone", moment("2018-04-18", "YYYY-MM-DD"), "Dinner", stationStr),
             "image": {
                 "url": "https://www.gstatic.com/mobilesdk/170329_assistant/assistant_color_96dp.png",
                 "accessibilityText": "Google Assistant Bubbles"
