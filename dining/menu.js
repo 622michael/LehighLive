@@ -13,7 +13,7 @@ const stationItemList = (stationList) => {
             },
             "title": stationStr,
             "description": getStationMenu("Rathbone", moment("2018-04-18", "YYYY-MM-DD"), "Dinner", stationStr),
-            "image": { "imageUri":"https://allo.google.com/images/allo-logo.png", "accessibilityText":"Google Allo Logo" }
+            "image": { "imageUri":"", "accessibilityText": getStationMenu("Rathbone", moment("2018-04-18", "YYYY-MM-DD"), "Dinner", stationStr)}
         };
         itemList.push(item);
     });
