@@ -81,25 +81,22 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // intentMap.set('menu', yourFunctionHandler(app));
         // app.handleRequest(intentMap);
 
-
-        res.status(200).send(JSON.stringify({
-            "fulfillmentMessages": [
+        let response = "This is a sample response from your webhook!";//Default response from the webhook to show it’s working
+        let responseObj={
+            "fulfillmentText":response
+            ,"fulfillmentMessages":[
                 {
-                    "buttons": [
-                        {
-                            "postback": "Card Link URL or text",
-                            "text": "Card Link Title"
-                        }
-                    ],
-                    "imageUrl": "http://urltoimage.com",
-                    "platform": "google",
-                    "subtitle": "Card Subtitle",
-                    "title": "Card Title",
-                    "type": 1
+                    "text": {
+                        "text": [
+                            "Hello I m Responding to intent"
+                        ]
+                    }
                 }
             ]
-        }));
-    },
+            ,"source":""
+        };
+        return res.json(responseObj);
+    }
 };
 
 const getStations = (location, date, period) => {
