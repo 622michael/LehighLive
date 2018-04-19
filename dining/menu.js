@@ -104,6 +104,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
 
         res.json({
+                "fulfillmentText": "Stations provided below:",
                 "fulfillmentMessages": [
                     {
                         "platform": "ACTIONS_ON_GOOGLE",
