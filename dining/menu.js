@@ -72,7 +72,15 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     const queryResult = req.body.queryResult;
     const station = queryResult.parameters.station;
 
-    const contextResult = queryResult.outputContexts.parameters;
+    const contextResult = queryResult.outputContexts[0].parameters;
+
+    if(!contextResult)
+    {
+        res.json({
+            fulfillmentText: 'Sorry, can you say that again?'
+        });
+    }
+
     const location = contextResult.location;
     const meal = contextResult.meal;
     const time = moment('2018-04-18', 'YYYY-MM-DD');
