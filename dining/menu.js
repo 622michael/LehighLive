@@ -81,18 +81,24 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         // intentMap.set('menu', yourFunctionHandler(app));
         // app.handleRequest(intentMap);
 
-        const result = {
-            fulfillmentMessages: [
+
+        res.status(200).send(JSON.stringify({
+            "messages": [
                 {
-                    "platform": "ACTIONS_ON_GOOGLE",
-                    "listSelect": {
-                        "title": "Stations",
-                        "items": itemList
-                    }
+                    "buttons": [
+                        {
+                            "postback": "Card Link URL or text",
+                            "text": "Card Link Title"
+                        }
+                    ],
+                    "imageUrl": "http://urltoimage.com",
+                    "platform": "facebook",
+                    "subtitle": "Card Subtitle",
+                    "title": "Card Title",
+                    "type": 1
                 }
             ]
-        };
-        res.json(result)
+        }));
     },
 };
 
