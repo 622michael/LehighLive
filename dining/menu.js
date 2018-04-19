@@ -4,15 +4,23 @@ const parser = require('xml2json');
 const common = require('./common');
 const isResidentDiningLocation = (locationName) => common.residentDiningLocations.has(locationName);
 
+const YEAR_MONTH_DAY_FORMAT = 'YYYY-MM-DD';
+const DINNER_PERIOD = 'Dinner';
+const LUNCH_PERIOD = 'Lunch';
+const BREAKFAST_PERIOD = 'Breakfast';
+
+const RATHBONE = 'Rathbone';
+const CORT = 'Lower Cort';
+const BRODHEAD = 'Brodhead';
+
 const getItemsGroupedByStation = (stationList) => {
-  console.log(stationList);
   return stationList.map((stationStr) => {
     return {
       'title': stationStr,
-      'description': getStationMenu('Rathbone', moment('2018-04-18', 'YYYY-MM-DD'), 'Dinner', stationStr).join(', '),
+      'description': getStationMenu(RATHBONE, moment('2018-04-18', YEAR_MONTH_DAY_FORMAT), DINNER_PERIOD, stationStr).join(', '),
       'image': {
         'imageUri': 'http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495',
-        'accessibilityText': 'Rathbone'
+        'accessibilityText': RATHBONE
       },
       'info': {
         'key': stationStr
@@ -23,15 +31,15 @@ const getItemsGroupedByStation = (stationList) => {
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   'menu': (req, res) => {
-    // const app = new WebhookClient({req, res});
 
     const parameters = req.body.queryResult.parameters;
     const location = parameters.location;
     const meal = parameters.meal;
     if (!isResidentDiningLocation(location)) {
       res.json({
-        fulfillment_text: `I only know how to tell you what's for ${meal} at Rathbone, Lower Cort, and Brodhead`
+        fulfillment_text: `I only know how to tell you what's for ${meal} at ${RATHBONE}, ${CORT}, and ${BRODHEAD}`
       });
+      return;
     }
     const now = moment();
     // console.log('Location:', location);
@@ -46,43 +54,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     // console.log('Station Menu List:\n', stationMenu);
     // console.log('Station Item List\n', itemList);
 
-
-    // function makeWebsite(location, date, period, station) {
-    //     let http = require('http');
-    //
-    //     http.createServer(function (req, res) {
-    //         let html = buildHtml(req);
-    //
-    //         res.writeHead(200, {
-    //             'Content-Type': 'text/html',
-    //             'Content-Length': html.length,
-    //             'Expires': new Date().toUTCString()
-    //         });
-    //         res.end(html);
-    //     }).listen(8080);
-    //
-    //     function buildHtml(req) {
-    //         let itemsFromStation = getStationMenu(location, date, period, station);
-    //
-    //         let liStatements = "";
-    //         itemsFromStation.forEach(item => {
-    //             liStatements += '<li>' + item + '</li>'
-    //         });
-    //
-    //         return '' +
-    //             '<!DOCTYPE html>\n' +
-    //             '<html>\n' +
-    //             '<head>\n' +
-    //             '<title>Station Items</title>\n' +
-    //             '</head>\n' +
-    //             '<body style="background-color: #f77f6a; text-align: center;">\n' +
-    //             '<h1>' + station + ' Station</h1>\n' +
-    //             '<ul>\n' + itemsFromStation + '</ul>\n' +
-    //             '</body>\n' +
-    //             '</html>';
-    //     }
-    // }
-
     res.json({
       'fulfillmentText': 'Stations provided below:',
       'fulfillmentMessages': [
@@ -95,20 +66,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         }
       ]
     });
-
-
-    // res.json({
-    //         "fulfillmentText": "Stations provided below:",
-    //         "fulfillmentMessages": [
-    //             {
-    //                 "platform": "ACTIONS_ON_GOOGLE",
-    //                 "carouselSelect": {
-    //                     "items": itemList
-    //                 }
-    //             }
-    //         ]
-    //     }
-    // );
   },
 
   'menufollowup': (req, res) => {
@@ -117,7 +74,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     const contextResult = queryResult.outputContexts.parameters;
     const location = contextResult.location;
     const meal = contextResult.meal;
-    const time = moment('2018-04-18', 'YYYY-MM-DD');
+    const time = moment('2018-04-18', YEAR_MONTH_DAY_FORMAT);
 
     res.json({
       fulfillmentText: 'List for this station: ' + getStationMenu(location, time, meal, station)
@@ -132,7 +89,7 @@ const getStations = (location, date, period) => {
   const xmlData = fs.readFileSync(xmLFile, 'utf8');
   const jsonText = parser.toJson(xmlData);
   const item = JSON.parse(jsonText)['VFPData']['weeklymenu'];
-  const time = date.format('YYYY-MM-DD');
+  const time = date.format(YEAR_MONTH_DAY_FORMAT);
 
   const stationsAdded = {};
   return item.map(attribute => {
@@ -149,7 +106,7 @@ const getStationMenu = (location, date, period, station) => {
   const xmlData = fs.readFileSync(xmLFile, 'utf8');
   const jsonText = parser.toJson(xmlData);
   const item = JSON.parse(jsonText)['VFPData']['weeklymenu'];
-  const time = date.format('YYYY-MM-DD');
+  const time = date.format(YEAR_MONTH_DAY_FORMAT);
 
   return item.map(attribute => {
     if (attribute['menudate'] === time && attribute['meal'] === period && attribute['station'] === station) {
@@ -165,9 +122,9 @@ const isOpenDuringPeriod = (location, period) => {
   const endBreakfastTime = moment('9:45am', common.hourMinuteFormat);
   const locationTimes = common.getStartAndEndTimeForToday(location.hours);
   const {startTime, endTime} = locationTimes;
-  if (period === 'Dinner') {
+  if (period === DINNER_PERIOD) {
     return startDinnerTime.isBefore(endTime);
-  } else if (period === 'Lunch') {
+  } else if (period === LUNCH_PERIOD) {
     return startLunchTime.isSameOrAfter(startTime) && endLunchTime.isSameOrBefore(endTime);
   } else {
     return endBreakfastTime.isAfter(startTime);
