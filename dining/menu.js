@@ -8,15 +8,14 @@ const stationItemList = (stationList) => {
     let itemList = [];
     Array.from(stationList).forEach((stationStr) => {
         let item = {
-            "title": "Title of item 1",
-            "description": "Description of item 1",
-            "footer": "Item 1 footer",
+            "title": stationStr,
+            "description": getStationMenu("Rathbone", "2018-04-18", "Dinner", stationStr),
             "image": {
                 "url": "https://www.gstatic.com/mobilesdk/170329_assistant/assistant_color_96dp.png",
                 "accessibilityText": "Google Assistant Bubbles"
             },
-            "openUrlAction": {
-                "url": "https://github.com"
+            "info": {
+                "key": stationStr
             }
         };
         itemList.push(item);
@@ -91,7 +90,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             "fulfillmentMessages": [
                 {
                     "platform": "ACTIONS_ON_GOOGLE",
-                    "carouselBrowse":
+                    "carouselSelect":
                         {
                             "items" : itemList
                         }
