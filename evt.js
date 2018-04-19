@@ -89,7 +89,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             return eventItems.map((event) => {
               return {
                 'title': event.name,
-                'description': event.time,
+                'description': event.time + " at " + event.location,
                 'info': {
                   'key': event.location
                 }
