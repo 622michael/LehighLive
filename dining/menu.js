@@ -90,7 +90,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     // }
 
     res.json({
-      fulfillmentText: 'Test to see if follow up works'
+      fulfillmentText: 'Test to see if follow up is working'
     });
   }
 
