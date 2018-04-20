@@ -179,12 +179,10 @@ const getBusData = (callback) => {
   });
 };
 
-const getNextStops = (data, busData) => {
-  return Object.keys(data).map(key => {
-    if (busData[key].key == busAbbr[bus]) {
-      if (busData[key].currentstop != '') {
+const getNextStops = (busData, bus) => {
+  return Object.keys(busData).map(key => {
+    if (busData[key].key == busAbbr[bus] && busData[key].currentstop != '') {
         return busData[key].currentstop;
-      }
     }
   }).filter(el => el);
 };
@@ -195,7 +193,8 @@ const busGoesTo = (timeTable, bus, dest) => {
   return getArrival(timeTable, bus, dest) != false;
 };
 
-const CONNTECTIVITY_ISSUES_FULLFILLMENT = 'I\'m having trouble getting the bus routes at the moment. Please try again later.';
+const CONNECTIVITY_ISSUES_FULFILLMENT = 'I\'m having trouble getting the bus routes at the moment. Please try again later.';
+const BUS_NOT_RUNNING_FULFILLMENT = 'That bus is not running right now.';
 
 const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   'Destination': (req, res) => {
@@ -205,7 +204,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     getTimeTable((error, response, timeTable) => {
       let fullfillment = null;
       if (error != null) {
-        fullfillment = CONNTECTIVITY_ISSUES_FULLFILLMENT;
+        fullfillment = CONNECTIVITY_ISSUES_FULFILLMENT;
       }
       else {
         const arrival = getArrival(timeTable, bus, dest);
@@ -249,7 +248,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
       let fullfillment;
 
       if (error != null) {
-        fullfillment = CONNTECTIVITY_ISSUES_FULLFILLMENT;
+        fullfillment = CONNECTIVITY_ISSUES_FULFILLMENT;
       } else {
         const buses = Object.keys(timeTable).map(key => {
           const bus = timeTable[key].name;
@@ -276,7 +275,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     getTimeTable((error, response, timeTable) => {
       let fullfillment;
       if (error != null) {
-        fullfillment = CONNTECTIVITY_ISSUES_FULLFILLMENT;
+        fullfillment = CONNECTIVITY_ISSUES_FULFILLMENT;
       } else {
         const bus = req.body.queryResult.parameters.bus;
         const dest = req.body.queryResult.parameters.dest;
@@ -310,7 +309,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     getTimeTable((error, response, timeTable) => {
       let fullfillment;
       if (error != null) {
-        fullfillment = CONNTECTIVITY_ISSUES_FULLFILLMENT;
+        fullfillment = CONNECTIVITY_ISSUES_FULFILLMENT;
       } else {
         if (routeToKey[bus] == null || timeTable[routeToKey[bus]] == null) {
           fullfillment = 'Could not find that bus';
@@ -344,26 +343,29 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     getBusData((error, respone, busData) => {
       if (error != null) {
         res.json({
-          fulfillment_text: CONNTECTIVITY_ISSUES_FULLFILLMENT
+          fulfillment_text: CONNECTIVITY_ISSUES_FULFILLMENT
         });
       } else {
         getTimeTable((error, response, timeTable) => {
-          let fullfillment;
+          let fulfillment;
           if (error != null) {
-            fullfillment = CONNTECTIVITY_ISSUES_FULLFILLMENT;
+            fulfillment = CONNECTIVITY_ISSUES_FULFILLMENT;
           } else {
-            const times = [];
             const stops = getNextStops(busData, bus);
-            for (let i = 0; i < stops.length; i++) {
-              const arrival = getArrival(timeTable, bus, stops[i]);
+
+            const times = stops.map(stop => {
+              const arrival = getArrival(timeTable, bus, stop);
               if (arrival != '-' || !arrival) {
-                times.push(arrival);
+                return arrival;
               }
-            }
+            }).filter(el => el);
+
             if (times.length == 0) {
+              fulfillment = BUS_NOT_RUNNING_FULFILLMENT;
               // Bus not running
             }
             else if (times.length == 1) {
+              fulfillment = `${bus} will arrive at ${stops[0]} in ${times[0]}`;
               // One bus running
               // Use times[0] for the time it will arrive
               // at next stop
