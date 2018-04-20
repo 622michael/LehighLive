@@ -193,7 +193,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     if (isClosedForEntireDay) {
       responseText = `${name} is closed for the entire day.`;
     } else {
-      responseText = `sThe hours for ${name} today are ${openTime}-${closeTime}`;
+      responseText = `The hours for ${name} today are ${openTime}-${closeTime}`;
     }
     res.json({
       fulfillment_text: responseText

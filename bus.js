@@ -202,40 +202,30 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             })
         })
     },
-    'FromTo': (req, res) => {
-        var origin = req.body.queryResult.parameters.origin;
-        var dest = req.body.queryResult.parameters.destination;
-        if (origin == dest) {
-            res.json({
-                fulfillment_text: "You don't need a bus!"
-            })
-            return
-        }
-
-        getTimeTable(function(error, response, timeTable) {
-            var fullfillment;
-
-            if (error != null) {
-                fullfillment = CONNTECTIVITY_ISSUES_FULLFILLMENT
-            } else {
-                var buses = []
-
-                Object.keys(timeTable).forEach(function(key) {
-                    var bus = timeTable[key].name
-                    if (busGoesTo(timeTable, bus, dest) && busGoesTo(timeTable, bus, origin)) {
-                        buses.push(bus)
-                    }
-                });
-
-                if (buses.length == 0) {
-                    fullfillment = "There is no bus from " + origin + " to " + dest;
-                } else if (buses.length == 1) {
-                    fullfillment = "To get to " + dest + ", you can take the " + buses[0] + " bus"
-                } else {
-                    fullfillment = "To get to " + dest + ", you can take either the " + buses[0] + " bus or the " + buses[1] + " bus"; 
-                }
+    'Test': (req, res) => {
+        getBusData((busdata, error) => {
+            let busName = req.body.queryResult.parameters.bus;
+            let busCode = routeToKey[busName];
+            console.log(busName);
+            console.log(busCode);
+            console.log(busdata);
+            for (var i = 0; i <= busdata.length; i++) {
+                console.log(busdata[i]);
             }
+            let found = false;
+            let busItself;
+            let j = 0;
+            while (!found) {
+                console.log(busdata[j]['name']);
+            }
+            const speech = busdata[1]['stops']['0'];
 
+            //TODO Decide what bus data to provide based on what the user asks for, the busCode variable doesn't correspond
+            //TODO to the index in busData
+            console.log("Bus Code: " + busCode);
+            let prettySpeech = "The " + busName + " " + speech;
+            console.log(prettySpeech);
+            
             res.json({
                 fulfillment_text: fullfillment
             })

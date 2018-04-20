@@ -67,8 +67,17 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           };
           let googleHomeEventString = filteredThreeDay.join(',').toString();
           console.log("Google Home Event String" + googleHomeEventString);
-          
+
           let eventsText = events.join(',');
+        let hereAreTheEvents = 'Here are some upcoming events';
+
+     //    if (date.time === 'today') {
+     //      let hereAreTheEvents = 'Here are the events today';
+     //    }
+     // if (date.time === 'week'){
+     //      let hereAreTheEvents = 'Here are the events this week';
+     //    }
+
         let returnedJson = {
             // fulfillment_text: filteredThreeDay.join(', ')
             // // outputContexts: outputContextsVal
@@ -89,7 +98,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                   "items": [
                     {
                       "simpleResponse": {
-                        "displayText": 'Here are the events',
+                        "displayText": hereAreTheEvents,
                         "textToSpeech": eventsText
                       }
                     }
