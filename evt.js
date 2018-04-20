@@ -142,6 +142,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                             gamesList.push(game['sport'] + ' at ' + game['opponent']);
                             return {
                                 'name': game['sport'] + ' at ' + game['opponent'],
+                                'opponent': game['opponent_logo'],
+                                'accessibilityText': game['opponent'],
                                 'time': gameTime.format('MMMM Do YYYY, h:mm a'),
                                 'location': game['location']
                             }
@@ -158,6 +160,10 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                             return {
                                 'title': game.name,
                                 'description': game.time + " at " + game.location,
+                                'image': {
+                                    'imageUri': game.opponent,
+                                    'accessibilityText': location.displayTitle
+                                },
                                 'info': {
                                     'key': game.location
                                 }
@@ -185,7 +191,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                                     "items": [
                                         {
                                             "simpleResponse": {
-                                                "displayText": 'Here are some upcoming games',
+                                                "displayText": 'Here are some upcoming games.',
                                                 "textToSpeech": gamesText
                                             }
                                         }
