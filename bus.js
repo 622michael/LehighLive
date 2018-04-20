@@ -129,7 +129,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             let busCode = routeToKey[busName];
             console.log(busName);
             console.log(busCode);
-            console.log('forloop');
+            console.log(busdata);
             for (var i = 0; i <= busdata.length; i++) {
                 console.log(busdata[i]);
             }
