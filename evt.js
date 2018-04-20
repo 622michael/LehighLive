@@ -129,26 +129,21 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           const currentTime = moment();
           const nextTime = moment().add(2, 'd');
           console.log('In the next two days: \n');
-          // const gameString = games.reduce((gameString, currentGame) => {
-          //   const gameTime = moment(currentGame['date'], 'MM-DD-YYYY hh:mm:ss A');
-          //   if (gameTime.isAfter(currentTime) && gameTime.isBefore(nextTime)) {
-          //     const listItem = '- ' + currentGame['sport_abbrev'] + ' at ' + currentGame['date'] + '\n';
-          //     return gameString + listItem;
-          //   }
-          //   return gameString;
-          // });
-            const twoDays = games.map(game => {
-                const gameTime = moment(game['date'], 'MM-DD-YYYY hh:mm:ss A');
-                if (gameTime.isAfter(currentTime) && gameTime.isBefore(nextTime)) {
-                    gamesText.push(game['sport'] + ' versus ' + game['opponent']);
-                    return {
-                        'name': game['sport'] + ' versus ' + game['opponent'],
-                        'time': gameTime.format('MMMM Do YYYY, h:mm a'),
-                        'location': game['location']
+          const nextTwoDays = games.map(game => {
+            const gameTime = moment(game['date'], 'MM-DD-YYYY hh:mm:ss A');
+            if (gameTime.isAfter(currentTime) && gameTime.isBefore(nextTime)) {
+                gamesText.push(game['sport'] + ' at ' + game['opponent']);
+                return {
+                    'name': game['sport'] + ' at ' + game['opponent'],
+                    'time': gameTime.format('MMMM Do YYYY, h:mm a'),
+                    'location': game['location']
                     }
                 }
-            });
-            console.log(twoDays);
+          });
+          const filteredTwoDays = nextTwoDays.filter(function(n){ return n != undefined });
+          console.log(filteredTwoDays);
+
+
         });
         res.json({
           fulfillment_text: 'Sports Reached'
