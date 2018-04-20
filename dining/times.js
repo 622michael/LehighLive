@@ -89,7 +89,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     res.json({
       fulfillment_text: (
         `Here's what's open right now: \n
-        ${getOpenLocations().map(location => location.title).join('\n')}
+        ${getOpenLocations().map(location => location.title).join(', ')}
         `
       )
     });
