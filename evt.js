@@ -24,11 +24,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           const threeDaysFromNow = moment(Date.now()).add(4, 'd');
           const aWeekFromNow = moment(Date.now()).add(7, 'd');
           const tomorrow = moment(Date.now()).add(1, 'd');
-
-
           const events = [];
-
-
           const threeDay = result.body.items.map(event => {
             const dateTime = event.start.dateTime;
             const eventName = event.summary;
@@ -56,10 +52,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               }
             }
           });
-
           const filteredThreeDay = threeDay.filter(arr => arr);
           console.log(filteredThreeDay);
-
           const getEventItems = (eventItems) => {
             return eventItems.map((event) => {
               return {
@@ -72,9 +66,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             });
           };
           let googleHomeEventString = filteredThreeDay.join(',').toString();
-
-
           console.log("Google Home Event String" + googleHomeEventString);
+          
           let eventsText = events.join(',');
         let returnedJson = {
             // fulfillment_text: filteredThreeDay.join(', ')
@@ -106,8 +99,6 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             }
 
           };
-
-
           console.log("Returned JSON: " + returnedJson);
           res.json(returnedJson);
         }
