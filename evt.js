@@ -35,6 +35,10 @@ const parser = require('xml2json');
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'today': (req, res) => {
+      const queryResult = req.body.queryResult;
+      const date = queryResult.parameters;
+      console.log(date);
+
       console.log('Event Today reached');
       let unirestReq = unirest('GET', 'https://clients6.google.com/calendar/v3/calendars/indark@lehigh.edu/events?calendarId=indark%40lehigh.edu&singleEvents=true&timeZone=America%2FNew_York&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-04-06T00%3A00%3A00-04%3A00&timeMax=2018-05-15T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs');
       unirestReq.headers({
@@ -49,17 +53,32 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           console.log(moment(Date.now()));
           const threeDaysFromNow = moment(Date.now()).add(4, 'd');
           const aWeekFromNow = moment(Date.now()).add(7, 'd');
+          const tomorrow = moment(Date.now()).add(1, 'd');
+
+
+          const events = [];
+
+
           const threeDay = result.body.items.map(event => {
             const dateTime = event.start.dateTime;
             const eventName = event.summary;
             const eventLocation = event.location;
-            console.log('moment : ' + moment(dateTime).fromNow() + ' ' + moment(dateTime).isAfter(Date.now()) + ' ' + moment(dateTime).isBefore(threeDaysFromNow));
+            let endTime = moment(dateTime).isBefore(threeDaysFromNow);
+
+            if (date.time === 'week') {
+              endTime = aWeekFromNow;
+            }
+            if (date.time === 'today') {
+              endTime = tomorrow;
+            }
+            console.log('moment : ' + moment(dateTime).fromNow() + ' ' + moment(dateTime).isAfter(Date.now()) + ' ' + endTime);
             if (moment(dateTime).isAfter(Date.now())) {
               //events[i] = {"dateTime": dateTime};
-              if (moment(dateTime).isBefore(threeDaysFromNow)) {
+              if (endTime) {
                 const eventMoment = moment(dateTime);
                 let time = eventMoment.format('dddd, MMMM Do');
                 // return eventName + ' on ' + time + ' at ' + eventLocation;
+                events.push(eventName);
                 return {
                   'name': eventName,
                   'time': time,
@@ -96,10 +115,11 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               };
             });
           };
-        let googleHomeEventString = filteredThreeDay.join(', ').toString();
+          let googleHomeEventString = filteredThreeDay.join(',').toString();
 
-        console.log(googleHomeEventString);
-        let returnedJson = {
+
+          console.log("Google Home Event String" + googleHomeEventString);
+          let returnedJson = {
             // fulfillment_text: filteredThreeDay.join(', ')
             // // outputContexts: outputContextsVal
             'fulfillmentText': 'Heres whats going on:',
@@ -112,38 +132,39 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                   }
               }
             ],
-          "payload": {
-            "google": {
-              "expectUserResponse": true,
-              "richResponse": {
-                "items": [
-                  {
-                    "simpleResponse": {
-                      "textToSpeech": googleHomeEventString
+            "payload": {
+              "google": {
+                "expectUserResponse": true,
+                "richResponse": {
+                  "items": [
+                    {
+                      "simpleResponse": {
+                        "displayText": 'Here are the events',
+                        "textToSpeech": events.join(',')
+                      }
                     }
-                  }
-                ]
+                  ]
+                }
               }
             }
-          }
-        //     'payload': {
-        //   'google': {
-        //   'expectUserResponse': true,
-        //     'richResponse': {
-        //     'items': [
-        //       {
-        //         "simpleResponse": {
-        //           "textToSpeech": googleHomeEventString
-        //         }
-        //       }
-        //     ]
-        //   }
-        // }
-        // }
-            }
+            //     'payload': {
+            //   'google': {
+            //   'expectUserResponse': true,
+            //     'richResponse': {
+            //     'items': [
+            //       {
+            //         "simpleResponse": {
+            //           "textToSpeech": googleHomeEventString
+            //         }
+            //       }
+            //     ]
+            //   }
+            // }
+            // }
+          };
 
 
-          console.log(returnedJson);
+          console.log("Returned JSON: " + returnedJson);
           res.json(returnedJson);
         }
       );
