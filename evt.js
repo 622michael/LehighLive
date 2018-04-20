@@ -71,7 +71,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             let eventsText = events.join(',');
           }
           else {
-            eventsText = events.toString();
+            let eventsText = events.toString();
             console.log("EventsText: " + eventsText);
           }
         let returnedJson = {
