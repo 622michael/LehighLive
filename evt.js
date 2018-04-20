@@ -67,13 +67,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           };
           let googleHomeEventString = filteredThreeDay.join(',').toString();
           console.log("Google Home Event String" + googleHomeEventString);
-          if (events.length > 1) {
-            let eventsText = events.join(',');
-          }
-          else {
-            let eventsText = events.toString();
-            console.log("EventsText: " + eventsText);
-          }
+          
+          let eventsText = events.join(',');
         let returnedJson = {
             // fulfillment_text: filteredThreeDay.join(', ')
             // // outputContexts: outputContextsVal
