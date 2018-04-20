@@ -197,32 +197,6 @@
         <boxscore_link/>
     </game>
     <game>
-        <game_id>11093</game_id>
-        <game_pregame_story_id>27036</game_pregame_story_id>
-        <sport>Women's Golf</sport>
-        <sport_abbrev>WGOLF</sport_abbrev>
-        <date>4/22/2018 8:30:00 AM</date>
-        <time>8:30 AM</time>
-        <location_indicator>N</location_indicator>
-        <location>Annapolis, Md.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Patriot League Championship</opponent>
-        <opponent_logo>
-            http://lehighsports.com/images/logos/Patriot-League.png
-        </opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
         <game_id>11000</game_id>
         <game_pregame_story_id>27034</game_pregame_story_id>
         <sport>Women's Lacrosse</sport>
