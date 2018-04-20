@@ -59,7 +59,7 @@ const extractTodaysDayAndTimeRangeFromTimeRanges = (timeRanges) => {
     } else {
       const day = moment(daysRange, DAY_OF_WEEK_TOKEN);
       const dayCrossedPastMidnight = isOneDayBefore(day, endTime);
-      return now.isSame(day, 'day') || (dayCrossedPastMidnight && withinClosingTime);
+      return now.isSame(day, 'day') || (dayCrossedPastMidnight && withinClosingTime && now.isBefore(startTime));
     }
   });
   if (todaysRange) {
