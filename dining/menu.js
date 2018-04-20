@@ -50,10 +50,10 @@ const getItemsGroupedByStation = (location, meal, date) => {
               'description': getStationMenu(location.title, date, meal, station, item).map(menuItem => {
                 return '• ' + menuItem;
               }).join('\n'),
-              // 'image': {
-              //   'imageUri': location.imageUrl,
-              //   'accessibilityText': location.displayTitle
-              // },
+              'image': {
+                'imageUri': location.imageUrl,
+                'accessibilityText': location.displayTitle
+              },
               'info': {
                 'key': station
               }
