@@ -146,7 +146,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             console.log("Bus Code: " + busCode);
             let prettySpeech = "The " + busName + " " + speech;
             console.log(prettySpeech);
-            console.log()
+            
             res.json({
                 fulfillment_text: prettySpeech
             });
