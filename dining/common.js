@@ -8,8 +8,9 @@ const CORT_DIALOGFLOW_TITLE = 'Cort';
 const BRODHEAD_DIALOGFLOW_TITLE = 'Brodhead';
 const RESIDENT_DINING_LOCATIONS = new Set([RATHBONE_DIALOGFLOW_TITLE, CORT_DIALOGFLOW_TITLE, BRODHEAD_DIALOGFLOW_TITLE]);
 const RATHBONE_IMAGE_URL = 'http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495';
-const CORT_IMAGE_URL = 'https://i.pinimg.com/564x/47/27/66/47276640c9a2f09e44e0030260a5f7b0.jpg';
+const CORT_IMAGE_URL = 'http://www.lehigh.edu/undergradprospectus/img/community-opener.jpg';
 const BRODHEAD_IMAGE_URL = 'https://content-service.sodexomyway.com/media/Brodhead_Hero_tcm50-8459_w1920_h976.jpg?url=https://lehigh.sodexomyway.com/';
+
 const isResidentDiningLocation = (locationName) => RESIDENT_DINING_LOCATIONS.has(locationName);
 
 const getCurrentHour = () => moment().hours();

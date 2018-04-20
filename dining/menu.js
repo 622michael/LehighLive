@@ -41,26 +41,26 @@ const getItemsGroupedByStation = (location, meal, date) => {
       unirest('GET', menuUrl)
         .headers(REQUEST_HEADERS)
         .end((xmlData) => {
-        const jsonText = parser.toJson(xmlData.body);
-        const item = JSON.parse(jsonText)['VFPData']['weeklymenu'];
-        const stations = getStations(date, meal, item);
-        const itemsGroupedByStation = stations.map(station => {
-          return {
-            'title': station,
-            'description': getStationMenu(location.title, date, meal, station, item).map(menuItem => {
-              return '• ' + menuItem;
-            }).join('\n'),
-            'image': {
-              'imageUri': location.imageUrl,
-              'accessibilityText': location.displayTitle
-            },
-            'info': {
-              'key': station
-            }
-          };
+          const jsonText = parser.toJson(xmlData.body);
+          const item = JSON.parse(jsonText)['VFPData']['weeklymenu'];
+          const stations = getStations(date, meal, item);
+          const itemsGroupedByStation = stations.map(station => {
+            return {
+              'title': station,
+              'description': getStationMenu(location.title, date, meal, station, item).map(menuItem => {
+                return '• ' + menuItem;
+              }).join('\n'),
+              'image': {
+                'imageUri': location.imageUrl,
+                'accessibilityText': location.displayTitle
+              },
+              'info': {
+                'key': station
+              }
+            };
+          });
+          resolve(itemsGroupedByStation);
         });
-        resolve(itemsGroupedByStation);
-      });
     });
   });
 };
@@ -81,7 +81,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
     getItemsGroupedByStation(nameToLocationObj[location], meal, date).then(items => {
       res.json({
-        'fulfillmentText': 'Stations provided below:',
+        'fulfillmentText': `Here are all the stations for ${meal} at ${location}.`,
         'fulfillmentMessages': [
           {
             'platform': 'ACTIONS_ON_GOOGLE',
@@ -90,10 +90,81 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 'items': items
               }
           }
-        ]
+        ],
+        "payload": {
+          "google": {
+            "expectUserResponse": true,
+            "richResponse": {
+              "items": [
+                {
+                  "simpleResponse": {
+                    "displayText": `Here are all the stations for ${meal} at ${location}.`,
+                    "textToSpeech": `Here are all the stations for ${meal} at ${location}.`
+                  }
+                }
+              ]
+            }
+          }
+        }
       });
+    }).catch(err => {
+      if (err.message === "Couldn't find a meal week during that time period") {
+        res.json({
+          fulfillment_text: err.message
+        })
+      } else if (err.message === "Couldn't find a location with that name") {
+        res.json({
+          fulfillment_text: err.message
+        });
+      }
     });
   },
+
+  // 'Meals.stationMenu': (req, res) => {
+  //   const queryResult = req.body.queryResult;
+  //   const station = queryResult.parameters.station;
+  //
+  //   const contextResult = queryResult.outputContexts[0].parameters;
+  //
+  //   if (!contextResult) {
+  //     res.json({
+  //       fulfillment_text: 'abcd'
+  //     });
+  //   }
+  //
+  //   const location = contextResult.location;
+  //   const meal = contextResult.meal;
+  //   const time = moment('2018-04-18', 'YYYY-MM-DD');
+  //
+  //   if (location && meal && time && station) {
+  //     let returnedJson = {
+  //       // fulfillment_text: filteredThreeDay.join(', ')
+  //       // // outputContexts: outputContextsVal
+  //       'fulfillmentText': 'List for this station: ' + getStationMenu(location, time, meal, station),
+  //       'payload': {
+  //         'google': {
+  //           'expectUserResponse': true,
+  //           'richResponse': {
+  //             'items': [
+  //               {
+  //                 'simpleResponse': {
+  //                   'displayText': 'List for this station: ' + getStationMenu(location, time, meal, station),
+  //                   'textToSpeech': `Here is the items being served at the ${station} at location.`
+  //                 }
+  //               }
+  //             ]
+  //           }
+  //         }
+  //       }
+  //     };
+  //     res.json(returnedJson);
+  //     return;
+  //   }
+  //   res.json({
+  //     fulfillment_text: 'Sefgh'
+  //   });
+  // }
+
 
 };
 
@@ -123,28 +194,34 @@ const generateMenuUrlByLocationAndDate = (location, date) => {
     unirest('GET', xmlFile)
       .headers(REQUEST_HEADERS)
       .end((result) => {
-      if (result.error) {
-        reject(result.error);
-      }
-      const jsonText = parser.toJson(result.body);
-      const parsed = JSON.parse(jsonText);
-      const locations = parsed.menu.location;
-      const locationObj = locations.find(locObj => {
-        return locObj.title === location.title;
+        if (result.error) {
+          reject(result.error);
+        }
+        const jsonText = parser.toJson(result.body);
+        const parsed = JSON.parse(jsonText);
+        const locations = parsed.menu.location;
+        const locationObj = locations.find(locObj => {
+          return locObj.title === location.title;
+        });
+        if (!locationObj) {
+          reject(new Error("Couldn't find a location with that name"));
+        }
+        const meals = locationObj.meal;
+        const mealObj = meals.find(meal => {
+          const mealWeekStartAndEnd = meal.title.split(' ').join('').split('-');
+          const MEAL_WEEK_MONTH_DAY_YEAR_FORMAT = 'MMMDDYYYY';
+          const mealWeekStart = moment(mealWeekStartAndEnd[0], MEAL_WEEK_MONTH_DAY_YEAR_FORMAT);
+          const mealWeekEnd = moment(mealWeekStartAndEnd[1], MEAL_WEEK_MONTH_DAY_YEAR_FORMAT);
+          return date.isBetween(mealWeekStart, mealWeekEnd);
+        });
+        if (!mealObj) {
+          reject(new Error("Couldn't find a meal week during that time period"));
+        }
+        const menunameSplit = mealObj.menuname.split('/');
+        const menuName = menunameSplit[0];
+        const weekString = menunameSplit[1];
+        resolve(`http://mc.lehigh.edu/services/dining/resident/${menuName}/${weekString}.xml`);
       });
-      const meals = locationObj.meal;
-      const mealObj = meals.find(meal => {
-        const mealWeekStartAndEnd = meal.title.split(' ').join('').split('-');
-        const MEAL_WEEK_MONTH_DAY_YEAR_FORMAT = 'MMMDDYYYY';
-        const mealWeekStart = moment(mealWeekStartAndEnd[0], MEAL_WEEK_MONTH_DAY_YEAR_FORMAT);
-        const mealWeekEnd = moment(mealWeekStartAndEnd[1], MEAL_WEEK_MONTH_DAY_YEAR_FORMAT);
-        return date.isBetween(mealWeekStart, mealWeekEnd);
-      });
-      const menunameSplit = mealObj.menuname.split('/');
-      const menuName = menunameSplit[0];
-      const weekString = menunameSplit[1];
-      resolve(`http://mc.lehigh.edu/services/dining/resident/${menuName}/${weekString}.xml`);
-    });
   });
 };
 
