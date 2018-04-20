@@ -167,7 +167,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                                     'accessibilityText': game.accessibilityText
                                 },
                                 'info': {
-                                    'key': game.description
+                                    'key': game.name
                                 }
                             };
                         });
