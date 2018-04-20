@@ -35,6 +35,11 @@ const nameToLocationObj = {
   [common.BRODHEAD_DIALOGFLOW_TITLE]: BRODHEAD
 };
 
+const ERROR_MESSAGES = {
+  MEAL_WEEK_NOT_FOUND: "Couldn't find a location with that name",
+  LOCATION_NOT_FOUND: "Couldn't find a location with that name"
+};
+
 const getItemsGroupedByStation = (location, meal, date) => {
   return generateMenuUrlByLocationAndDate(location, date).then(menuUrl => {
     return new Promise((resolve, reject) => {
@@ -108,13 +113,13 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         }
       });
     }).catch(err => {
-      if (err.message === "Couldn't find a meal week during that time period") {
+      if (err.message === ERROR_MESSAGES.LOCATION_NOT_FOUND) {
         res.json({
-          fulfillment_text: err.message
+          fulfillment_text: ERROR_MESSAGES.LOCATION_NOT_FOUND
         })
-      } else if (err.message === "Couldn't find a location with that name") {
+      } else if (err.message === ERROR_MESSAGES.MEAL_WEEK_NOT_FOUND) {
         res.json({
-          fulfillment_text: err.message
+          fulfillment_text: ERROR_MESSAGES.MEAL_WEEK_NOT_FOUND
         });
       }
     });
@@ -204,7 +209,7 @@ const generateMenuUrlByLocationAndDate = (location, date) => {
           return locObj.title === location.title;
         });
         if (!locationObj) {
-          reject(new Error("Couldn't find a location with that name"));
+          reject(new Error(ERROR_MESSAGES.LOCATION_NOT_FOUND));
         }
         const meals = locationObj.meal;
         const mealObj = meals.find(meal => {
@@ -217,7 +222,7 @@ const generateMenuUrlByLocationAndDate = (location, date) => {
         console.log(mealObj);
         console.log('isundefined',!mealObj);
         if (!mealObj) {
-          reject(new Error("Couldn't find a meal week during that time period"));
+          reject(new Error(ERROR_MESSAGES.MEAL_WEEK_NOT_FOUND));
         }
         const menunameSplit = mealObj.menuname.split('/');
         const menuName = menunameSplit[0];
