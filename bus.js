@@ -125,7 +125,6 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     },
     'Test': (req, res) => {
         getBusData((busdata, error) => {
-            console.dir(req);
             let busName = req.body.queryResult.parameters.bus;
             let busCode = routeToKey[busName];
             console.log(busName);
@@ -134,12 +133,13 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 console.log(busdata[i]['name']);
             }
             const speech = busdata[1]['stops']['0'];
+
             //TODO Decide what bus data to provide based on what the user asks for, the busCode variable doesn't correspond
             //TODO to the index in busData
             console.log("Bus Code: " + busCode);
             let prettySpeech = "The " + busName + " " + speech;
             console.log(prettySpeech);
-
+            console.log()
             res.json({
                 fulfillment_text: prettySpeech
             });
