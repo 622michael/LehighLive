@@ -180,15 +180,13 @@ const getBusData = (callback) => {
 };
 
 const getNextStops = (data, busData) => {
-  const stops = [];
-  Object.keys(data).forEach((key) => {
+  return Object.keys(data).map(key => {
     if (busData[key].key == busAbbr[bus]) {
       if (busData[key].currentstop != '') {
-        stops.push(busData[key].currentstop);
+        return busData[key].currentstop;
       }
     }
-  });
-  return stops;
+  }).filter(el => el);
 };
 
 // Determines if the bus goes to the destination
@@ -253,14 +251,12 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
       if (error != null) {
         fullfillment = CONNTECTIVITY_ISSUES_FULLFILLMENT;
       } else {
-        const buses = [];
-
-        Object.keys(timeTable).forEach(key => {
+        const buses = Object.keys(timeTable).map(key => {
           const bus = timeTable[key].name;
           if (busGoesTo(timeTable, bus, dest) && busGoesTo(timeTable, bus, origin)) {
-            buses.push(bus);
+            return bus;
           }
-        });
+        }).filter(el => el);
 
         if (buses.length === 0) {
           fullfillment = 'There is no bus from ' + origin + ' to ' + dest;
