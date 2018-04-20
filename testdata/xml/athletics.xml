@@ -51,32 +51,6 @@
         <boxscore_link/>
     </game>
     <game>
-        <game_id>10896</game_id>
-        <game_pregame_story_id>27037</game_pregame_story_id>
-        <sport>Baseball</sport>
-        <sport_abbrev>BB</sport_abbrev>
-        <date>4/21/2018 12:00:00 AM</date>
-        <time>12 p.m.</time>
-        <location_indicator>A</location_indicator>
-        <location>Lewisburg, Pa.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Bucknell University</opponent>
-        <opponent_logo>
-            http://lehighsports.com/images/logos/bucknell_logo.png
-        </opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
         <game_id>10669</game_id>
         <sport>Men's Tennis</sport>
         <sport_abbrev>MTEN</sport_abbrev>
@@ -190,31 +164,6 @@
         <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
         <opponent>Brown and White Spring Game</opponent>
         <opponent_logo>http://lehighsports.com/images/logos/Lehigh.png</opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
-        <game_id>11172</game_id>
-        <sport>Women's Tennis</sport>
-        <sport_abbrev>WTEN</sport_abbrev>
-        <date>4/22/2018 12:00:00 AM</date>
-        <time>12 p.m.</time>
-        <location_indicator>N</location_indicator>
-        <location>West Point, N.Y.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>TBD</opponent>
-        <opponent_logo>
-            http://lehighsports.com/images/logos/Patriot-League.png
-        </opponent_logo>
         <result/>
         <team_score/>
         <opponent_score/>
