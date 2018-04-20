@@ -52,26 +52,25 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           //let events = [];
           console.log(moment(Date.now()));
           const threeDaysFromNow = moment(Date.now()).add(4, 'd');
-        const aWeekFromNow = moment(Date.now()).add(7, 'd');
-        const tomorrow = moment(Date.now()).add(1, 'd');
+          const aWeekFromNow = moment(Date.now()).add(7, 'd');
+          const tomorrow = moment(Date.now()).add(1, 'd');
 
 
-
-        const events = [];
-        let endTime = moment(dateTime).isBefore(threeDaysFromNow);
-
-        if (date.time === 'week') {
-          endTime = aWeekFromNow;
-        }
-        if (date.time === 'today') {
-          endTime = tomorrow;
-        }
+          const events = [];
 
 
-        const threeDay = result.body.items.map(event => {
+          const threeDay = result.body.items.map(event => {
             const dateTime = event.start.dateTime;
             const eventName = event.summary;
             const eventLocation = event.location;
+            let endTime = moment(dateTime).isBefore(threeDaysFromNow);
+
+            if (date.time === 'week') {
+              endTime = aWeekFromNow;
+            }
+            if (date.time === 'today') {
+              endTime = tomorrow;
+            }
             console.log('moment : ' + moment(dateTime).fromNow() + ' ' + moment(dateTime).isAfter(Date.now()) + ' ' + endTime);
             if (moment(dateTime).isAfter(Date.now())) {
               //events[i] = {"dateTime": dateTime};
