@@ -130,6 +130,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                     if (err) {
                         return 'No athletics info found';
                     }
+                    let n = 0;
                     const jsonText = parser.toJson(data);
                     const games = JSON.parse(jsonText)['scores']['game'];
                     const gamesList = [];
@@ -138,7 +139,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                     console.log('In the next two days: \n');
                     const nextTwoDays = games.map(game => {
                         const gameTime = moment(game['date'], 'MM-DD-YYYY hh:mm:ss A');
-                        if (gameTime.isAfter(currentTime) && gameTime.isBefore(nextTime)) {
+                        if (gameTime.isAfter(currentTime) && gameTime.isBefore(nextTime) && n < 10) {
+                            n++;
                             gamesList.push(game['sport'] + ' at ' + game['opponent']);
                             return {
                                 'name': game['sport'] + ' at ' + game['opponent'],
