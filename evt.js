@@ -157,9 +157,9 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                         return gameItems.map((game) => {
                             return {
                                 'title': game.name,
-                                'description': event.time + " at " + event.location,
+                                'description': game.time + " at " + game.location,
                                 'info': {
-                                    'key': event.location
+                                    'key': game.location
                                 }
                             };
                         });
