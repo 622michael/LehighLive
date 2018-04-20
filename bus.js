@@ -381,12 +381,24 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
             }
             else if (times.length == 2) {
-
+              const arrivalTime = times[0];
+              if (arrivalTime === "Arriving Soon") {
+                fulfillment = `${bus} is arriving soon at ${stops[0]}`;
+              } else if (arrivalTime === "At Stop") {
+                fulfillment = `${bus} is at ${stops[0]} right now`;
+              } else if (arrivalTime === "Just Departed") {
+                fulfillment = `${bus} just left ${stops[0]}`;
+              } else {
+                fulfillment = `${bus} is arriving at ${stops[0]} at ${times[0]}`
+              }
               // Two buses running
               // use times[0] and times[1] for the time it will arrive
               // at next stop
             }
           }
+          res.json({
+            fulfillment_text: fulfillment
+          })
         });
       }
     });
