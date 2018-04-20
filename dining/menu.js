@@ -64,7 +64,7 @@ const getItemsGroupedByStation = (location, meal, date) => {
               }
             };
           });
-          resolve(itemsGroupedByStation);
+          return resolve(itemsGroupedByStation);
         });
     });
   });
@@ -200,7 +200,7 @@ const generateMenuUrlByLocationAndDate = (location, date) => {
       .headers(REQUEST_HEADERS)
       .end((result) => {
         if (result.error) {
-          reject(result.error);
+          return reject(result.error);
         }
         const jsonText = parser.toJson(result.body);
         const parsed = JSON.parse(jsonText);
@@ -209,7 +209,7 @@ const generateMenuUrlByLocationAndDate = (location, date) => {
           return locObj.title === location.title;
         });
         if (!locationObj) {
-          reject(new Error(ERROR_MESSAGES.LOCATION_NOT_FOUND));
+          return reject(new Error(ERROR_MESSAGES.LOCATION_NOT_FOUND));
         }
         const meals = locationObj.meal;
         const mealObj = meals.find(meal => {
@@ -219,15 +219,13 @@ const generateMenuUrlByLocationAndDate = (location, date) => {
           const mealWeekEnd = moment(mealWeekStartAndEnd[1], MEAL_WEEK_MONTH_DAY_YEAR_FORMAT);
           return date.isBetween(mealWeekStart, mealWeekEnd, 'day', '[]');
         });
-        console.log(mealObj);
-        console.log('isundefined',!mealObj);
         if (!mealObj) {
-          reject(new Error(ERROR_MESSAGES.MEAL_WEEK_NOT_FOUND));
+          return reject(new Error(ERROR_MESSAGES.MEAL_WEEK_NOT_FOUND));
         }
         const menunameSplit = mealObj.menuname.split('/');
         const menuName = menunameSplit[0];
         const weekString = menunameSplit[1];
-        resolve(`http://mc.lehigh.edu/services/dining/resident/${menuName}/${weekString}.xml`);
+        return resolve(`http://mc.lehigh.edu/services/dining/resident/${menuName}/${weekString}.xml`);
       });
   });
 };
