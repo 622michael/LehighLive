@@ -175,10 +175,7 @@ const getBusData = (callback) => {
       throw new Error(error);
     }
     console.log(body);
-    response.send(body);
-    makeCORRequest(TimeTableURL, function(error, response, body) {
-      callback(error, response, JSON.parse(body));
-    });
+    callback(error, response, JSON.parse(body));
   });
 };
 
