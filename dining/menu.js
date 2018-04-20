@@ -50,10 +50,10 @@ const getItemsGroupedByStation = (location, meal, date) => {
               'description': getStationMenu(location.title, date, meal, station, item).map(menuItem => {
                 return '• ' + menuItem;
               }).join('\n'),
-              'image': {
-                'imageUri': location.imageUrl,
-                'accessibilityText': location.displayTitle
-              },
+              // 'image': {
+              //   'imageUri': location.imageUrl,
+              //   'accessibilityText': location.displayTitle
+              // },
               'info': {
                 'key': station
               }
@@ -81,7 +81,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
     getItemsGroupedByStation(nameToLocationObj[location], meal, date).then(items => {
       res.json({
-        'fulfillmentText': 'Stations provided below:',
+        'fulfillmentText': `Here are all the stations for ${meal} at ${location}.`,
         'fulfillmentMessages': [
           {
             'platform': 'ACTIONS_ON_GOOGLE',
@@ -90,7 +90,22 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 'items': items
               }
           }
-        ]
+        ],
+        "payload": {
+          "google": {
+            "expectUserResponse": true,
+            "richResponse": {
+              "items": [
+                {
+                  "simpleResponse": {
+                    "displayText": `Here are all the stations for ${meal} at ${location}.`,
+                    "textToSpeech": `Here are all the stations for ${meal} at ${location}.`
+                  }
+                }
+              ]
+            }
+          }
+        }
       });
     }).catch(err => {
       if (err.message === "Couldn't find a meal week during that time period") {
@@ -105,50 +120,50 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     });
   },
 
-  'Meals.stationMenu': (req, res) => {
-    const queryResult = req.body.queryResult;
-    const station = queryResult.parameters.station;
-
-    const contextResult = queryResult.outputContexts[0].parameters;
-
-    if (!contextResult) {
-      res.json({
-        fulfillment_text: 'abcd'
-      });
-    }
-
-    const location = contextResult.location;
-    const meal = contextResult.meal;
-    const time = moment('2018-04-18', 'YYYY-MM-DD');
-
-    if (location && meal && time && station) {
-      let returnedJson = {
-        // fulfillment_text: filteredThreeDay.join(', ')
-        // // outputContexts: outputContextsVal
-        'fulfillmentText': 'List for this station: ' + getStationMenu(location, time, meal, station),
-        'payload': {
-          'google': {
-            'expectUserResponse': true,
-            'richResponse': {
-              'items': [
-                {
-                  'simpleResponse': {
-                    'displayText': 'List for this station: ' + getStationMenu(location, time, meal, station),
-                    'textToSpeech': `Here is the items being served at the ${station} at location.`
-                  }
-                }
-              ]
-            }
-          }
-        }
-      };
-      res.json(returnedJson);
-      return;
-    }
-    res.json({
-      fulfillment_text: 'Sefgh'
-    });
-  }
+  // 'Meals.stationMenu': (req, res) => {
+  //   const queryResult = req.body.queryResult;
+  //   const station = queryResult.parameters.station;
+  //
+  //   const contextResult = queryResult.outputContexts[0].parameters;
+  //
+  //   if (!contextResult) {
+  //     res.json({
+  //       fulfillment_text: 'abcd'
+  //     });
+  //   }
+  //
+  //   const location = contextResult.location;
+  //   const meal = contextResult.meal;
+  //   const time = moment('2018-04-18', 'YYYY-MM-DD');
+  //
+  //   if (location && meal && time && station) {
+  //     let returnedJson = {
+  //       // fulfillment_text: filteredThreeDay.join(', ')
+  //       // // outputContexts: outputContextsVal
+  //       'fulfillmentText': 'List for this station: ' + getStationMenu(location, time, meal, station),
+  //       'payload': {
+  //         'google': {
+  //           'expectUserResponse': true,
+  //           'richResponse': {
+  //             'items': [
+  //               {
+  //                 'simpleResponse': {
+  //                   'displayText': 'List for this station: ' + getStationMenu(location, time, meal, station),
+  //                   'textToSpeech': `Here is the items being served at the ${station} at location.`
+  //                 }
+  //               }
+  //             ]
+  //           }
+  //         }
+  //       }
+  //     };
+  //     res.json(returnedJson);
+  //     return;
+  //   }
+  //   res.json({
+  //     fulfillment_text: 'Sefgh'
+  //   });
+  // }
 
 
 };
