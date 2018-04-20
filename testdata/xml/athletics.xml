@@ -1,176 +1,5 @@
 <scores>
     <game>
-        <game_id>10843</game_id>
-        <sport>Women's Track and Field</sport>
-        <sport_abbrev>WTRACK</sport_abbrev>
-        <date>4/20/2018 12:00:00 AM</date>
-        <time>All Day</time>
-        <location_indicator>A</location_indicator>
-        <location>Charlottesville, Va.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Virginia Challenge</opponent>
-        <opponent_logo>http://lehighsports.com/images/logos/Virginia.png</opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
-        <game_id>11170</game_id>
-        <sport>Women's Tennis</sport>
-        <sport_abbrev>WTEN</sport_abbrev>
-        <date>4/20/2018 12:00:00 AM</date>
-        <time>11 a.m.</time>
-        <location_indicator>N</location_indicator>
-        <location>West Point, N.Y.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Bucknell University</opponent>
-        <opponent_logo>
-            http://lehighsports.com/images/logos/bucknell_logo.png
-        </opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
-        <game_id>10815</game_id>
-        <sport>Men's Track and Field</sport>
-        <sport_abbrev>MTRACK</sport_abbrev>
-        <date>4/20/2018 12:00:00 AM</date>
-        <time>All Day</time>
-        <location_indicator>A</location_indicator>
-        <location>Princeton, N.J.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Larry Ellis Invitational</opponent>
-        <opponent_logo>
-            http://lehighsports.com/images/logos/Princeton_Tigers.png
-        </opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
-        <game_id>10844</game_id>
-        <sport>Women's Track and Field</sport>
-        <sport_abbrev>WTRACK</sport_abbrev>
-        <date>4/20/2018 12:00:00 AM</date>
-        <time>All Day</time>
-        <location_indicator>A</location_indicator>
-        <location>Bethlehem, Pa.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Greyhound Invitational</opponent>
-        <opponent_logo>
-            http://lehighsports.com/images/logos/Moravian-College.png
-        </opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
-        <game_id>10816</game_id>
-        <sport>Men's Track and Field</sport>
-        <sport_abbrev>MTRACK</sport_abbrev>
-        <date>4/20/2018 12:00:00 AM</date>
-        <time>All Day</time>
-        <location_indicator>A</location_indicator>
-        <location>Charlottesville, Va.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Virginia Challenge</opponent>
-        <opponent_logo>http://lehighsports.com/images/logos/Virginia.png</opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
-        <game_id>10842</game_id>
-        <sport>Women's Track and Field</sport>
-        <sport_abbrev>WTRACK</sport_abbrev>
-        <date>4/20/2018 12:00:00 AM</date>
-        <time>All Day</time>
-        <location_indicator>A</location_indicator>
-        <location>Princeton, N.J.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Larry Ellis Invitational</opponent>
-        <opponent_logo>
-            http://lehighsports.com/images/logos/Princeton_Tigers.png
-        </opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
-        <game_id>10817</game_id>
-        <sport>Men's Track and Field</sport>
-        <sport_abbrev>MTRACK</sport_abbrev>
-        <date>4/20/2018 12:00:00 AM</date>
-        <time>All Day</time>
-        <location_indicator>A</location_indicator>
-        <location>Bethlehem, Pa.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Greyhound Invitational</opponent>
-        <opponent_logo>
-            http://lehighsports.com/images/logos/Moravian-College.png
-        </opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
         <game_id>10930</game_id>
         <game_pregame_story_id>27021</game_pregame_story_id>
         <sport>Men's Lacrosse</sport>
@@ -184,81 +13,6 @@
         <hometeam>Lehigh</hometeam>
         <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
         <opponent>Bucknell</opponent>
-        <opponent_logo>
-            http://lehighsports.com/images/logos/bucknell_logo.png
-        </opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
-        <game_id>11092</game_id>
-        <sport>Women's Golf</sport>
-        <sport_abbrev>WGOLF</sport_abbrev>
-        <date>4/21/2018 12:00:00 AM</date>
-        <time/>
-        <location_indicator>N</location_indicator>
-        <location>Annapolis, Md.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Patriot League Championship</opponent>
-        <opponent_logo>
-            http://lehighsports.com/images/logos/Patriot-League.png
-        </opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
-        <game_id>10897</game_id>
-        <sport>Baseball</sport>
-        <sport_abbrev>BB</sport_abbrev>
-        <date>4/21/2018 12:00:00 AM</date>
-        <time>2:30 p.m.</time>
-        <location_indicator>A</location_indicator>
-        <location>Lewisburg, Pa.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Bucknell University</opponent>
-        <opponent_logo>
-            http://lehighsports.com/images/logos/bucknell_logo.png
-        </opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
-        <game_id>10896</game_id>
-        <sport>Baseball</sport>
-        <sport_abbrev>BB</sport_abbrev>
-        <date>4/21/2018 12:00:00 AM</date>
-        <time>12 p.m.</time>
-        <location_indicator>A</location_indicator>
-        <location>Lewisburg, Pa.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Bucknell University</opponent>
         <opponent_logo>
             http://lehighsports.com/images/logos/bucknell_logo.png
         </opponent_logo>
@@ -320,7 +74,34 @@
         <boxscore_link/>
     </game>
     <game>
+        <game_id>10897</game_id>
+        <game_pregame_story_id>27037</game_pregame_story_id>
+        <sport>Baseball</sport>
+        <sport_abbrev>BB</sport_abbrev>
+        <date>4/21/2018 12:00:00 AM</date>
+        <time>2:30 p.m.</time>
+        <location_indicator>A</location_indicator>
+        <location>Lewisburg, Pa.</location>
+        <facility/>
+        <status>A</status>
+        <hometeam>Lehigh</hometeam>
+        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
+        <opponent>Bucknell University</opponent>
+        <opponent_logo>
+            http://lehighsports.com/images/logos/bucknell_logo.png
+        </opponent_logo>
+        <result/>
+        <team_score/>
+        <opponent_score/>
+        <prescore_info/>
+        <postscore_info/>
+        <inprogress_time/>
+        <recap_link/>
+        <boxscore_link/>
+    </game>
+    <game>
         <game_id>11169</game_id>
+        <game_pregame_story_id>27032</game_pregame_story_id>
         <sport>Women's Rowing</sport>
         <sport_abbrev>WROW</sport_abbrev>
         <date>4/21/2018 7:00:00 AM</date>
@@ -343,21 +124,46 @@
         <boxscore_link/>
     </game>
     <game>
-        <game_id>11172</game_id>
-        <sport>Women's Tennis</sport>
-        <sport_abbrev>WTEN</sport_abbrev>
-        <date>4/22/2018 12:00:00 AM</date>
-        <time>12 p.m.</time>
+        <game_id>11092</game_id>
+        <game_pregame_story_id>27036</game_pregame_story_id>
+        <sport>Women's Golf</sport>
+        <sport_abbrev>WGOLF</sport_abbrev>
+        <date>4/21/2018 8:30:00 AM</date>
+        <time>8:30 AM</time>
         <location_indicator>N</location_indicator>
-        <location>West Point, N.Y.</location>
+        <location>Annapolis, Md.</location>
         <facility/>
         <status>A</status>
         <hometeam>Lehigh</hometeam>
         <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>TBD</opponent>
+        <opponent>Patriot League Championship</opponent>
         <opponent_logo>
             http://lehighsports.com/images/logos/Patriot-League.png
         </opponent_logo>
+        <result/>
+        <team_score/>
+        <opponent_score/>
+        <prescore_info/>
+        <postscore_info/>
+        <inprogress_time/>
+        <recap_link/>
+        <boxscore_link/>
+    </game>
+    <game>
+        <game_id>11173</game_id>
+        <game_pregame_story_id>27029</game_pregame_story_id>
+        <sport>Football</sport>
+        <sport_abbrev>FB</sport_abbrev>
+        <date>4/21/2018 11:00:00 AM</date>
+        <time>11:00 AM</time>
+        <location_indicator>H</location_indicator>
+        <location>Bethlehem, Pa.</location>
+        <facility>Goodman Stadium</facility>
+        <status>A</status>
+        <hometeam>Lehigh</hometeam>
+        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
+        <opponent>Brown and White Spring Game</opponent>
+        <opponent_logo>http://lehighsports.com/images/logos/Lehigh.png</opponent_logo>
         <result/>
         <team_score/>
         <opponent_score/>
@@ -391,57 +197,8 @@
         <boxscore_link/>
     </game>
     <game>
-        <game_id>11093</game_id>
-        <sport>Women's Golf</sport>
-        <sport_abbrev>WGOLF</sport_abbrev>
-        <date>4/22/2018 12:00:00 AM</date>
-        <time/>
-        <location_indicator>N</location_indicator>
-        <location>Annapolis, Md.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Patriot League Championship</opponent>
-        <opponent_logo>
-            http://lehighsports.com/images/logos/Patriot-League.png
-        </opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
-        <game_id>10898</game_id>
-        <sport>Baseball</sport>
-        <sport_abbrev>BB</sport_abbrev>
-        <date>4/22/2018 12:00:00 AM</date>
-        <time>12 p.m.</time>
-        <location_indicator>A</location_indicator>
-        <location>Lewisburg, Pa.</location>
-        <facility/>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Bucknell University</opponent>
-        <opponent_logo>
-            http://lehighsports.com/images/logos/bucknell_logo.png
-        </opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
         <game_id>11000</game_id>
+        <game_pregame_story_id>27034</game_pregame_story_id>
         <sport>Women's Lacrosse</sport>
         <sport_abbrev>WLAX</sport_abbrev>
         <date>4/22/2018 1:00:00 PM</date>
@@ -537,29 +294,6 @@
         <boxscore_link/>
     </game>
     <game>
-        <game_id>11073</game_id>
-        <sport>Softball</sport>
-        <sport_abbrev>SB</sport_abbrev>
-        <date>4/25/2018 12:00:00 AM</date>
-        <time>5 PM</time>
-        <location_indicator>H</location_indicator>
-        <location>Bethlehem, Pa.</location>
-        <facility>Leadership Park</facility>
-        <status>A</status>
-        <hometeam>Lehigh</hometeam>
-        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Villanova</opponent>
-        <opponent_logo>http://lehighsports.com/images/logos/Villanova.png</opponent_logo>
-        <result/>
-        <team_score/>
-        <opponent_score/>
-        <prescore_info/>
-        <postscore_info/>
-        <inprogress_time/>
-        <recap_link/>
-        <boxscore_link/>
-    </game>
-    <game>
         <game_id>10899</game_id>
         <sport>Baseball</sport>
         <sport_abbrev>BB</sport_abbrev>
@@ -585,11 +319,11 @@
         <boxscore_link/>
     </game>
     <game>
-        <game_id>11072</game_id>
+        <game_id>11073</game_id>
         <sport>Softball</sport>
         <sport_abbrev>SB</sport_abbrev>
         <date>4/25/2018 12:00:00 AM</date>
-        <time>3 PM</time>
+        <time>5 PM</time>
         <location_indicator>H</location_indicator>
         <location>Bethlehem, Pa.</location>
         <facility>Leadership Park</facility>
@@ -608,21 +342,19 @@
         <boxscore_link/>
     </game>
     <game>
-        <game_id>10818</game_id>
-        <sport>Men's Track and Field</sport>
-        <sport_abbrev>MTRACK</sport_abbrev>
-        <date>4/26/2018 12:00:00 AM</date>
-        <time>All Day</time>
-        <location_indicator>A</location_indicator>
-        <location>Philadelphia, Pa.</location>
-        <facility/>
+        <game_id>11072</game_id>
+        <sport>Softball</sport>
+        <sport_abbrev>SB</sport_abbrev>
+        <date>4/25/2018 12:00:00 AM</date>
+        <time>3 PM</time>
+        <location_indicator>H</location_indicator>
+        <location>Bethlehem, Pa.</location>
+        <facility>Leadership Park</facility>
         <status>A</status>
         <hometeam>Lehigh</hometeam>
         <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
-        <opponent>Penn Relays</opponent>
-        <opponent_logo>
-            http://lehighsports.com/images/logos/penn_200x200.png
-        </opponent_logo>
+        <opponent>Villanova</opponent>
+        <opponent_logo>http://lehighsports.com/images/logos/Villanova.png</opponent_logo>
         <result/>
         <team_score/>
         <opponent_score/>
@@ -658,6 +390,31 @@
         <boxscore_link/>
     </game>
     <game>
+        <game_id>10818</game_id>
+        <sport>Men's Track and Field</sport>
+        <sport_abbrev>MTRACK</sport_abbrev>
+        <date>4/26/2018 12:00:00 AM</date>
+        <time>All Day</time>
+        <location_indicator>A</location_indicator>
+        <location>Philadelphia, Pa.</location>
+        <facility/>
+        <status>A</status>
+        <hometeam>Lehigh</hometeam>
+        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
+        <opponent>Penn Relays</opponent>
+        <opponent_logo>
+            http://lehighsports.com/images/logos/penn_200x200.png
+        </opponent_logo>
+        <result/>
+        <team_score/>
+        <opponent_score/>
+        <prescore_info/>
+        <postscore_info/>
+        <inprogress_time/>
+        <recap_link/>
+        <boxscore_link/>
+    </game>
+    <game>
         <game_id>10845</game_id>
         <sport>Women's Track and Field</sport>
         <sport_abbrev>WTRACK</sport_abbrev>
@@ -673,6 +430,77 @@
         <opponent_logo>
             http://lehighsports.com/images/logos/penn_200x200.png
         </opponent_logo>
+        <result/>
+        <team_score/>
+        <opponent_score/>
+        <prescore_info/>
+        <postscore_info/>
+        <inprogress_time/>
+        <recap_link/>
+        <boxscore_link/>
+    </game>
+    <game>
+        <game_id>10819</game_id>
+        <sport>Men's Track and Field</sport>
+        <sport_abbrev>MTRACK</sport_abbrev>
+        <date>4/27/2018 12:00:00 AM</date>
+        <time>All Day</time>
+        <location_indicator>H</location_indicator>
+        <location>Bethlehem, Pa.</location>
+        <facility>Goodman Track and Field Complex</facility>
+        <status>A</status>
+        <hometeam>Lehigh</hometeam>
+        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
+        <opponent>Lehigh Games</opponent>
+        <opponent_logo>http://lehighsports.com/images/logos/Lehigh.png</opponent_logo>
+        <result/>
+        <team_score/>
+        <opponent_score/>
+        <prescore_info/>
+        <postscore_info/>
+        <inprogress_time/>
+        <recap_link/>
+        <boxscore_link/>
+    </game>
+    <game>
+        <game_id>10932</game_id>
+        <sport>Men's Lacrosse</sport>
+        <sport_abbrev>MLAX</sport_abbrev>
+        <date>4/27/2018 12:00:00 AM</date>
+        <time>TBA</time>
+        <location_indicator>N</location_indicator>
+        <location>TBA</location>
+        <facility/>
+        <status>A</status>
+        <hometeam>Lehigh</hometeam>
+        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
+        <opponent>Semifinals</opponent>
+        <opponent_logo>
+            http://lehighsports.com/images/logos/Patriot-League.png
+        </opponent_logo>
+        <result/>
+        <team_score/>
+        <opponent_score/>
+        <prescore_info/>
+        <postscore_info/>
+        <inprogress_time/>
+        <recap_link/>
+        <boxscore_link/>
+    </game>
+    <game>
+        <game_id>10846</game_id>
+        <sport>Women's Track and Field</sport>
+        <sport_abbrev>WTRACK</sport_abbrev>
+        <date>4/27/2018 12:00:00 AM</date>
+        <time>All Day</time>
+        <location_indicator>H</location_indicator>
+        <location>Bethlehem, Pa.</location>
+        <facility>Goodman Track and Field Complex</facility>
+        <status>A</status>
+        <hometeam>Lehigh</hometeam>
+        <hometeam_logo>http://lehighsports.com/images/logos/site/site.png</hometeam_logo>
+        <opponent>Lehigh Games</opponent>
+        <opponent_logo>http://lehighsports.com/images/logos/Lehigh.png</opponent_logo>
         <result/>
         <team_score/>
         <opponent_score/>
