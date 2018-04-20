@@ -130,7 +130,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             console.log(busName);
             console.log(busCode);
             for (var i = 0; i <= busdata.length; i++) {
-                console.log(busdata[i]['name']);
+                console.log(busdata[i]);
             }
             const speech = busdata[1]['stops']['0'];
 
