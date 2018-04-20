@@ -92,6 +92,16 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           }
         ]
       });
+    }).catch(err => {
+      if (err.message === "Couldn't find a meal week during that time period") {
+        res.json({
+          fulfillment_text: err.message
+        })
+      } else if (err.message === "Couldn't find a location with that name") {
+        res.json({
+          fulfillment_text: err.message
+        });
+      }
     });
   },
 
@@ -178,6 +188,9 @@ const generateMenuUrlByLocationAndDate = (location, date) => {
         const locationObj = locations.find(locObj => {
           return locObj.title === location.title;
         });
+        if (!locationObj) {
+          reject(new Error("Couldn't find a location with that name"));
+        }
         const meals = locationObj.meal;
         const mealObj = meals.find(meal => {
           const mealWeekStartAndEnd = meal.title.split(' ').join('').split('-');
@@ -186,6 +199,9 @@ const generateMenuUrlByLocationAndDate = (location, date) => {
           const mealWeekEnd = moment(mealWeekStartAndEnd[1], MEAL_WEEK_MONTH_DAY_YEAR_FORMAT);
           return date.isBetween(mealWeekStart, mealWeekEnd);
         });
+        if (!mealObj) {
+          reject(new Error("Couldn't find a meal week during that time period"));
+        }
         const menunameSplit = mealObj.menuname.split('/');
         const menuName = menunameSplit[0];
         const weekString = menunameSplit[1];
