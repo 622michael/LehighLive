@@ -137,7 +137,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             let busItself;
             let j = 0;
             while (!found) {
-                console.log(busdata[j]);
+                console.log(busdata[j]['name']);
             }
             const speech = busdata[1]['stops']['0'];
 
