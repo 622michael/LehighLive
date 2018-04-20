@@ -7,7 +7,7 @@ const RATHBONE_DIALOGFLOW_TITLE = 'Rathbone';
 const CORT_DIALOGFLOW_TITLE = 'Cort';
 const BRODHEAD_DIALOGFLOW_TITLE = 'Brodhead';
 const RESIDENT_DINING_LOCATIONS = new Set([RATHBONE_DIALOGFLOW_TITLE, CORT_DIALOGFLOW_TITLE, BRODHEAD_DIALOGFLOW_TITLE]);
-const RATHBONE_IMAGE_URL = 'http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495';
+const RATHBONE_IMAGE_URL = 'https://farm5.staticflickr.com/4209/35803177536_3d1d8751f2_b.jpg';
 const CORT_IMAGE_URL = 'http://www.lehigh.edu/undergradprospectus/img/community-opener.jpg';
 const BRODHEAD_IMAGE_URL = 'https://content-service.sodexomyway.com/media/Brodhead_Hero_tcm50-8459_w1920_h976.jpg?url=https://lehigh.sodexomyway.com/';
 
