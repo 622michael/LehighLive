@@ -1,37 +1,7 @@
 const unirest = require('unirest');
 const moment = require('moment');
-//const request = require("request");
 const fs = require('fs');
 const parser = require('xml2json');
-
-
-// function xmlToJson(url, callback) {
-//     var req = http.get(url, function(res) {
-//     var xml = '';
-//
-//     res.on('data', function (chunk) {
-//       xml += chunk;
-//       console.log("what");
-//     });
-//
-//     res.on('error', function (e) {
-//       callback(e, null);
-//       console.log("is");
-//     });
-//
-//     res.on('timeout', function (e) {
-//       callback(e, null);
-//       console.log("going");
-//     });
-//
-//     res.on('end', function () {
-//       parseString(xml, function (err, result) {
-//         callback(null, result);
-//         console.log("on");
-//       });
-//     });
-//   });
-// }
 
 const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     'today': (req, res) => {
@@ -63,8 +33,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             const dateTime = event.start.dateTime;
             const eventName = event.summary;
             const eventLocation = event.location;
-            let endTime = moment(dateTime).isBefore(threeDaysFromNow);
-
+            let endTime = threeDaysFromNow;
             if (date.time === 'week') {
               endTime = aWeekFromNow;
             }
@@ -74,7 +43,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             console.log('moment : ' + moment(dateTime).fromNow() + ' ' + moment(dateTime).isAfter(Date.now()) + ' ' + endTime);
             if (moment(dateTime).isAfter(Date.now())) {
               //events[i] = {"dateTime": dateTime};
-              if (endTime) {
+              if (moment(dateTime).isBefore(endTime)) {
                 const eventMoment = moment(dateTime);
                 let time = eventMoment.format('dddd, MMMM Do');
                 // return eventName + ' on ' + time + ' at ' + eventLocation;
@@ -87,23 +56,10 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               }
             }
           });
-          console.log('EVENTS ARRAY');
-          //console.log(events);
-          console.log('3 DAY ARRAY');
+
           const filteredThreeDay = threeDay.filter(arr => arr);
           console.log(filteredThreeDay);
-          // let outputName = req.body.session + "/contexts/event";
-          // console.log(outputName);
-          //   var outputContextsVal = [{
-          //     name: outputName,
-          //     "lifespanCount": 5,
-          //     parameters: {
-          //       event: filteredThreeDay
-          //     }
-          //   }];
-          //   console.log("outputContextsVal");
-          //   console.log(outputContextsVal);
-          // handleRequest('2018-04-02', 'Breakfast');
+
           const getEventItems = (eventItems) => {
             return eventItems.map((event) => {
               return {
@@ -119,7 +75,8 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
 
           console.log("Google Home Event String" + googleHomeEventString);
-          let returnedJson = {
+          let eventsText = events.join(',');
+        let returnedJson = {
             // fulfillment_text: filteredThreeDay.join(', ')
             // // outputContexts: outputContextsVal
             'fulfillmentText': 'Heres whats going on:',
@@ -140,27 +97,14 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                     {
                       "simpleResponse": {
                         "displayText": 'Here are the events',
-                        "textToSpeech": events.join(',')
+                        "textToSpeech": eventsText
                       }
                     }
                   ]
                 }
               }
             }
-            //     'payload': {
-            //   'google': {
-            //   'expectUserResponse': true,
-            //     'richResponse': {
-            //     'items': [
-            //       {
-            //         "simpleResponse": {
-            //           "textToSpeech": googleHomeEventString
-            //         }
-            //       }
-            //     ]
-            //   }
-            // }
-            // }
+
           };
 
 
@@ -195,45 +139,10 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           });
           console.log(gameString);
         });
-
         res.json({
           fulfillment_text: 'Sports Reached'
         });
-        //}
       }
-
-// function handleRequest(menudate, meal) {
-//     //fs.readFile('food.xml', 'utf8', function (err, data) {
-//     var unirest = require("unirest");
-//
-//     var req = unirest("GET", "http://mc.lehigh.edu/services/dining/resident/Rathbone/Week_14_Rathbone.xml");
-//
-//     req.headers({
-//         "Postman-Token": "dfa2aeb8-c260-49d1-8b13-b48b10ff73d4",
-//         "Cache-Control": "no-cache"
-//     });
-//
-//
-//     unirest.get("http://mc.lehigh.edu/services/dining/resident/Rathbone/Week_14_Rathbone.xml").end( (function (res) {
-//         if (res.error) throw new Error(res.error);
-//         console.log(res.body);
-//         fs.writeFile('/food2.xml',res.body,null,null);
-//         var weeklyMenus = JSON.parse(res.body).VFPData.weeklymenu;
-//         var station = "";
-//         for (i in weeklyMenus) {
-//             var menu = weeklyMenus[i];
-//             if (menu['menudate'] == menudate && menu['meal'] == meal) {
-//                 if (menu['station'] != station) {
-//                     station = menu['station'];
-//                     console.log(station + ' Station:');
-//                 }
-//                 console.log('\tItem: ' + menu['item_name']);
-//                 if (menu['allergens'] != "") console.log('\t-', menu['allergens']);
-//                 if (menu['station'] != "") console.log('\t-', menu['station']);
-//             }
-//         }
-//         console.log(res.body);
-//     }));
   }
 ;
 module.exports = EVT_FUNCTION_ACTION_NAME_TO_FUNCTION;
