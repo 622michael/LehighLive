@@ -212,8 +212,10 @@ const generateMenuUrlByLocationAndDate = (location, date) => {
           const MEAL_WEEK_MONTH_DAY_YEAR_FORMAT = 'MMMDDYYYY';
           const mealWeekStart = moment(mealWeekStartAndEnd[0], MEAL_WEEK_MONTH_DAY_YEAR_FORMAT);
           const mealWeekEnd = moment(mealWeekStartAndEnd[1], MEAL_WEEK_MONTH_DAY_YEAR_FORMAT);
-          return date.isBetween(mealWeekStart, mealWeekEnd);
+          return date.isBetween(mealWeekStart, mealWeekEnd, 'day', '[]');
         });
+        console.log(mealObj);
+        console.log('isundefined',!mealObj);
         if (!mealObj) {
           reject(new Error("Couldn't find a meal week during that time period"));
         }
