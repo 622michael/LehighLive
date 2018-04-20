@@ -75,7 +75,13 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
 
 
           console.log("Google Home Event String" + googleHomeEventString);
-          let returnedJson = {
+          if (events.length > 1) {
+            let eventsText = events.join(',');
+          }
+          else {
+            eventsText = events;
+          }
+        let returnedJson = {
             // fulfillment_text: filteredThreeDay.join(', ')
             // // outputContexts: outputContextsVal
             'fulfillmentText': 'Heres whats going on:',
@@ -96,7 +102,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                     {
                       "simpleResponse": {
                         "displayText": 'Here are the events',
-                        "textToSpeech": events.join(',')
+                        "textToSpeech": eventsText
                       }
                     }
                   ]
