@@ -16,6 +16,27 @@ const isResidentDiningLocation = (locationName) => RESIDENT_DINING_LOCATIONS.has
 const getCurrentHour = () => moment().hours();
 const getCurrentDay = () => moment().days();
 
+const json = require('../testdata/formatLocations');
+
+const allLocations = json.locations.category.map(element => {
+  return element.location;
+}).reduce((acc, val) => acc.concat(val), []);
+
+const getAllLocations = () => {
+  return allLocations;
+};
+
+const getRequestedLocationObject = (locationName) => {
+  return getAllLocations().find(location => {
+    const locationNames = new Set([location.title, location.fulltitle, location.mapsearch]);
+    return locationNames.has(locationName);
+  });
+};
+
+const getLocationHoursStringByName = (locationName) => {
+  return getRequestedLocationObject(locationName).hours;
+};
+
 const getStartAndEndTimeForToday = (hoursString) => {
   const timeRangesSeparator = ',';
   // [ 'Mon-Thu: 7:00am-7:00pm', ' Fri: 7:00am-2:00pm' ]
@@ -158,6 +179,9 @@ const adjustDatesForAmAmCase = (startTime, endTime, startDay, endDay) => {
 module.exports = {
   getStartAndEndTimeForToday: getStartAndEndTimeForToday,
   isResidentDiningLocation: isResidentDiningLocation,
+  getRequestedLocationObject: getRequestedLocationObject,
+  getAllLocations: getAllLocations,
+  getLocationHoursStringByName: getLocationHoursStringByName,
   HOUR_MINUTE_FORMAT: HOUR_MINUTE_FORMAT,
   DATE_FROM_REQUEST_FORMAT: DATE_FROM_REQUEST_FORMAT,
   RATHBONE_IMAGE_URL: RATHBONE_IMAGE_URL,

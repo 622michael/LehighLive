@@ -42,6 +42,7 @@ const ERROR_MESSAGES = {
 
 const getItemsGroupedByStation = (location, meal, date) => {
   return generateMenuUrlByLocationAndDate(location, date).then(menuUrl => {
+    console.log('menuurl=',menuUrl);
     return new Promise((resolve, reject) => {
       unirest('GET', menuUrl)
         .headers(REQUEST_HEADERS)
@@ -49,6 +50,7 @@ const getItemsGroupedByStation = (location, meal, date) => {
           const jsonText = parser.toJson(xmlData.body);
           const item = JSON.parse(jsonText)['VFPData']['weeklymenu'];
           const stations = getStations(date, meal, item);
+          console.log('stations=',stations);
           const itemsGroupedByStation = stations.map(station => {
             return {
               'title': station,
@@ -82,6 +84,12 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
         fulfillment_text: `I only know how to tell you what's for ${meal} at ${RATHBONE.displayTitle}, ${CORT.displayTitle}, and ${BRODHEAD.displayTitle}`
       });
       return;
+    }
+
+    if (!isOpenDuringPeriod(common.getRequestedLocationObject(location), meal)) {
+      res.json({
+        fulfillment_text: `${location} is not open for ${meal} today.`
+      })
     }
 
     getItemsGroupedByStation(nameToLocationObj[location], meal, date).then(items => {
@@ -185,6 +193,7 @@ const getStations = (date, period, json) => {
   const time = date.format(YEAR_MONTH_DAY_FORMAT);
   const stationsAdded = {};
   return json.map(attribute => {
+    console.log('attribute=',attribute);
     const station = attribute['station'];
     if (attribute['menudate'] === time && attribute['meal'] === period && !stationsAdded[station]) {
       stationsAdded[station] = 1;

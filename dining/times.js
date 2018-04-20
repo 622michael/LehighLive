@@ -3,34 +3,13 @@ const momentDurationFormatSetup = require("moment-duration-format");
 const common = require('./common');
 momentDurationFormatSetup(moment);
 
-const json = require('../testdata/formatLocations');
-
-const allLocations = json.locations.category.map(element => {
-  return element.location;
-}).reduce((acc, val) => acc.concat(val), []);
-
-const getAllLocations = () => {
-  return allLocations;
-};
-
-const getRequestedLocationObject = (locationName) => {
-    return getAllLocations().find(location => {
-        const locationNames = new Set([location.title, location.fulltitle, location.mapsearch]);
-        return locationNames.has(locationName);
-    });
-};
-
-const getLocationHoursStringByName = (locationName) => {
-  return getRequestedLocationObject(locationName).hours;
-};
-
 const minutesAsHoursAndMinutes = (minutes) => {
   const prettyPrintHoursAndMinutesFormat = "h [hours and] m [minutes]";
   return moment.duration(minutes, "minutes").format(prettyPrintHoursAndMinutesFormat);
 };
 
 const getOpenLocations = () => {
-  return getAllLocations().filter(location => isOpen(location, moment()));
+  return common.getAllLocations().filter(location => isOpen(location, moment()));
 };
 
 const getLocationHoursInfo = (locationName, time = moment()) => {
@@ -78,7 +57,7 @@ const getResponseTextIfDateSpecified = (request) => {
     return (
         `
         The hours for ${locationName} are: \n 
-        ${getLocationHoursStringByName(locationName)}
+        ${common.getLocationHoursStringByName(locationName)}
         `
     );
   }
