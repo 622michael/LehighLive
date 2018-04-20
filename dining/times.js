@@ -35,6 +35,7 @@ const getOpenLocations = () => {
 
 const getLocationHoursInfo = (locationName, time = moment()) => {
   const locationTimes = common.getStartAndEndTimeForToday(getLocationHoursStringByName(locationName));
+  console.log(locationTimes);
   if (!locationTimes) {
     return {
       name: locationName,
