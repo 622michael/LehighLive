@@ -25,7 +25,7 @@ const getStartAndEndTimeForToday = (hoursString) => {
   if (!timeRangeForToday) {
     return undefined;
   }
-  return extractStartAndEndDateFromDayAndTimeRange(timeRangeForToday);
+  return convertTimeRangeToStartAndEndTimeForTodayAdjustedForAmPm(timeRangeForToday);
 };
 
 // STRING LOOKS LIKE THIS = Mon-Thurs: 8:00am-7:00pm, Fri: 8:00am - 1:30pm
@@ -34,33 +34,13 @@ const extractTodaysDayAndTimeRangeFromTimeRanges = (timeRanges) => {
   const todaysRange = timeRanges.find(timeRange => {
     const dayRangeAndTimeRangeSeparator = ':';
     const daysRange = timeRange.substring(0, timeRange.indexOf(dayRangeAndTimeRangeSeparator)).trim();
-    const now = moment();
     const daySeparator = '-';
-    const { startTime, endTime } = extractStartAndEndDateFromDayAndTimeRange(timeRange);
-    const isOneDayBefore = (first, second) => first.isSame(moment(second).subtract(1, 'day'), 'day');
-    const withinClosingTime = now.isBefore(endTime);
-    if (daysRange.includes(daySeparator)) {
-      const days = daysRange.split(daySeparator).map(day => day.substring(0, 3));
-      const startDay = moment(days[0], DAY_OF_WEEK_TOKEN);
-      const endDay = moment(days[1], DAY_OF_WEEK_TOKEN);
-      if (endDay.isBefore(startDay)) endDay.add(1, 'week');
-      const inclusiveDayToken = '[]';
-      const lastDayInRangeCrossedPastMidnight = isOneDayBefore(endDay, endTime);
-      console.log('startDay=',startDay);
-      console.log('ENDDAY=',endDay);
-      console.log('ENDDATE=', endTime);
-      console.log('NOW=',now);
-      const dayIsWithinRange = now.isBetween(startDay, endDay, 'day', inclusiveDayToken);
-      console.log('WITHINRANGE=',dayIsWithinRange);
-      console.log('first',lastDayInRangeCrossedPastMidnight);
-      console.log('second',withinClosingTime);
-      console.log(dayIsWithinRange || (lastDayInRangeCrossedPastMidnight && withinClosingTime));
-      return dayIsWithinRange || (lastDayInRangeCrossedPastMidnight && withinClosingTime && now.isBefore(startTime));
-    } else {
-      const day = moment(daysRange, DAY_OF_WEEK_TOKEN);
-      const dayCrossedPastMidnight = isOneDayBefore(day, endTime);
-      return now.isSame(day, 'day') || (dayCrossedPastMidnight && withinClosingTime && now.isBefore(startTime));
-    }
+    const daysOfRange = daysRange.split(daySeparator).map(day => day.substring(0, 3));
+    const { startTime , endTime } = convertTimeRangeToStartAndEndTimeForTodayAdjustedForAmPm(timeRange);
+    console.log('TIMERANGE=',timeRange);
+    console.log('STARTIME=',startTime);
+    console.log('ENDTIME=',endTime);
+    return isNowBetweenStartAndEndTime(daysOfRange, startTime, endTime);
   });
   if (todaysRange) {
     return todaysRange.trim();
@@ -68,8 +48,29 @@ const extractTodaysDayAndTimeRangeFromTimeRanges = (timeRanges) => {
   return todaysRange;
 };
 
+const isNowBetweenStartAndEndTime = (daysOfRangeArray, startTimeOfRangeAdjustedForAmPm, endTimeOfRangeAdjustedForAmPm) => {
+  const now = moment();
+  const isOneDayBefore = (first, second) => first.isSame(moment(second).subtract(1, 'day'), 'day');
+  const withinClosingTime = now.isBefore(endTimeOfRangeAdjustedForAmPm);
+  if (daysOfRangeArray.length > 1) {
+    const startDay = moment(daysOfRangeArray[0], DAY_OF_WEEK_TOKEN);
+    const endDay = moment(daysOfRangeArray[1], DAY_OF_WEEK_TOKEN);
+    if (endDay.isBefore(startDay)) endDay.add(1, 'week');
+    const inclusiveDayToken = '[]';
+    const lastDayInRangeCrossedPastMidnight = isOneDayBefore(endDay, endTimeOfRangeAdjustedForAmPm);
+    const dayIsWithinRange = now.isBetween(startDay, endDay, 'day', inclusiveDayToken);
+    const inBetweenMidnightAndEndTimeOfPreviousRange = lastDayInRangeCrossedPastMidnight && withinClosingTime && now.isBefore(startTimeOfRangeAdjustedForAmPm);
+    return dayIsWithinRange || inBetweenMidnightAndEndTimeOfPreviousRange;
+  } else {
+    const day = moment(daysOfRangeArray[0], DAY_OF_WEEK_TOKEN);
+    const dayCrossedPastMidnight = isOneDayBefore(day, endTimeOfRangeAdjustedForAmPm);
+    const inBetweenMidnightAndEndTimeOfPreviousDay = dayCrossedPastMidnight && withinClosingTime && now.isBefore(startTimeOfRangeAdjustedForAmPm);
+    return now.isSame(day, 'day') || inBetweenMidnightAndEndTimeOfPreviousDay;
+  }
+};
+
 // STRING LOOKS LIKE THIS = Mon-Thurs: 8:00am-7:00pm OR Fri: 8:00am - 1:30pm
-const extractStartAndEndDateFromDayAndTimeRange = (timeRange) => {
+const convertTimeRangeToStartAndEndTimeForTodayAdjustedForAmPm = (timeRange) => {
   const { startDay, endDay } = extractStartAndEndDayFromDayAndTimeRange(timeRange);
 
   // 7:30am. For now we just assume we're being passed the current day's time range
