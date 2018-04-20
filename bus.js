@@ -133,6 +133,12 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             for (var i = 0; i <= busdata.length; i++) {
                 console.log(busdata[i]);
             }
+            let found = false;
+            let busItself;
+            let j = 0;
+            while (!found) {
+                console.log(busdata[j]);
+            }
             const speech = busdata[1]['stops']['0'];
 
             //TODO Decide what bus data to provide based on what the user asks for, the busCode variable doesn't correspond
