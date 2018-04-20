@@ -10,6 +10,15 @@ const routeToKey = {
     "Campus Connector": '11'
 };
 
+const busAbbr = {
+    "Mountaintop Express" : "MT", 
+    "T.R.A.C.S": "TR",
+    "Packer Express": "PE",
+    "Campus Connector": "CC",
+    "Saucon Village": "SV",
+    "Athletics": "AT"
+}
+
 const TimeTableURL = "http://buses.lehigh.edu/scripts/routestoptimes.php?format=json"
 
 const makeCORRequest = (url, callback) => {
@@ -144,6 +153,19 @@ function getInterval(timeTable, bus) {
 
     return r
 
+}
+
+function getNextStops(data, bus) {
+    var stops = []
+    Object.keys(data).foreach(function(key) {
+        if (busData[key].key == busAbbr[bus]) {
+            if(busData[key].currentstop != "") {
+                stops.push(busData[key].currentstop)
+            }
+        }
+    }) 
+
+    return stops
 }
 
 // Determines if the bus goes to the destination
@@ -315,6 +337,39 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                 fulfillment_text: fullfillment
             })
 
+        })
+    },
+    'Location': (req, res) => {
+        var bus = req.body.queryResult.parameters.bus
+
+        getBusData(function(error, respone, busData) {
+            if (error != null) {
+                res.json({
+                    fulfillment_text: CONNTECTIVITY_ISSUES_FULLFILLMENT
+                })
+            } else {
+                getTimeTable(function(error, response, timeTable) {
+                    var fullfillment;
+                    if (error != null) {
+                        fullfillment = CONNTECTIVITY_ISSUES_FULLFILLMENT
+                    } else {
+                        var times = []
+                        var stops = getNextStops(busData, bus);
+                        for (var i = 0; i < stops.length; i++ ) {
+                            const arrival = getArrival(timeTable,bus, stops[i])
+                            if (arrival != "-" || !arrival) {
+                                times.push(arrival)
+                            }
+                        }
+                        if (times.length == 0) {
+                            
+                        }
+                        if (times.length == 1) {
+
+                        }
+                    }
+                })
+            }
         })
     }
 };
