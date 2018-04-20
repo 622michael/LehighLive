@@ -162,7 +162,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                                 'description': game.time + " at " + game.location,
                                 'image': {
                                     'imageUri': game.opponent,
-                                    'accessibilityText': location.displayTitle
+                                    'accessibilityText': game.accessibilityText
                                 },
                                 'info': {
                                     'key': game.location
