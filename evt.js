@@ -67,8 +67,10 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           };
           let googleHomeEventString = filteredThreeDay.join(',').toString();
           console.log("Google Home Event String" + googleHomeEventString);
+          console.log('Events length: ' + events.length);
 
           let eventsText = events.join(',');
+
         let hereAreTheEvents = 'Here are some upcoming events';
 
      //    if (date.time === 'today') {
@@ -107,6 +109,11 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               }
             }
           };
+        if(events.length < 2) {
+          returnedJson = {
+            fulfillment_text: events[0]
+          };
+        }
           console.log("Returned JSON: " + JSON.stringify(returnedJson));
           res.json(returnedJson);
         }
