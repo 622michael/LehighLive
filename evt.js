@@ -110,9 +110,9 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             }
           };
         if(events.length < 2) {
-          res.json({
+          returnedJson = {
             fulfillment_text: events[0]
-          });
+          };
         }
           console.log("Returned JSON: " + JSON.stringify(returnedJson));
           res.json(returnedJson);
