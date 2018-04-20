@@ -36,7 +36,6 @@ const makeCORRequest = (url, callback) => {
 const getTimeTable = (callback) => {
   // const testBody = require('./testdata/timetable');
   // callback(null, null, testBody);
-
   makeCORRequest(TimeTableURL, function(error, response, body) {
     callback(error, response, JSON.parse(body));
   });
@@ -176,7 +175,7 @@ const getBusData = (callback) => {
       throw new Error(error);
     }
     console.log(body);
-    res.send(body);
+    response.send(body);
     makeCORRequest(TimeTableURL, function(error, response, body) {
       callback(error, response, JSON.parse(body));
     });
@@ -192,7 +191,6 @@ const getNextStops = (data, bus) => {
       }
     }
   });
-
   return stops;
 };
 
@@ -205,14 +203,6 @@ const busGoesTo = (timeTable, bus, dest) => {
 const CONNTECTIVITY_ISSUES_FULLFILLMENT = 'I\'m having trouble getting the bus routes at the moment. Please try again later.';
 
 const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
-  'Location': (req, res) => {
-    const app = new DialogflowApp({req, res});
-    if (app.isPermissionGranted()) {
-      app.tell('You have granted permission');
-    } else {
-      app.askForPermission('To locate you', app.SupportedPermissions.DEVICE_PRECISE_LOCATION);
-    }
-  },
   'Destination': (req, res) => {
     const bus = req.body.queryResult.parameters.bus;
     const dest = req.body.queryResult.parameters.destination;
@@ -292,14 +282,13 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   'Interval': (req, res) => {
     getTimeTable(function(error, response, timeTable) {
       let fullfillment;
-
       if (error != null) {
         fullfillment = CONNTECTIVITY_ISSUES_FULLFILLMENT;
       } else {
         const bus = req.body.queryResult.parameters.bus;
         const dest = req.body.queryResult.parameters.dest;
-
         const arrivalTime = getArrival(timeTable, bus, dest);
+
         if (!arrivalTime) {
           fullfillment = 'The ' + bus + ' bus does not go to ' + dest;
         } else if (arrivalTime == '-') {
@@ -317,11 +306,9 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           }
         }
       }
-
       res.json({
         fulfillment_text: fullfillment
       });
-
     });
   },
   'Schedule': (req, res) => {
@@ -336,7 +323,6 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           fullfillment = 'Could not find that bus';
         } else {
           const schedule = timeTable[routeToKey[bus]]['schedule'];
-
           let i = 0;
           fullfillment = '';
           Object.keys(schedule).forEach(function(key) {
@@ -349,20 +335,14 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             desc = desc.toLowerCase();
             desc = bus + ' ' + desc;
 
-
             fullfillment += desc + '\n';
-
             i += 1;
           });
-
         }
-
       }
-
       res.json({
         fulfillment_text: fullfillment
       });
-
     });
   },
   'Location': (req, res) => {
