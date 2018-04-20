@@ -1,11 +1,16 @@
 const moment = require('moment');
-const hourMinuteFormat = 'h:mma';
-const dayOfWeekToken = 'ddd';
+const HOUR_MINUTE_FORMAT = 'h:mma';
+const DAY_OF_WEEK_TOKEN = 'ddd';
+const DATE_FROM_REQUEST_FORMAT = "YYYY-MM-DD";
 
-const RATHBONE_TITLE = 'Rathbone';
-const CORT_TITLE = 'Cort';
-const BRODHEAD_TITLE = 'Brodhead';
-const residentDiningLocations = new Set([RATHBONE_TITLE, CORT_TITLE, BRODHEAD_TITLE]);
+const RATHBONE_DIALOGFLOW_TITLE = 'Rathbone';
+const CORT_DIALOGFLOW_TITLE = 'Cort';
+const BRODHEAD_DIALOGFLOW_TITLE = 'Brodhead';
+const RESIDENT_DINING_LOCATIONS = new Set([RATHBONE_DIALOGFLOW_TITLE, CORT_DIALOGFLOW_TITLE, BRODHEAD_DIALOGFLOW_TITLE]);
+const RATHBONE_IMAGE_URL = 'http://www.sse-llc.com/uploads/7/7/2/6/77268303/published/lehigh-university-rathbone-hall-2.jpg?1519764495';
+const CORT_IMAGE_URL = 'https://i.pinimg.com/564x/47/27/66/47276640c9a2f09e44e0030260a5f7b0.jpg';
+const BRODHEAD_IMAGE_URL = 'https://content-service.sodexomyway.com/media/Brodhead_Hero_tcm50-8459_w1920_h976.jpg?url=https://lehigh.sodexomyway.com/';
+const isResidentDiningLocation = (locationName) => RESIDENT_DINING_LOCATIONS.has(locationName);
 
 const getCurrentHour = () => moment().hours();
 const getCurrentDay = () => moment().days();
@@ -34,8 +39,8 @@ const extractTodaysDayAndTimeRangeFromTimeRanges = (timeRanges) => {
     const withinClosingTime = now.isBefore(endDate);
     if (daysRange.includes(daySeparator)) {
       const days = daysRange.split(daySeparator).map(day => day.substring(0, 3));
-      const startDay = moment(days[0], dayOfWeekToken);
-      const endDay = moment(days[1], dayOfWeekToken);
+      const startDay = moment(days[0], DAY_OF_WEEK_TOKEN);
+      const endDay = moment(days[1], DAY_OF_WEEK_TOKEN);
       if (endDay.isBefore(startDay)) endDay.add(1, 'week');
       const inclusiveDayToken = '[]';
       const lastDayInRangeCrossedPastMidnight = isOneDayBefore(endDay, endDate);
@@ -44,7 +49,7 @@ const extractTodaysDayAndTimeRangeFromTimeRanges = (timeRanges) => {
       console.log('second',dayIsWithinRange);
       return dayIsWithinRange || (lastDayInRangeCrossedPastMidnight && withinClosingTime);
     } else {
-      const day = moment(daysRange, dayOfWeekToken);
+      const day = moment(daysRange, DAY_OF_WEEK_TOKEN);
       const dayCrossedPastMidnight = isOneDayBefore(day, endDate);
       return now.isSame(day, 'day') || (dayCrossedPastMidnight && withinClosingTime);
     }
@@ -72,8 +77,8 @@ const extractStartAndEndDateFromDayAndTimeRange = (timeRange) => {
 const extractStartAndEndDayFromDayAndTimeRange = (timeRange) => {
   const split = timeRange.split(' ').join('').split(':')[0].split('-');
   return {
-    startDay: moment(split[0], dayOfWeekToken),
-    endDay: moment(split[split.length - 1], dayOfWeekToken)
+    startDay: moment(split[0], DAY_OF_WEEK_TOKEN),
+    endDay: moment(split[split.length - 1], DAY_OF_WEEK_TOKEN)
   };
 };
 
@@ -89,8 +94,8 @@ const extractStartAndEndTimeFromDayAndTimeRange = (timeRange) => {
   const startOfTimeRangeIndex = replaced.indexOf(':') + 1;
   const times = replaced.substring(startOfTimeRangeIndex).split('-'); // separate into the start time and end time
   return {
-    startTime: moment(times[0], hourMinuteFormat),
-    endTime: moment(times[1], hourMinuteFormat)
+    startTime: moment(times[0], HOUR_MINUTE_FORMAT),
+    endTime: moment(times[1], HOUR_MINUTE_FORMAT)
   };
 };
 
@@ -143,7 +148,13 @@ const adjustDatesForAmAmCase = (startTime, endTime, startDay, endDay) => {
 
 module.exports = {
   getStartAndEndTimeForToday: getStartAndEndTimeForToday,
-  residentDiningLocations: residentDiningLocations,
-  hourMinuteFormat: hourMinuteFormat,
-  dayOfWeekToken: dayOfWeekToken
+  isResidentDiningLocation: isResidentDiningLocation,
+  HOUR_MINUTE_FORMAT: HOUR_MINUTE_FORMAT,
+  DATE_FROM_REQUEST_FORMAT: DATE_FROM_REQUEST_FORMAT,
+  RATHBONE_IMAGE_URL: RATHBONE_IMAGE_URL,
+  CORT_IMAGE_URL: CORT_IMAGE_URL,
+  BRODHEAD_IMAGE_URL: BRODHEAD_IMAGE_URL,
+  RATHBONE_DIALOGFLOW_TITLE: RATHBONE_DIALOGFLOW_TITLE,
+  CORT_DIALOGFLOW_TITLE: CORT_DIALOGFLOW_TITLE,
+  BRODHEAD_DIALOGFLOW_TITLE: BRODHEAD_DIALOGFLOW_TITLE
 };
