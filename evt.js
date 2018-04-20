@@ -79,7 +79,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
             let eventsText = events.join(',');
           }
           else {
-            eventsText = events;
+            let eventsText = events;
           }
         let returnedJson = {
             // fulfillment_text: filteredThreeDay.join(', ')
