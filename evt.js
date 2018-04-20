@@ -69,16 +69,15 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           console.log("Google Home Event String" + googleHomeEventString);
 
           let eventsText = events.join(',');
+        let hereAreTheEvents = 'Here are the upcoming events in the next three days';
+
         if (date.time === 'today') {
           let hereAreTheEvents = 'Here are the events today';
         }
-        else if (date.time === 'week'){
+     if (date.time === 'week'){
           let hereAreTheEvents = 'Here are the events this week';
         }
-        else {
-          let hereAreTheEvents = 'Here are the upcoming events in the next three days';
 
-        }
         let returnedJson = {
             // fulfillment_text: filteredThreeDay.join(', ')
             // // outputContexts: outputContextsVal
