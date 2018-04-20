@@ -107,7 +107,7 @@ const EVT_FUNCTION_ACTION_NAME_TO_FUNCTION = {
               }
             }
           };
-          console.log("Returned JSON: " + returnedJson);
+          console.log("Returned JSON: " + JSON.stringify(returnedJson));
           res.json(returnedJson);
         }
       );
