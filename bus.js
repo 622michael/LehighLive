@@ -25,12 +25,12 @@ const makeCORRequest = (url, callback) => {
 }
 
 const getTimeTable = (callback) => {
-    const testBody = require('./testdata/timetable');
-    callback(null, null, testBody);
+    // const testBody = require('./testdata/timetable');
+    // callback(null, null, testBody);
 
-    // makeCORRequest(TimeTableURL, function(error, response, body) {
-    //     callback(error, response, JSON.parse(body))
-    // });
+    makeCORRequest(TimeTableURL, function(error, response, body) {
+        callback(error, response, JSON.parse(body))
+    });
 }
 
 // Determines what time the bus will arrive at a destination
