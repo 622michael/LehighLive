@@ -362,10 +362,18 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
                             }
                         }
                         if (times.length == 0) {
-                            
+                            // Bus not running
                         }
-                        if (times.length == 1) {
+                        else if (times.length == 1) {
+                            // One bus running
+                            // Use times[0] for the time it will arrive
+                            // at next stop
 
+                        }
+                        else if (times.length == 2) {
+                            // Two buses running
+                            // use times[0] and times[1] for the time it will arrive
+                            // at next stop
                         }
                     }
                 })
