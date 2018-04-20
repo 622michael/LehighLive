@@ -28,7 +28,7 @@ const makeCORRequest = (url, callback) => {
     qs: {format: 'json'},
     headers: {'origin': 'Android', 'User-Agent': 'Android'}
   };
-  request(options, function(error, response, body) {
+  request(options, (error, response, body) => {
     callback(error, response, body);
   });
 };
@@ -36,7 +36,7 @@ const makeCORRequest = (url, callback) => {
 const getTimeTable = (callback) => {
   // const testBody = require('./testdata/timetable');
   // callback(null, null, testBody);
-  makeCORRequest(TimeTableURL, function(error, response, body) {
+  makeCORRequest(TimeTableURL, (error, response, body) => {
     callback(error, response, JSON.parse(body));
   });
 };
@@ -55,22 +55,22 @@ const getTimeTable = (callback) => {
 // "HH:MM"
 // "-" - Indicates the bus is not running
 // false to indicate the bus does not go to the destination
-function getArrival(timeTable, bus, dest) {
+const getArrival = (timeTable, bus, dest) => {
   if (routeToKey[bus] == null || timeTable[routeToKey[bus]] == null) {
     return false;
   }
 
   const stops = timeTable[routeToKey[bus]]['stops'];
 
-  for (let stop in stops) {
-    const stopInfo = stops[stop];
+  Object.keys(stops).forEach(key => {
+    const stopInfo = stops[key];
     if (stopInfo.name == dest) {
       return stopInfo.arrival;
     }
-  }
+  });
 
   return false;
-}
+};
 
 // Gets the time interval that a bus goes through its entire route
 // in minutes.
@@ -80,7 +80,7 @@ function getArrival(timeTable, bus, dest) {
 //        look in the keys of routeToKey for valid options
 // Returns false if the bus is not running or there is no loop
 //          otherwise returns minutes for bus to return to same spot
-function getInterval(timeTable, bus) {
+const getInterval = (timeTable, bus) => {
   if (routeToKey[bus] == null || timeTable[routeToKey[bus]] == null) {
     return false;
   }
@@ -98,7 +98,7 @@ function getInterval(timeTable, bus) {
   const stopTimes = [];
 
   let r = false;
-  Object.keys(schedule).forEach(function(key) {
+  Object.keys(schedule).forEach(key => {
     const descRegex = /Departs ([a-zA-Z\s]*) at ([0-9]{1,2}):([0-9]{2}) ([PMA]{2})/g;
 
     // If we have found the interval already then ignore the loop
@@ -148,7 +148,7 @@ function getInterval(timeTable, bus) {
     }
   });
   return r;
-}
+};
 
 const getBusData = (callback) => {
   // The busdata request may respond with a blank JSON if no buses are running
@@ -170,7 +170,7 @@ const getBusData = (callback) => {
         'Origin': ''
       }
   };
-  request(options, function(error, response, body) {
+  request(options, (error, response, body) => {
     if (error) {
       throw new Error(error);
     }
@@ -179,9 +179,9 @@ const getBusData = (callback) => {
   });
 };
 
-const getNextStops = (data, bus) => {
+const getNextStops = (data, busData) => {
   const stops = [];
-  Object.keys(data).foreach(function(key) {
+  Object.keys(data).forEach((key) => {
     if (busData[key].key == busAbbr[bus]) {
       if (busData[key].currentstop != '') {
         stops.push(busData[key].currentstop);
@@ -204,7 +204,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     const bus = req.body.queryResult.parameters.bus;
     const dest = req.body.queryResult.parameters.destination;
 
-    getTimeTable(function(error, response, timeTable) {
+    getTimeTable((error, response, timeTable) => {
       let fullfillment = null;
       if (error != null) {
         fullfillment = CONNTECTIVITY_ISSUES_FULLFILLMENT;
@@ -247,7 +247,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
       return;
     }
 
-    getTimeTable(function(error, response, timeTable) {
+    getTimeTable((error, response, timeTable) => {
       let fullfillment;
 
       if (error != null) {
@@ -255,7 +255,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
       } else {
         const buses = [];
 
-        Object.keys(timeTable).forEach(function(key) {
+        Object.keys(timeTable).forEach(key => {
           const bus = timeTable[key].name;
           if (busGoesTo(timeTable, bus, dest) && busGoesTo(timeTable, bus, origin)) {
             buses.push(bus);
@@ -277,7 +277,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
     });
   },
   'Interval': (req, res) => {
-    getTimeTable(function(error, response, timeTable) {
+    getTimeTable((error, response, timeTable) => {
       let fullfillment;
       if (error != null) {
         fullfillment = CONNTECTIVITY_ISSUES_FULLFILLMENT;
@@ -311,7 +311,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   'Schedule': (req, res) => {
     const bus = req.body.queryResult.parameters.bus;
 
-    getTimeTable(function(error, response, timeTable) {
+    getTimeTable((error, response, timeTable) => {
       let fullfillment;
       if (error != null) {
         fullfillment = CONNTECTIVITY_ISSUES_FULLFILLMENT;
@@ -322,7 +322,7 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
           const schedule = timeTable[routeToKey[bus]]['schedule'];
           let i = 0;
           fullfillment = '';
-          Object.keys(schedule).forEach(function(key) {
+          Object.keys(schedule).forEach(key => {
             if (i > 2) {
               return;
             }
@@ -345,13 +345,13 @@ const BUS_FUNCTION_ACTION_NAME_TO_FUNCTION = {
   'Location': (req, res) => {
     const bus = req.body.queryResult.parameters.bus;
 
-    getBusData(function(error, respone, busData) {
+    getBusData((error, respone, busData) => {
       if (error != null) {
         res.json({
           fulfillment_text: CONNTECTIVITY_ISSUES_FULLFILLMENT
         });
       } else {
-        getTimeTable(function(error, response, timeTable) {
+        getTimeTable((error, response, timeTable) => {
           let fullfillment;
           if (error != null) {
             fullfillment = CONNTECTIVITY_ISSUES_FULLFILLMENT;
